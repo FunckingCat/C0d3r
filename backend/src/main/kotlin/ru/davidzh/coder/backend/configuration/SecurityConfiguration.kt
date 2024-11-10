@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 import org.springframework.security.web.SecurityFilterChain
 import ru.davidzh.coder.backend.configuration.converter.KeycloakJwtTokenConverter
 
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -20,19 +21,18 @@ class SecurityConfig {
     @Throws(Exception::class)
     fun myServerFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.authorizeHttpRequests { authorizeHttpRequests ->
-            authorizeHttpRequests
-                .requestMatchers("/private/**")
-                .authenticated()
-                // others are public
-                .requestMatchers("/**")
-                .permitAll()
-
-        }
+                authorizeHttpRequests
+                    .requestMatchers("/private/**")
+                    .authenticated()
+                    // others are public
+                    .requestMatchers("/**")
+                    .permitAll()
+            }
+            .csrf { it.disable() }
         http.oauth2ResourceServer {
                 oauth2 -> oauth2.jwt { jwt -> jwt.jwtAuthenticationConverter(keycloakJwtTokenConverter)
             }
         }
-
         return http.build()
     }
 }

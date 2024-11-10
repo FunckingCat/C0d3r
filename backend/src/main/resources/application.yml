@@ -5,15 +5,24 @@ spring:
   application:
     name: backend
   datasource:
-    url: jdbc:postgresql://localhost:5432/backend
+    url: jdbc:postgresql://localhost:5432/backend?currentSchema=public
     username: backend_user
     password: password
     driverClassName: org.postgresql.Driver
   sql:
     init:
+      mode: NEVER
       platform: postgres
+      schema-locations: classpath:schema.sql
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/realms/users
+
+keycloak:
+  serverUrl: http://localhost:8080
+  realm: users
+  clientId: backend-client
+  adminUsername: users-admin
+  adminPassword: password
