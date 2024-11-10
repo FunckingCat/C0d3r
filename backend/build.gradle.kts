@@ -1,5 +1,6 @@
 plugins {
 	kotlin("jvm") version "1.9.25"
+	kotlin("kapt") version "1.9.25"
 	kotlin("plugin.spring") version "1.9.25"
 	id("org.springframework.boot") version "3.3.5"
 	id("io.spring.dependency-management") version "1.1.6"
@@ -26,12 +27,26 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-websocket")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
+	implementation("org.keycloak:keycloak-admin-client:26.0.2")
+	implementation("org.mapstruct:mapstruct:1.6.2")
+
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testImplementation("org.springframework.security:spring-security-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+	annotationProcessor("org.mapstruct:mapstruct-processor:1.6.2")
+	kapt("org.mapstruct:mapstruct-processor:1.6.2")
+}
+
+kapt {
+	arguments {
+		// Set Mapstruct Configuration options here
+		// https://kotlinlang.org/docs/reference/kapt.html#annotation-processor-arguments
+		// https://mapstruct.org/documentation/stable/reference/html/#configuration-options
+		 arg("mapstruct.defaultComponentModel", "spring")
+	}
 }
 
 kotlin {
