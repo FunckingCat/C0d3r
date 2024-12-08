@@ -31,7 +31,7 @@ class KeycloakService(
 
         val userRepresentation = UserRepresentation()
         userRepresentation.isEnabled = true
-        userRepresentation.username = request.username.lowercase()
+        userRepresentation.username = request.usernameLower
         userRepresentation.isEmailVerified = true
         userRepresentation.credentials = listOf(credentialRepresentation)
         userRepresentation.requiredActions = emptyList()
@@ -51,7 +51,7 @@ class KeycloakService(
             .serverUrl(keycloakConfigurationProperties.serverUrl)
             .realm(keycloakConfigurationProperties.realm)
             .clientId(keycloakConfigurationProperties.clientId) // ID of client used for token requests
-            .username(username.lowercase())
+            .username(username)
             .password(password)
             .grantType(OAuth2Constants.PASSWORD)
             .build()

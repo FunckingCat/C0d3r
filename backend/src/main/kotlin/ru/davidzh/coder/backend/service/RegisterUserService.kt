@@ -15,10 +15,10 @@ class RegisterUserService(
     fun registerUser(request: RegisterUserRequest): JwtToken {
         val keycloakUserId = keycloakService.registerUser(request)
 
-        val userEntity = UserEntity(userId = keycloakUserId, username = request.username.lowercase())
+        val userEntity = UserEntity(userId = keycloakUserId, username = request.usernameLower)
         userRepository.save(userEntity)
 
-        return keycloakService.getUserToken(request.username.lowercase(), request.password)
+        return keycloakService.getUserToken(request.usernameLower, request.password)
     }
 
 }

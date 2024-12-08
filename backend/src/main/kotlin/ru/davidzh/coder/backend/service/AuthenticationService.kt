@@ -17,17 +17,17 @@ class AuthenticationService(
     private val logger = LoggerFactory.getLogger(AuthenticationService::class.java)
 
     fun logIn(request: LogInUserRequest): JwtToken = keycloakService
-        .getUserToken(request.username.lowercase(), request.password)
+        .getUserToken(request.usernameLower, request.password)
 
     fun resetPassword(request: ResetPasswordRequest) {
-        logger.info("Resetting password ${request.username}")
+        logger.info("Resetting password ${request.usernameLower}")
 
-        val userEntity = userRepository.findByUsername(request.username.lowercase())
+        val userEntity = userRepository.findByUsername(request.usernameLower)
 
         if (userEntity.isPresent) {
             keycloakService.resetPassword(userEntity.get().userId, request.password)
         } else {
-            throw UsernameNotFoundException("User ${request.username.lowercase()} not found")
+            throw UsernameNotFoundException("User ${request.usernameLower} not found")
         }
     }
 
