@@ -22,11 +22,10 @@ class SecurityConfig {
     fun myServerFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.authorizeHttpRequests { authorizeHttpRequests ->
                 authorizeHttpRequests
-                    .requestMatchers("/private/**")
-                    .authenticated()
-                    // others are public
-                    .requestMatchers("/**")
+                    .requestMatchers("/public/**")
                     .permitAll()
+                    .anyRequest()
+                    .authenticated()
             }
             .csrf { it.disable() }
         http.oauth2ResourceServer {

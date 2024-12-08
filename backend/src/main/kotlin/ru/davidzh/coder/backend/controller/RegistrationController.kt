@@ -6,14 +6,16 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.davidzh.coder.backend.controller.model.RegisterUserRequest
 import ru.davidzh.coder.backend.service.RegisterUserService
+import ru.davidzh.coder.backend.util.extension.asResponseEntity
 
 @RestController
-@RequestMapping("/api/v1/registration")
+@RequestMapping("/public/api/v1/registration")
 class RegistrationController(
     private val registerUserService: RegisterUserService
 ) {
 
     @PostMapping
-    fun registerUser(@RequestBody request: RegisterUserRequest) = registerUserService.registerUser(request)
+    fun registerUser(@RequestBody request: RegisterUserRequest) =
+        registerUserService.registerUser(request).asResponseEntity()
 
 }

@@ -29,6 +29,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.keycloak:keycloak-admin-client:26.0.2")
 	implementation("org.mapstruct:mapstruct:1.6.2")
+	implementation("io.kubernetes:client-java:22.0.0")
 
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -42,9 +43,6 @@ dependencies {
 
 kapt {
 	arguments {
-		// Set Mapstruct Configuration options here
-		// https://kotlinlang.org/docs/reference/kapt.html#annotation-processor-arguments
-		// https://mapstruct.org/documentation/stable/reference/html/#configuration-options
 		 arg("mapstruct.defaultComponentModel", "spring")
 	}
 }
