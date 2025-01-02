@@ -11,7 +11,7 @@ class KubernetesConfiguration {
     internal fun apiClient() = Config.defaultClient()
 
     companion object {
-        private const val ORCHESTRATION_NAMESPACE = "sandbox"
+        const val ORCHESTRATION_NAMESPACE = "sandbox"
     }
 
 }

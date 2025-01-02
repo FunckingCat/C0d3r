@@ -4,13 +4,15 @@ import java.time.LocalDateTime
 
 data class Job(
     /** Уникальный идентификатор задачи */
-    val id: String,
+    val id: String?,
     /** Идентификатор пользователя, создавшего задачу */
-    val userId: String,
+    val userId: String?,
     /** Название задачи */
     val name: String,
     /** Ссылка на Docker-образ или локальный .tar */
     val dockerImage: String,
+    /** Команда с которой должен быть запущен контейнер */
+    val command: List<String>,
     /** Переменные окружения */
     val environmentVariables: Map<String, String> = emptyMap(),
     /** Тип запуска задачи */
@@ -20,7 +22,7 @@ data class Job(
     /** Текущий статус задачи */
     val status: TaskStatus = TaskStatus.PENDING,
     /** Время создания задачи */
-    val createdAt: LocalDateTime = LocalDateTime.now(),
+    val createdAt: LocalDateTime? = LocalDateTime.now(),
     /** Время начала задачи */
     val startedAt: LocalDateTime? = null,
     /** Время завершения задачи */
@@ -28,5 +30,5 @@ data class Job(
     /** Результат выполнения задачи */
     val result: String? = null,
     /** Логи задачи */
-    val logs: List<String> = emptyList()
+    val logs: List<String>? = emptyList()
 )
