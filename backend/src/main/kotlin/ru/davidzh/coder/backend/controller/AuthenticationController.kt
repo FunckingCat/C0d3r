@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.davidzh.coder.backend.controller.UsersController.Companion.log
-import ru.davidzh.coder.backend.controller.model.LogInUserRequest
-import ru.davidzh.coder.backend.controller.model.ResetPasswordRequest
+import ru.davidzh.coder.backend.controller.dto.LogInUserRequest
+import ru.davidzh.coder.backend.controller.dto.ResetPasswordRequest
 import ru.davidzh.coder.backend.service.AuthenticationService
 import ru.davidzh.coder.backend.util.extension.asResponseEntity
 import ru.davidzh.coder.backend.util.extension.getUserAuthentication

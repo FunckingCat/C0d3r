@@ -1,6 +1,6 @@
-package ru.davidzh.coder.backend.controller.model
+package ru.davidzh.coder.backend.controller.dto
 
-data class RegisterUserRequest(
+data class LogInUserRequest(
     private val username: String,
     val password: String
 ) {

@@ -1,4 +1,4 @@
-package ru.davidzh.coder.backend.controller.model
+package ru.davidzh.coder.backend.controller.dto
 
 data class ResetPasswordRequest(
     private val username: String,

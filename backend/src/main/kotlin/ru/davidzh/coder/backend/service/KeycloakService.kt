@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import ru.davidzh.coder.backend.configuration.properties.KeycloakConfigurationProperties
 import ru.davidzh.coder.backend.controller.model.JwtToken
-import ru.davidzh.coder.backend.controller.model.RegisterUserRequest
+import ru.davidzh.coder.backend.controller.dto.RegisterUserRequest
 import java.util.*
 
 @Service

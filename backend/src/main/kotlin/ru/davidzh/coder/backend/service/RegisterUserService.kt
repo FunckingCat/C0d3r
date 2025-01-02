@@ -2,7 +2,7 @@ package ru.davidzh.coder.backend.service
 
 import org.springframework.stereotype.Service
 import ru.davidzh.coder.backend.controller.model.JwtToken
-import ru.davidzh.coder.backend.controller.model.RegisterUserRequest
+import ru.davidzh.coder.backend.controller.dto.RegisterUserRequest
 import ru.davidzh.coder.backend.dao.model.UserEntity
 import ru.davidzh.coder.backend.dao.repository.UserRepository
 

@@ -3,9 +3,9 @@ package ru.davidzh.coder.backend.service
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
+import ru.davidzh.coder.backend.controller.dto.LogInUserRequest
+import ru.davidzh.coder.backend.controller.dto.ResetPasswordRequest
 import ru.davidzh.coder.backend.controller.model.JwtToken
-import ru.davidzh.coder.backend.controller.model.LogInUserRequest
-import ru.davidzh.coder.backend.controller.model.ResetPasswordRequest
 import ru.davidzh.coder.backend.dao.repository.UserRepository
 
 @Service
