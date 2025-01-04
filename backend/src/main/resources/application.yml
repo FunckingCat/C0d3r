@@ -20,6 +20,12 @@ spring:
         jwt:
           issuer-uri: http://localhost:8080/realms/users
 
+
+logging:
+  level:
+    root: info
+    ru: debug
+
 keycloak:
   serverUrl: http://localhost:8080
   realm: users

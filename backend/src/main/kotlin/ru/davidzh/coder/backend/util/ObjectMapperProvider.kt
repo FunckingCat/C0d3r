@@ -1,18 +1,15 @@
-package ru.davidzh.coder.backend.configuration
+package ru.davidzh.coder.backend.util
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 
-@Configuration
-class ObjectMapperConfiguration {
+object ObjectMapperProvider {
 
-    @Bean
-    fun objectMapper(): ObjectMapper = ObjectMapper()
+    val MAPPER: ObjectMapper = ObjectMapper()
         .registerModule(JavaTimeModule())
         .registerModule(KotlinModule.Builder().build())
         .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+
 }

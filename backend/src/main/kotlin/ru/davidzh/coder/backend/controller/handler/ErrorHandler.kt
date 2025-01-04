@@ -1,6 +1,7 @@
 package ru.davidzh.coder.backend.controller.handler
 
 import jakarta.servlet.http.HttpServletRequest
+import org.apache.commons.lang3.exception.ExceptionUtils.getRootCause
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -18,7 +19,7 @@ class ErrorHandler {
         return RestError(
             500,
             "Fatal Error",
-            e.message?: ""
+            getRootCause(e)?.message ?: "Fatal Error",
         ).asResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
     }
 

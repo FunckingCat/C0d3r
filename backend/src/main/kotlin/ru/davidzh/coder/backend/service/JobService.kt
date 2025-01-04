@@ -1,33 +1,54 @@
 package ru.davidzh.coder.backend.service
 
-import org.springframework.boot.context.event.ApplicationReadyEvent
-import org.springframework.context.event.EventListener
+import jakarta.validation.ValidationException
 import org.springframework.stereotype.Service
+import ru.davidzh.coder.backend.controller.UsersController.Companion.log
 import ru.davidzh.coder.backend.controller.dto.CreateJobRequest
-import ru.davidzh.coder.backend.converter.JobConverter
-import ru.davidzh.coder.backend.model.ExecutionType
-import ru.davidzh.coder.backend.model.Job
+import ru.davidzh.coder.backend.converter.JobEntityConverter
+import ru.davidzh.coder.backend.converter.JobParametersConverter
+import ru.davidzh.coder.backend.dao.repository.JobRepository
+import ru.davidzh.coder.backend.model.JobParameters
+import ru.davidzh.coder.backend.util.extension.getUserAuthentication
 
 @Service
 class JobService(
-    private val jobConverter: JobConverter,
-    private val kubernetesService: KubernetesService
+    private val jobParametersConverter: JobParametersConverter,
+    private val kubernetesService: KubernetesService,
+    private val jobEntityConverter: JobEntityConverter,
+    private val jobRepository: JobRepository
 ) {
 
-    @EventListener(ApplicationReadyEvent::class)
-    fun applicationReady() {
-        createJob(
-            CreateJobRequest(
-                name = "test-job",
-                dockerImage = "busybox",
-                command = listOf("echo", "Hello from Kubernetes Job!"),
-                environmentVariables = emptyMap(),
-                executionType = ExecutionType.ON_DEMAND
-            )
-        )
+    /**
+     * Creates new Job
+     */
+    fun createJob(createJobRequest: CreateJobRequest): JobParameters {
+
+        if (!validateJobName(createJobRequest.name)) throw ValidationException("Job name is invalid")
+
+        val jobParameters = jobParametersConverter.convert(createJobRequest, getUserAuthentication().userId)
+        val jobEntity = jobEntityConverter.convert(jobParameters)
+
+        log.debug("JobService::createJob jobParameters {} jobEntity {}", jobParameters, jobEntity)
+
+        return jobRepository.save(jobEntity)
+            .let { kubernetesService.startJob(jobParameters) }
+            .let { jobParameters }
     }
 
-    fun createJob(job: CreateJobRequest): Job = jobConverter.convert(job)
-        .also { kubernetesService.startJob(it) }
+    fun validateJobName(input: String): Boolean {
+        if (input.length > 200) return false
+        val regex = Regex("^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$")
+        return regex.matches(input)
+    }
+
+    /**
+     * Returns list of jobs of user
+     */
+    fun getJobs(): List<Any> = emptyList()
+
+    /**
+     * Returns job by job id. If user is not owner of the job throws exception.
+     */
+    fun getJob(): Any = Any()
 
 }
