@@ -1,6 +1,6 @@
 package ru.davidzh.coder.backend.model
 
-enum class TaskStatus {
+enum class ExecutionStatus {
     /** Ожидает выполнения */
     PENDING,
     /** В процессе выполнения */

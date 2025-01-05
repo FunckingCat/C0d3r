@@ -31,6 +31,7 @@ dependencies {
 	implementation("org.mapstruct:mapstruct:1.6.2")
 	implementation("io.kubernetes:client-java:22.0.0")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
+	implementation("org.springframework.boot:spring-boot-starter-aop")
 
 
 	runtimeOnly("org.postgresql:postgresql")

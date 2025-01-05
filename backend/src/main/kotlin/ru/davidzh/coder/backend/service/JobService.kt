@@ -4,10 +4,11 @@ import jakarta.validation.ValidationException
 import org.springframework.stereotype.Service
 import ru.davidzh.coder.backend.controller.UsersController.Companion.log
 import ru.davidzh.coder.backend.controller.dto.CreateJobRequest
+import ru.davidzh.coder.backend.converter.JobConverter
 import ru.davidzh.coder.backend.converter.JobEntityConverter
 import ru.davidzh.coder.backend.converter.JobParametersConverter
 import ru.davidzh.coder.backend.dao.repository.JobRepository
-import ru.davidzh.coder.backend.model.JobParameters
+import ru.davidzh.coder.backend.model.Job
 import ru.davidzh.coder.backend.util.extension.getUserAuthentication
 
 @Service
@@ -15,13 +16,14 @@ class JobService(
     private val jobParametersConverter: JobParametersConverter,
     private val kubernetesService: KubernetesService,
     private val jobEntityConverter: JobEntityConverter,
-    private val jobRepository: JobRepository
+    private val jobRepository: JobRepository,
+    private val jobConverter: JobConverter,
 ) {
 
     /**
      * Creates new Job
      */
-    fun createJob(createJobRequest: CreateJobRequest): JobParameters {
+    fun createJob(createJobRequest: CreateJobRequest): Job {
 
         if (!validateJobName(createJobRequest.name)) throw ValidationException("Job name is invalid")
 
@@ -31,8 +33,8 @@ class JobService(
         log.debug("JobService::createJob jobParameters {} jobEntity {}", jobParameters, jobEntity)
 
         return jobRepository.save(jobEntity)
-            .let { kubernetesService.startJob(jobParameters) }
-            .let { jobParameters }
+            .also { kubernetesService.startJob(jobParameters) }
+            .let { jobConverter.convert(it) }
     }
 
     fun validateJobName(input: String): Boolean {

@@ -1,4 +1,4 @@
-package ru.davidzh.coder.backend.dao.model
+package ru.davidzh.coder.backend.dao.entity
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
