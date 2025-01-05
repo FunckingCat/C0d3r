@@ -27,6 +27,11 @@ spring:
 
 logging:
   level:
+    org:
+      springframework:
+        jdbc:
+          core:
+            JdbcTemplate: info
     root: info
     ru: debug
 

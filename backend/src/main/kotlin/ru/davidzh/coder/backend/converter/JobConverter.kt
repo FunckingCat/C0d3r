@@ -1,12 +1,19 @@
 package ru.davidzh.coder.backend.converter
 
 import com.fasterxml.jackson.core.type.TypeReference
+import org.mapstruct.InjectionStrategy
 import org.mapstruct.Mapper
 import ru.davidzh.coder.backend.dao.entity.JobEntity
 import ru.davidzh.coder.backend.model.Job
 import ru.davidzh.coder.backend.util.ObjectMapperProvider.MAPPER
 
-@Mapper(componentModel = "spring")
+@Mapper(
+    componentModel = "spring",
+    injectionStrategy = InjectionStrategy.CONSTRUCTOR,
+    uses = [
+        ExecutionResultConverter::class
+    ]
+)
 abstract class JobConverter {
 
     abstract fun convert(jobEntity: JobEntity): Job

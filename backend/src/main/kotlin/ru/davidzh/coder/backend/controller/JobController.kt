@@ -23,6 +23,6 @@ class JobController(
 
     @LogExecution
     @GetMapping("/{id}")
-    fun getJob(@PathVariable id: String) = jobService.getJob().asResponseEntity()
+    fun getJob(@PathVariable id: Long) = jobService.getJob(id).asResponseEntity()
 
 }

@@ -5,6 +5,8 @@ import java.time.LocalDateTime
 data class ExecutionResult(
     /** Уникальный идентификатор выполнения */
     val id: Long? = null,
+    /** Уникальный идентификатор выполнения */
+    val jobId: Long,
     /** Время начала выполнения задачи */
     val startedAt: LocalDateTime,
     /** Время завершения выполнения задачи */

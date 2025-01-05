@@ -28,7 +28,7 @@ object V1JobFactory {
             )
     }
 
-    private fun containerName(userId: UUID, jobName: String): String = "$userId-$jobName"
+    fun containerName(userId: UUID, jobName: String): String = "$userId-$jobName"
 
     private fun containerFromJob(jobParameters: JobParameters): V1Container = V1Container()
         .name(containerName(jobParameters.userId, jobParameters.name))

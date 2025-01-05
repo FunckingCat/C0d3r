@@ -64,11 +64,15 @@ class JobService(
     /**
      * Returns list of jobs of user
      */
-    fun getJobs(): List<Any> = emptyList()
+    fun getJobs(): List<Job> = jobRepository.findAllByUserId(getUserAuthentication().userId)
+        .map { jobConverter.convert(it) }
 
     /**
      * Returns job by job id. If user is not owner of the job throws exception.
      */
-    fun getJob(): Any = Any()
+    fun getJob(id: Long): Job = jobRepository.findById(id)
+        .filter { it.userId == getUserAuthentication().userId }
+        .map { jobConverter.convert(it) }
+        .orElseThrow()
 
 }
