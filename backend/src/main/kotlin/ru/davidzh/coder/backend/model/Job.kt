@@ -23,6 +23,6 @@ data class Job(
     /** Планировщик CronJob (если используется) */
     val schedule: String? = null,
     /** Результаты выполнения */
-    val executionResults: List<ExecutionResult>?
+    val executionResults: List<ExecutionResult>? = null
 ) {
 }

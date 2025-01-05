@@ -1,6 +1,7 @@
 package ru.davidzh.coder.backend.dao.entity
 
 import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.MappedCollection
 import org.springframework.data.relational.core.mapping.Table
 import ru.davidzh.coder.backend.model.ExecutionType
 import java.time.LocalDateTime
@@ -25,6 +26,9 @@ data class JobEntity(
     /** Тип запуска задачи */
     val executionType: ExecutionType,
     /** Планировщик CronJob (если используется) */
-    val schedule: String? = null
+    val schedule: String? = null,
+    /** Планировщик CronJob (если используется) */
+    @MappedCollection(idColumn = "job_id", keyColumn = "id")
+    val executionResults: List<ExecutionResultEntity>? = emptyList(),
 ) {
 }

@@ -17,9 +17,11 @@ class JobController(
     fun createJob(@RequestBody createJobRequest: CreateJobRequest) =
         jobService.createJob(createJobRequest).asResponseEntity()
 
+    @LogExecution
     @GetMapping
     fun getJobs() = jobService.getJobs().asResponseEntity()
 
+    @LogExecution
     @GetMapping("/{id}")
     fun getJob(@PathVariable id: String) = jobService.getJob().asResponseEntity()
 

@@ -32,7 +32,7 @@ dependencies {
 	implementation("io.kubernetes:client-java:22.0.0")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
 	implementation("org.springframework.boot:spring-boot-starter-aop")
-
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")

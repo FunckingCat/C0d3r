@@ -1,15 +1,20 @@
 package ru.davidzh.coder.backend.service
 
 import jakarta.validation.ValidationException
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import ru.davidzh.coder.backend.controller.UsersController.Companion.log
 import ru.davidzh.coder.backend.controller.dto.CreateJobRequest
 import ru.davidzh.coder.backend.converter.JobConverter
 import ru.davidzh.coder.backend.converter.JobEntityConverter
 import ru.davidzh.coder.backend.converter.JobParametersConverter
+import ru.davidzh.coder.backend.dao.entity.ExecutionResultEntity
+import ru.davidzh.coder.backend.dao.repository.ExecutionResultRepository
 import ru.davidzh.coder.backend.dao.repository.JobRepository
+import ru.davidzh.coder.backend.model.ExecutionStatus
 import ru.davidzh.coder.backend.model.Job
 import ru.davidzh.coder.backend.util.extension.getUserAuthentication
+import java.time.LocalDateTime
 
 @Service
 class JobService(
@@ -18,6 +23,7 @@ class JobService(
     private val jobEntityConverter: JobEntityConverter,
     private val jobRepository: JobRepository,
     private val jobConverter: JobConverter,
+    private val executionResultRepository: ExecutionResultRepository
 ) {
 
     /**
@@ -32,9 +38,21 @@ class JobService(
 
         log.debug("JobService::createJob jobParameters {} jobEntity {}", jobParameters, jobEntity)
 
-        return jobRepository.save(jobEntity)
-            .also { kubernetesService.startJob(jobParameters) }
-            .let { jobConverter.convert(it) }
+        val entity = jobRepository.save(jobEntity)
+        kubernetesService.startJob(jobParameters)
+
+        executionResultRepository.save(
+            ExecutionResultEntity(
+                jobId = entity.id ?: throw ValidationException("Job id is null"),
+                startedAt = LocalDateTime.now(),
+                status = ExecutionStatus.RUNNING,
+                recordedAt = LocalDateTime.now()
+            )
+        )
+
+        return jobConverter.convert(
+            jobRepository.findByIdOrNull(entity.id) ?: throw ValidationException("Job id is null"),
+        )
     }
 
     fun validateJobName(input: String): Boolean {
