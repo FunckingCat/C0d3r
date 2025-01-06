@@ -20,5 +20,7 @@ data class ExecutionResult(
     /** Ошибки, возникшие во время выполнения (если есть) */
     val errorMessage: String? = null,
     /** Дата и время записи результата в базу данных */
-    val recordedAt: LocalDateTime
+    val recordedAt: LocalDateTime,
+    /** Дата и время записи результата в базу данных */
+    val originalJobName: String? = null
 )

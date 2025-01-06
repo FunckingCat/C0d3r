@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.MappedCollection
 import org.springframework.data.relational.core.mapping.Table
 import ru.davidzh.coder.backend.model.ExecutionType
+import ru.davidzh.coder.backend.model.JobStatus
 import java.time.LocalDateTime
 import java.util.*
 
@@ -27,7 +28,9 @@ data class JobEntity(
     val executionType: ExecutionType,
     /** Планировщик CronJob (если используется) */
     val schedule: String? = null,
-    /** Планировщик CronJob (если используется) */
+    /** Статус задачи */
+    val status: JobStatus? = null,
+    /** Список результатов выполнения задачи */
     @MappedCollection(idColumn = "job_id", keyColumn = "id")
     val executionResults: List<ExecutionResultEntity>? = emptyList(),
 ) {

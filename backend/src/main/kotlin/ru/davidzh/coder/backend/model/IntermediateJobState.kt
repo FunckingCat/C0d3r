@@ -1,14 +1,12 @@
 package ru.davidzh.coder.backend.model
 
-import java.time.LocalDateTime
-
 data class IntermediateJobState(
+    /** Unique identifier for the job from Kubernetes */
+    val originalJobName: String,
     /** Unique identifier for the job */
     val jobName: String,
     /** The current status of the job (Pending, Running, Completed, Failed, etc.) */
     val status: ExecutionStatus,
-    /** Check time */
-    val checkTime: LocalDateTime,
-    /** Logs for the job execution */
-    val logs: List<String>
+    /** List of container states of the job */
+    val containerStates: List<ContainerState> = emptyList()
 )

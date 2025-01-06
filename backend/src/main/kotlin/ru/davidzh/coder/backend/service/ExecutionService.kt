@@ -1,18 +1,17 @@
 package ru.davidzh.coder.backend.service
 
-import jakarta.validation.ValidationException
 import org.slf4j.LoggerFactory
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import ru.davidzh.coder.backend.converter.ExecutionResultConverter
 import ru.davidzh.coder.backend.converter.ExecutionResultEntityConverter
+import ru.davidzh.coder.backend.converter.JobConverter
 import ru.davidzh.coder.backend.dao.entity.ExecutionResultEntity
 import ru.davidzh.coder.backend.dao.repository.ExecutionResultRepository
 import ru.davidzh.coder.backend.dao.repository.JobRepository
-import ru.davidzh.coder.backend.model.ExecutionResult
-import ru.davidzh.coder.backend.model.ExecutionStatus
-import ru.davidzh.coder.backend.model.IntermediateJobState
+import ru.davidzh.coder.backend.model.*
+import java.time.LocalDateTime
 
 @Service
 class ExecutionService(
@@ -20,32 +19,66 @@ class ExecutionService(
     private val jobRepository: JobRepository,
     private val executionResultConverter: ExecutionResultConverter,
     private val executionResultEntityConverter: ExecutionResultEntityConverter,
-    private val executionResultRepository: ExecutionResultRepository
+    private val executionResultRepository: ExecutionResultRepository,
+    private val jobConverter: JobConverter
 ) {
 
 //    @EventListener(ApplicationReadyEvent::class)
     @Scheduled(fixedDelay = 5000, initialDelay = 2000)
     fun executeTask() {
-        val pendingExecutions = executionResultRepository.findByStatus(ExecutionStatus.RUNNING)
+        val runningJobs = jobRepository.findByStatus(JobStatus.RUNNING)
 
-        pendingExecutions
-            .map { executionResultConverter.convert(it) }
-            .forEach { precessExecution(it) }
+        runningJobs
+            .filter { it.executionType == ExecutionType.ON_DEMAND }
+            .map { jobConverter.convert(it) }
+            .forEach { precessOnDemandJobExecution(it) }
+
+        runningJobs
+            .filter { it.executionType == ExecutionType.SCHEDULED }
+            .map { jobConverter.convert(it) }
+            .map { it to kubernetesService.getCronJobExecutionResult(it.userId, it.name) }
+            .forEach {
+                it.second.forEach {
+                    intermediateJobState -> precessJobExecution(it.first, intermediateJobState)
+                }
+            }
 
     }
 
-    private fun precessExecution(execution: ExecutionResult) {
-        val job = jobRepository.findByIdOrNull(execution.jobId)
-            ?: throw ValidationException("Job ${execution.jobId} not found")
-        val intermediateResult: IntermediateJobState = kubernetesService.getExecutionResult(job.userId, job.name)
-        log.debug(intermediateResult.toString())
-        val updatedExecutionResult: ExecutionResultEntity = executionResultEntityConverter.convert(execution)
-            .copy(
+    private fun precessOnDemandJobExecution(job: Job) {
+        val intermediateResult: IntermediateJobState = kubernetesService.getJobExecutionResult(job.userId, job.name)
+        precessJobExecution(job, intermediateResult)
+        if (intermediateResult.status == ExecutionStatus.COMPLETED) {
+            jobRepository.findByIdOrNull(job.id!!)!!
+                .let { jobRepository.save(it.copy(status = JobStatus.COMPLETED)) }
+        }
+    }
+
+    private fun precessJobExecution(job: Job, intermediateResult: IntermediateJobState) {
+
+        val execution: ExecutionResultEntity? = executionResultRepository
+            .findByOriginalJobName(intermediateResult.originalJobName)
+
+        if (execution == null) {
+            val newExecutionEntity = ExecutionResultEntity(
+                originalJobName = intermediateResult.originalJobName,
+                jobId = job.id!!,
+                startedAt = LocalDateTime.now(),
                 status = intermediateResult.status,
-                recordedAt = intermediateResult.checkTime,
-                logs = intermediateResult.logs
+                recordedAt = intermediateResult.containerStates[0].checkTime,
+                logs = intermediateResult.containerStates[0].logs
             )
-        executionResultRepository.save(updatedExecutionResult)
+            executionResultRepository.save(newExecutionEntity)
+        } else {
+            val updatedExecutionResult: ExecutionResultEntity = execution
+                .copy(
+                    status = intermediateResult.status,
+                    recordedAt = intermediateResult.containerStates[0].checkTime,
+                    logs = intermediateResult.containerStates[0].logs
+                )
+            executionResultRepository.save(updatedExecutionResult)
+        }
+
     }
 
     companion object {

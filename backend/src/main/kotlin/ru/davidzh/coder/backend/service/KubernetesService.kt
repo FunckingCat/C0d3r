@@ -11,6 +11,7 @@ import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Service
 import ru.davidzh.coder.backend.configuration.KubernetesConfiguration.Companion.ORCHESTRATION_NAMESPACE
 import ru.davidzh.coder.backend.factory.V1JobFactory
+import ru.davidzh.coder.backend.model.ContainerState
 import ru.davidzh.coder.backend.model.ExecutionStatus
 import ru.davidzh.coder.backend.model.IntermediateJobState
 import ru.davidzh.coder.backend.model.JobParameters
@@ -35,35 +36,54 @@ class KubernetesService(
             }
     }
 
-    fun getExecutionResult(userId: UUID, jobName: String): IntermediateJobState {
+    fun startCronJob(jobParameters: JobParameters) {
+        V1JobFactory.createV1CronJob(jobParameters)
+            .also { logger.info("Cron Job created $it") }
+            .let {
+                batchApi.createNamespacedCronJob(ORCHESTRATION_NAMESPACE, it)
+                    .pretty("true")
+                    .execute()
+            }
+    }
 
-        val fullJobName = V1JobFactory.containerName(userId, jobName)
+    fun getCronJobExecutionResult(userId: UUID, jobName: String): List<IntermediateJobState> =
+        batchApi.listNamespacedJob("sandbox")
+            .execute()
+            .items
+            .filter { it.metadata.name.startsWith(V1JobFactory.containerName(userId, jobName))}
+            .map { it.metadata.name }
+            .map { getJobExecutionResult(it) }
 
+    fun getJobExecutionResult(fullJobName: String): IntermediateJobState {
         val job = batchApi.readNamespacedJob(fullJobName, ORCHESTRATION_NAMESPACE).execute()
 
-        val podList = coreApi.listNamespacedPod(ORCHESTRATION_NAMESPACE)
+        val containerStates: List<ContainerState> = coreApi.listNamespacedPod(ORCHESTRATION_NAMESPACE)
             .execute()
             .items
             .filter { it.metadata.labels[JOB_NAME_LABEL] == fullJobName }
-
-        val logs = mutableListOf<String>()
-
-        podList.forEach { pod ->
-            try {
-                val podLogs = coreApi.readNamespacedPodLog(pod.metadata.name, ORCHESTRATION_NAMESPACE).execute()
-                logs.add(podLogs)
-            } catch (e: Exception) {
-                logs.add("Error fetching logs for pod: ${pod.metadata.name}")
+            .map {
+                ContainerState(
+                    containerName = it.metadata.name,
+                    status = ExecutionStatus.COMPLETED, // TODO Ставить корректный статус
+                    checkTime = LocalDateTime.now(),
+                    logs = getPodLogs(it.metadata.name),
+                )
             }
-        }
 
         return IntermediateJobState(
-            jobName = jobName,
+            originalJobName = job.metadata.name,
+            jobName = fullJobName,
             status = mapK8sJobStatusToExecutionStatus(job.status),
-            checkTime = LocalDateTime.now(),
-            logs = logs
+            containerStates = containerStates
         )
     }
+
+    fun getPodLogs(podName: String) = coreApi
+        .readNamespacedPodLog(podName, ORCHESTRATION_NAMESPACE)
+        .execute().split("\n")
+
+    fun getJobExecutionResult(userId: UUID, jobName: String): IntermediateJobState =
+        getJobExecutionResult(V1JobFactory.containerName(userId, jobName))
 
     fun mapK8sJobStatusToExecutionStatus(k8sJobStatus: V1JobStatus): ExecutionStatus {
         return if (k8sJobStatus.active == 1) {
@@ -74,7 +94,7 @@ class KubernetesService(
              ExecutionStatus.FAILED
         } else if (k8sJobStatus.terminating == 1) {
              ExecutionStatus.CANCELLED
-        }else  ExecutionStatus.PENDING
+        } else  ExecutionStatus.PENDING
     }
 
     @EventListener(ApplicationReadyEvent::class)
