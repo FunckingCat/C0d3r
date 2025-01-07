@@ -16,5 +16,7 @@ data class JobParameters(
     /** Тип запуска задачи */
     val executionType: ExecutionType,
     /** Планировщик CronJob (если используется) */
-    val schedule: String? = null
+    val schedule: String? = null,
+    /** Порядковый номер запуска */
+    val ordinal: Int? = null,
 )

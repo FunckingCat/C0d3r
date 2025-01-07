@@ -24,6 +24,8 @@ data class Job(
     val schedule: String? = null,
     /** Планировщик CronJob (если используется) */
     val jobStatus: JobStatus? = null,
+    /** Планировщик CronJob (если используется) */
+    val ordinal: Int? = null,
     /** Результаты выполнения */
     val executionResults: List<ExecutionResult>? = null
 ) {

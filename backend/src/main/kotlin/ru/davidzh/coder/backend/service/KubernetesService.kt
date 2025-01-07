@@ -1,6 +1,7 @@
 package ru.davidzh.coder.backend.service
 
 import io.kubernetes.client.openapi.ApiClient
+import io.kubernetes.client.openapi.ApiException
 import io.kubernetes.client.openapi.apis.BatchV1Api
 import io.kubernetes.client.openapi.apis.CoreV1Api
 import io.kubernetes.client.openapi.models.V1JobStatus
@@ -16,7 +17,6 @@ import ru.davidzh.coder.backend.model.ExecutionStatus
 import ru.davidzh.coder.backend.model.IntermediateJobState
 import ru.davidzh.coder.backend.model.JobParameters
 import java.time.LocalDateTime
-import java.util.*
 
 @Service
 class KubernetesService(
@@ -46,11 +46,11 @@ class KubernetesService(
             }
     }
 
-    fun getCronJobExecutionResult(userId: UUID, jobName: String): List<IntermediateJobState> =
+    fun getCronJobExecutionResult(containerName: String): List<IntermediateJobState> =
         batchApi.listNamespacedJob("sandbox")
             .execute()
             .items
-            .filter { it.metadata.name.startsWith(V1JobFactory.containerName(userId, jobName))}
+            .filter { it.metadata.name.startsWith(containerName)}
             .map { it.metadata.name }
             .map { getJobExecutionResult(it) }
 
@@ -82,9 +82,6 @@ class KubernetesService(
         .readNamespacedPodLog(podName, ORCHESTRATION_NAMESPACE)
         .execute().split("\n")
 
-    fun getJobExecutionResult(userId: UUID, jobName: String): IntermediateJobState =
-        getJobExecutionResult(V1JobFactory.containerName(userId, jobName))
-
     fun mapK8sJobStatusToExecutionStatus(k8sJobStatus: V1JobStatus): ExecutionStatus {
         return if (k8sJobStatus.active == 1) {
              ExecutionStatus.RUNNING
@@ -95,6 +92,25 @@ class KubernetesService(
         } else if (k8sJobStatus.terminating == 1) {
              ExecutionStatus.CANCELLED
         } else  ExecutionStatus.PENDING
+    }
+
+    /**
+     * Deletes a job from Kubernetes by its name.
+     *
+     * @param jobName the name of the job to delete.
+     * @return true if the job was successfully deleted, false otherwise.
+     * @throws ApiException if there is an error during the deletion process.
+     */
+    fun deleteJob(jobName: String): Unit {
+        try {
+            batchApi.deleteNamespacedJob(
+                jobName,
+                ORCHESTRATION_NAMESPACE
+            ).execute()
+            logger.debug("Job $jobName successfully deleted.")
+        } catch (e: Exception) {
+            logger.debug("Job $jobName not exists.")
+        }
     }
 
     @EventListener(ApplicationReadyEvent::class)

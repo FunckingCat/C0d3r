@@ -8,7 +8,6 @@ import ru.davidzh.coder.backend.controller.dto.CreateJobRequest
 import ru.davidzh.coder.backend.converter.JobConverter
 import ru.davidzh.coder.backend.converter.JobEntityConverter
 import ru.davidzh.coder.backend.converter.JobParametersConverter
-import ru.davidzh.coder.backend.dao.repository.ExecutionResultRepository
 import ru.davidzh.coder.backend.dao.repository.JobRepository
 import ru.davidzh.coder.backend.model.ExecutionType.*
 import ru.davidzh.coder.backend.model.Job
@@ -21,8 +20,7 @@ class JobService(
     private val kubernetesService: KubernetesService,
     private val jobEntityConverter: JobEntityConverter,
     private val jobRepository: JobRepository,
-    private val jobConverter: JobConverter,
-    private val executionResultRepository: ExecutionResultRepository
+    private val jobConverter: JobConverter
 ) {
 
     /**
@@ -32,8 +30,11 @@ class JobService(
 
         if (!validateJobName(createJobRequest.name)) throw ValidationException("Job name is invalid")
 
-        val jobParameters = jobParametersConverter.convert(createJobRequest, getUserAuthentication().userId)
-        val jobEntity = jobEntityConverter.convert(jobParameters).copy(status = JobStatus.RUNNING) // TODO Доделать на вебхуке, статус должен быть не RUNNING а PENDING
+        val jobParameters = jobParametersConverter
+            .convert(createJobRequest, getUserAuthentication().userId)
+            .copy(ordinal = 1)
+        val jobEntity = jobEntityConverter.convert(jobParameters)
+            .copy(status = if (jobParameters.executionType == WEBHOOK) JobStatus.PENDING else JobStatus.RUNNING)
 
         log.debug("JobService::createJob jobParameters {} jobEntity {}", jobParameters, jobEntity)
 
@@ -42,10 +43,10 @@ class JobService(
         when (jobParameters.executionType) {
             ON_DEMAND -> kubernetesService.startJob(jobParameters)
             SCHEDULED -> kubernetesService.startCronJob(jobParameters)
-            WEBHOOK -> TODO()
+            WEBHOOK -> Unit
         }
 
-        return jobConverter.convert(jobRepository.findByIdOrNull(entity.id!!)!!,)
+        return jobConverter.convert(jobRepository.findByIdOrNull(entity.id!!)!!)
     }
 
     fun validateJobName(input: String): Boolean {
