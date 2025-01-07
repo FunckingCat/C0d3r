@@ -8,7 +8,6 @@ import ru.davidzh.coder.backend.controller.dto.CreateJobRequest
 import ru.davidzh.coder.backend.converter.JobConverter
 import ru.davidzh.coder.backend.converter.JobEntityConverter
 import ru.davidzh.coder.backend.converter.JobParametersConverter
-import ru.davidzh.coder.backend.dao.repository.ExecutionResultRepository
 import ru.davidzh.coder.backend.dao.repository.JobRepository
 import ru.davidzh.coder.backend.model.ExecutionStatus
 import ru.davidzh.coder.backend.model.ExecutionType.*
@@ -23,8 +22,7 @@ class JobService(
     private val kubernetesService: KubernetesService,
     private val jobEntityConverter: JobEntityConverter,
     private val jobRepository: JobRepository,
-    private val jobConverter: JobConverter,
-    private val executionResultRepository: ExecutionResultRepository
+    private val jobConverter: JobConverter
 ) {
 
     /**
@@ -106,6 +104,27 @@ class JobService(
     }
 
     /**
+     * Deletes a job by its ID.
+     *
+     * This method removes the specified job and its associated metadata from the system.
+     * Use with caution, as this action is irreversible.
+     *
+     * @param id The unique identifier of the job to delete.
+     */
+    fun deleteJob(id: Long) {
+
+        val job = jobRepository.findByIdOrNull(id)?: throw ValidationException("Job with id $id not found")
+
+        if (job.userId != getUserAuthentication().userId) throw ValidationException("Job with id $id is not allowed")
+
+        try {
+            cancelJob(id)
+        } catch (_: Exception) { }
+
+        jobRepository.save(job.copy(deleted = true))
+    }
+
+    /**
      * Reruns a job by its ID.
      *
      * This method creates a new execution instance of the specified job using the same
@@ -115,21 +134,39 @@ class JobService(
      * @param id The unique identifier of the job to rerun.
      */
     fun rerunJob(id: Long) {
-        // Implementation here
+        val job = (jobRepository.findByIdOrNull(id) ?: throw IllegalStateException("Job with ID $id not found"))
+            .apply { ordinal = ordinal?.plus(1) }
+
+        if (job.userId != getUserAuthentication().userId) throw IllegalStateException("Access denied")
+
+        if (job.status == JobStatus.RUNNING) throw IllegalStateException("Job with ID $id is already running")
+
+        if (job.deleted == true) throw ValidationException("Job with id $id is deleted")
+
+        val parameters = jobParametersConverter.convert(job)
+
+        if (parameters.executionType == SCHEDULED) {
+            kubernetesService.startCronJob(parameters)
+        } else {
+            kubernetesService.startJob(parameters)
+        }
+
+        jobRepository.save(job.copy(status = JobStatus.RUNNING))
     }
 
-    /**
-     * Deletes a job by its ID.
-     *
-     * This method removes the specified job and its associated metadata from the system.
-     * Use with caution, as this action is irreversible.
-     *
-     * @param id The unique identifier of the job to delete.
-     */
-    fun deleteJob(id: Long) {
-        // Implementation here
+    fun startWebHookJob(jobId: Long) {
+        val job = (jobRepository.findByIdOrNull(jobId) ?: throw IllegalStateException("Job with ID $jobId not found"))
+            .apply { ordinal = ordinal?.plus(1) }
+
+        if (job.userId != getUserAuthentication().userId) throw IllegalStateException("Access denied")
+
+        if (job.status != JobStatus.PENDING) throw IllegalStateException("Job with ID $jobId is not pending")
+
+        val parameters = jobParametersConverter.convert(job)
+
+        kubernetesService.startJob(parameters)
+
+        jobRepository.save(job.copy(status = JobStatus.RUNNING))
     }
-
-
 
 }

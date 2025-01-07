@@ -5,13 +5,11 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import ru.davidzh.coder.backend.converter.JobConverter
-import ru.davidzh.coder.backend.converter.JobParametersConverter
 import ru.davidzh.coder.backend.dao.entity.ExecutionResultEntity
 import ru.davidzh.coder.backend.dao.repository.ExecutionResultRepository
 import ru.davidzh.coder.backend.dao.repository.JobRepository
 import ru.davidzh.coder.backend.model.*
 import ru.davidzh.coder.backend.util.JobNameUtil.containerName
-import ru.davidzh.coder.backend.util.extension.getUserAuthentication
 import java.time.LocalDateTime
 
 @Service
@@ -19,8 +17,7 @@ class ExecutionService(
     private val kubernetesService: KubernetesService,
     private val jobRepository: JobRepository,
     private val executionResultRepository: ExecutionResultRepository,
-    private val jobConverter: JobConverter,
-    private val jobParametersConverter: JobParametersConverter
+    private val jobConverter: JobConverter
 ) {
 
 //    @EventListener(ApplicationReadyEvent::class)
@@ -93,21 +90,6 @@ class ExecutionService(
             executionResultRepository.save(updatedExecutionResult)
         }
 
-    }
-
-    fun startWebHookJob(jobId: Long) {
-        val job = (jobRepository.findByIdOrNull(jobId) ?: throw IllegalStateException("Job with ID $jobId not found"))
-            .apply { ordinal = ordinal?.plus(1) }
-
-        if (job.userId != getUserAuthentication().userId) throw IllegalStateException("Access denied")
-
-        if (job.status != JobStatus.PENDING) throw IllegalStateException("Job with ID $jobId is not pending")
-
-        val parameters = jobParametersConverter.convert(job)
-
-        kubernetesService.startJob(parameters)
-
-        jobRepository.save(job.copy(status = JobStatus.RUNNING))
     }
 
     companion object {

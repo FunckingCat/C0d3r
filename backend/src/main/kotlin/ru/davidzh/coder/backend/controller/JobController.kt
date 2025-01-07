@@ -37,4 +37,8 @@ class JobController(
     @PostMapping("/delete/{id}")
     fun deleteJob(@PathVariable id: Long) = jobService.deleteJob(id).asResponseEntity()
 
+    @LogExecution
+    @PostMapping("/webhook/run/{id}")
+    fun startWebhook(@PathVariable id: Long) = jobService.startWebHookJob(id).asResponseEntity()
+
 }
