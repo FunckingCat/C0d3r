@@ -139,6 +139,26 @@ class KubernetesService(
         }
     }
 
+    /**
+     * Terminates a Kubernetes cron job by its name.
+     *
+     * This method deletes the specified job from the Kubernetes cluster.
+     * It ensures that the job and its associated pods are removed.
+     *
+     * @param jobName The name of the job to terminate.
+     * @throws ApiException If there is an error communicating with the Kubernetes API.
+     */
+    fun terminateCronJob(jobName: String) {
+        try {
+            batchApi.deleteNamespacedCronJob(jobName, ORCHESTRATION_NAMESPACE)
+                .execute()
+            logger.debug("Cron Job '$jobName' successfully terminated in namespace.")
+        } catch (e: ApiException) {
+            logger.debug("Error while terminating cron job '$jobName': ${e.responseBody}")
+            throw e
+        }
+    }
+
 
     @EventListener(ApplicationReadyEvent::class)
     fun listAllPodsOnStartUp() {

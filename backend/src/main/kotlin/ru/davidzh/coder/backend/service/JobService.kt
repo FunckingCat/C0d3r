@@ -90,7 +90,11 @@ class JobService(
 
         val jobName = containerName(job.userId, job.name, job.ordinal!!)
 
-        kubernetesService.terminateJob(jobName)
+        if (job.executionType == SCHEDULED) {
+            kubernetesService.terminateCronJob(jobName)
+        } else {
+            kubernetesService.terminateJob(jobName)
+        }
 
         jobRepository.save(
             job.copy(
