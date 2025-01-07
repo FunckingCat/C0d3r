@@ -78,9 +78,15 @@ class KubernetesService(
         )
     }
 
-    fun getPodLogs(podName: String) = coreApi
-        .readNamespacedPodLog(podName, ORCHESTRATION_NAMESPACE)
-        .execute().split("\n")
+    fun getPodLogs(podName: String): List<String> {
+        try {
+            val logs = coreApi.readNamespacedPodLog(podName, ORCHESTRATION_NAMESPACE).execute()?: ""
+            return  logs.split("\n")
+        } catch (e: Exception) {
+            logger.error("Filed to get logs from pod {} {}", podName, e.message)
+            return emptyList()
+        }
+    }
 
     fun mapK8sJobStatusToExecutionStatus(k8sJobStatus: V1JobStatus): ExecutionStatus {
         return if (k8sJobStatus.active == 1) {
@@ -112,6 +118,27 @@ class KubernetesService(
             logger.debug("Job $jobName not exists.")
         }
     }
+
+    /**
+     * Terminates a Kubernetes job by its name.
+     *
+     * This method deletes the specified job from the Kubernetes cluster.
+     * It ensures that the job and its associated pods are removed.
+     *
+     * @param jobName The name of the job to terminate.
+     * @throws ApiException If there is an error communicating with the Kubernetes API.
+     */
+    fun terminateJob(jobName: String) {
+        try {
+            batchApi.deleteNamespacedJob(jobName, ORCHESTRATION_NAMESPACE)
+                .execute()
+            logger.debug("Job '$jobName' successfully terminated in namespace.")
+        } catch (e: ApiException) {
+            logger.debug("Error while terminating job '$jobName': ${e.responseBody}")
+            throw e
+        }
+    }
+
 
     @EventListener(ApplicationReadyEvent::class)
     fun listAllPodsOnStartUp() {

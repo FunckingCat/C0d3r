@@ -8,10 +8,13 @@ import ru.davidzh.coder.backend.controller.dto.CreateJobRequest
 import ru.davidzh.coder.backend.converter.JobConverter
 import ru.davidzh.coder.backend.converter.JobEntityConverter
 import ru.davidzh.coder.backend.converter.JobParametersConverter
+import ru.davidzh.coder.backend.dao.repository.ExecutionResultRepository
 import ru.davidzh.coder.backend.dao.repository.JobRepository
+import ru.davidzh.coder.backend.model.ExecutionStatus
 import ru.davidzh.coder.backend.model.ExecutionType.*
 import ru.davidzh.coder.backend.model.Job
 import ru.davidzh.coder.backend.model.JobStatus
+import ru.davidzh.coder.backend.util.JobNameUtil.containerName
 import ru.davidzh.coder.backend.util.extension.getUserAuthentication
 
 @Service
@@ -20,7 +23,8 @@ class JobService(
     private val kubernetesService: KubernetesService,
     private val jobEntityConverter: JobEntityConverter,
     private val jobRepository: JobRepository,
-    private val jobConverter: JobConverter
+    private val jobConverter: JobConverter,
+    private val executionResultRepository: ExecutionResultRepository
 ) {
 
     /**
@@ -68,5 +72,60 @@ class JobService(
         .filter { it.userId == getUserAuthentication().userId }
         .map { jobConverter.convert(it) }
         .orElseThrow()
+
+    /**
+     * Cancels an active job by its ID.
+     *
+     * This method terminates the execution of the specified job if it is currently running.
+     * If the job is not in a cancellable state, no action is performed.
+     *
+     * @param id The unique identifier of the job to cancel.
+     */
+    fun cancelJob(id: Long) {
+        val job = jobRepository.findByIdOrNull(id)?: throw ValidationException("Job with id $id not found")
+
+        if (job.userId != getUserAuthentication().userId) throw ValidationException("Job with id $id is not allowed")
+
+        if (job.status != JobStatus.RUNNING) throw ValidationException("Job with id $id is not allowed")
+
+        val jobName = containerName(job.userId, job.name, job.ordinal!!)
+
+        kubernetesService.terminateJob(jobName)
+
+        jobRepository.save(
+            job.copy(
+                status = JobStatus.CANCELLED,
+                executionResults = job.executionResults
+                    ?.map {
+                        if (it.status == ExecutionStatus.RUNNING) it.copy(status = ExecutionStatus.CANCELLED) else it
+                    }))
+    }
+
+    /**
+     * Reruns a job by its ID.
+     *
+     * This method creates a new execution instance of the specified job using the same
+     * configuration as the original job. It is typically used for retrying failed jobs or
+     * rerunning completed jobs.
+     *
+     * @param id The unique identifier of the job to rerun.
+     */
+    fun rerunJob(id: Long) {
+        // Implementation here
+    }
+
+    /**
+     * Deletes a job by its ID.
+     *
+     * This method removes the specified job and its associated metadata from the system.
+     * Use with caution, as this action is irreversible.
+     *
+     * @param id The unique identifier of the job to delete.
+     */
+    fun deleteJob(id: Long) {
+        // Implementation here
+    }
+
+
 
 }

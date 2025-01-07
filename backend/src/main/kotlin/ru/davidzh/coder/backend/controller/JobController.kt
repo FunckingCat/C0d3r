@@ -25,4 +25,16 @@ class JobController(
     @GetMapping("/{id}")
     fun getJob(@PathVariable id: Long) = jobService.getJob(id).asResponseEntity()
 
+    @LogExecution
+    @PostMapping("/cancel/{id}")
+    fun cancelJob(@PathVariable id: Long) = jobService.cancelJob(id).asResponseEntity()
+
+    @LogExecution
+    @PostMapping("/rerun/{id}")
+    fun rerunJob(@PathVariable id: Long) = jobService.rerunJob(id).asResponseEntity()
+
+    @LogExecution
+    @PostMapping("/delete/{id}")
+    fun deleteJob(@PathVariable id: Long) = jobService.deleteJob(id).asResponseEntity()
+
 }

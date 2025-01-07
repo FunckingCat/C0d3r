@@ -32,6 +32,8 @@ data class JobEntity(
     val status: JobStatus? = null,
     /** Номер текущего запуска */
     var ordinal: Int? = null,
+    /** Признак удаления задачи */
+    var deleted: Boolean? = false,
     /** Список результатов выполнения задачи */
     @MappedCollection(idColumn = "job_id", keyColumn = "id")
     val executionResults: List<ExecutionResultEntity>? = emptyList(),
