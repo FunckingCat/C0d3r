@@ -10,7 +10,11 @@ import ru.davidzh.coder.backend.aop.annotation.LogExecution
 import ru.davidzh.coder.backend.util.extension.asResponseEntity
 import ru.davidzh.coder.backend.util.extension.getUserAuthentication
 
-
+/**
+ * REST controller for user-related operations.
+ *
+ * Provides endpoints for managing user interactions within the application.
+ */
 @RestController
 @RequestMapping("/api/v1/users")
 class UsersController {

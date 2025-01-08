@@ -14,6 +14,15 @@ import java.util.stream.Stream
 const val RESOURCE_ID = "account"
 const val PRINCIPAL_ATTR = "preferred_username"
 
+/**
+ * A custom converter for transforming a Keycloak JWT token into a Spring Security `JwtAuthenticationToken`.
+ *
+ * This class is responsible for converting the Keycloak JWT token into a `JwtAuthenticationToken`
+ * that Spring Security can use for authentication and authorization purposes. It delegates the conversion
+ * of authorities (roles) from the JWT token to a `JwtGrantedAuthoritiesConverter`.
+ *
+ * @param jwtGrantedAuthoritiesConverter A converter for extracting authorities from the JWT token.
+ */
 class KeycloakJwtTokenConverter(
     private val jwtGrantedAuthoritiesConverter: JwtGrantedAuthoritiesConverter,
 ) : Converter<Jwt, JwtAuthenticationToken> {

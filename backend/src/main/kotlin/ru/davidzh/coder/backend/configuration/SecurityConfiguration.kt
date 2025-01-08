@@ -9,7 +9,15 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 import org.springframework.security.web.SecurityFilterChain
 import ru.davidzh.coder.backend.configuration.converter.KeycloakJwtTokenConverter
 
-
+/**
+ * Security configuration class for setting up HTTP security and JWT authentication.
+ *
+ * This configuration class is responsible for setting up security-related features in the application,
+ * including authorization rules, JWT authentication, and resource server settings.
+ * It allows public access to certain endpoints (e.g., swagger UI, public API) while securing others,
+ * ensuring that only authenticated users can access sensitive resources.
+ * Additionally, CSRF protection is disabled, and JWT authentication is used for OAuth2 resource server.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -17,6 +25,19 @@ class SecurityConfig {
     private var keycloakJwtTokenConverter: KeycloakJwtTokenConverter? =
         KeycloakJwtTokenConverter(JwtGrantedAuthoritiesConverter())
 
+    /**
+     * Configures the HTTP security for the application.
+     *
+     * This method sets up HTTP security for the web application, including:
+     * - Permitting access to public endpoints (e.g., `/public`, Swagger-related paths).
+     * - Securing other endpoints to require authentication.
+     * - Disabling CSRF protection as it is not needed for stateless APIs.
+     * - Configuring JWT-based OAuth2 resource server authentication using Keycloak.
+     *
+     * @param http The HttpSecurity instance used to configure the security.
+     * @return The configured SecurityFilterChain.
+     * @throws Exception If any errors occur while configuring the security filter chain.
+     */
     @Bean
     @Throws(Exception::class)
     fun myServerFilterChain(http: HttpSecurity): SecurityFilterChain {

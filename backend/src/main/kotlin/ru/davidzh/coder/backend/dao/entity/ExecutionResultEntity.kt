@@ -5,27 +5,61 @@ import org.springframework.data.relational.core.mapping.Table
 import ru.davidzh.coder.backend.model.ExecutionStatus
 import java.time.LocalDateTime
 
+/**
+ * Entity class representing the execution result of a job.
+ *
+ * This class stores the details of a job execution result, including the job ID, execution start and finish times,
+ * status, logs, exit code, error messages, and other related information.
+ */
 @Table("execution_results")
 data class ExecutionResultEntity(
-    /** Идентификатор результата выполнения */
+    /**
+     * Identifier of the execution result.
+     */
     @Id val id: Long? = null,
-    /** Идентификатор задачи к которой относится результат */
+
+    /**
+     * Identifier of the job associated with this execution result.
+     */
     val jobId: Long,
-    /** Время начала выполнения задачи */
+
+    /**
+     * Start time of the job execution.
+     */
     val startedAt: LocalDateTime,
-    /** Время завершения выполнения задачи */
+
+    /**
+     * Finish time of the job execution. Can be null if the job is still running.
+     */
     val finishedAt: LocalDateTime? = null,
-    /** Статус выполнения задачи */
+
+    /**
+     * Status of the job execution, as defined by the [ExecutionStatus] enum.
+     */
     val status: ExecutionStatus,
-    /** Логи выполнения задачи */
+
+    /**
+     * Logs generated during the job execution, if any.
+     */
     val logs: List<String>? = null,
-    /** Код завершения процесса (например, 0 для успешного завершения) */
+
+    /**
+     * Exit code of the process, typically 0 for a successful completion.
+     */
     val exitCode: Int? = 0,
-    /** Ошибки, возникшие во время выполнения (если есть) */
+
+    /**
+     * Error message encountered during job execution, if any.
+     */
     val errorMessage: String? = null,
-    /** Дата и время записи результата в базу данных */
+
+    /**
+     * Date and time when the execution result was recorded in the database.
+     */
     val recordedAt: LocalDateTime,
-    /** Дата и время записи результата в базу данных */
+
+    /**
+     * Original name of the job that generated this execution result.
+     */
     val originalJobName: String? = null
-) {
-}
+)

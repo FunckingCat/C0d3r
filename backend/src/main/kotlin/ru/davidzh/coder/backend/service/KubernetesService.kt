@@ -19,8 +19,7 @@ import ru.davidzh.coder.backend.model.JobParameters
 import java.time.LocalDateTime
 
 @Service
-class KubernetesService(
-) {
+class KubernetesService {
 
     private val apiClient: ApiClient = Config.defaultClient()
     private val coreApi: CoreV1Api = CoreV1Api(apiClient)

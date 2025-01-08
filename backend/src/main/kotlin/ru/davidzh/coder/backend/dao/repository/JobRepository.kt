@@ -6,6 +6,12 @@ import ru.davidzh.coder.backend.dao.entity.JobEntity
 import ru.davidzh.coder.backend.model.JobStatus
 import java.util.*
 
+/**
+ * Repository interface for performing CRUD operations on the [JobEntity] class.
+ *
+ * This interface provides methods for accessing and manipulating job data from the database.
+ * It extends [CrudRepository], offering basic CRUD functionalities for the [JobEntity].
+ */
 @Repository
 interface JobRepository: CrudRepository<JobEntity, Long> {
 

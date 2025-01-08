@@ -5,6 +5,12 @@ import org.springframework.stereotype.Repository
 import ru.davidzh.coder.backend.dao.entity.ExecutionResultEntity
 import ru.davidzh.coder.backend.model.ExecutionStatus
 
+/**
+ * Repository interface for performing CRUD operations on the [ExecutionResultEntity] class.
+ *
+ * This interface provides methods for accessing and manipulating execution result data from the database.
+ * It extends [CrudRepository], providing basic CRUD functionalities for the [ExecutionResultEntity].
+ */
 @Repository
 interface ExecutionResultRepository : CrudRepository<ExecutionResultEntity, Long> {
 
