@@ -1,12 +1,26 @@
-import { ref, computed } from 'vue'
-import { defineStore } from 'pinia'
+import { ref, computed } from "vue";
+import { defineStore } from "pinia";
 
-export const useCounterStore = defineStore('counter', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
-  }
+interface StateType {
+	authentication: AuthenticationType;
+}
 
-  return { count, doubleCount, increment }
-})
+interface AuthenticationType {
+	authorized: boolean;
+}
+
+export const useGlobalStore = defineStore("global", () => {
+
+	const state = ref<StateType>({
+		authentication: { authorized: false },
+	});
+
+	function setAuthorized(authorized: boolean) {
+		state.value.authentication.authorized = authorized;
+	}
+
+	return {
+		state,
+		setAuthorized,
+	};
+});
