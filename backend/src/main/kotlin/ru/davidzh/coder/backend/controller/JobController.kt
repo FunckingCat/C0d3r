@@ -13,6 +13,7 @@ import ru.davidzh.coder.backend.util.extension.asResponseEntity
  *
  * @param jobService the service responsible for handling job-related logic.
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/job")
 class JobController(
