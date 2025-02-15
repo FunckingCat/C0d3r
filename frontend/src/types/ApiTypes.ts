@@ -20,7 +20,17 @@ export type RegisterResponse = {
 	expiresIn: number;
 };
 
-export type Job = {
+export interface User {
+	id: string,
+	username: string,
+	roles: Role[]
+}
+
+export enum Role {
+	USER, ADMIN
+}
+
+export interface Job {
 	id?: number | null;
 	userId: string;
 	name: string;

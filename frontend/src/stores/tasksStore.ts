@@ -1,7 +1,6 @@
-// src/stores/tasksStore.js
 import { defineStore } from "pinia";
-import { reactive, computed } from "vue";
-import JobsService from "@/service/JobsService";
+import { ref, computed } from "vue";
+import JobsService from "@/api/JobsApi";
 import type { Job } from "@/types/ApiTypes";
 
 interface ITaskStore {
@@ -9,31 +8,46 @@ interface ITaskStore {
 }
 
 export const useTasksStore = defineStore("tasks", () => {
-	const state = reactive<ITaskStore>({
+
+	const getDefaultState = () => ({
 		tasks: [],
 	});
 
+	const state = ref<ITaskStore>(getDefaultState());
+
 	async function fetchTasks() {
 		try {
-			state.tasks = await JobsService.getAllJobs();
+			state.value.tasks = await JobsService.getAllJobs();
 		} catch (error) {
 			console.error("Failed to fetch tasks:", error);
 		}
 	}
 
-	const getSummary = computed(() => {
-		const total = state.tasks.length;
-		const inProgress = state.tasks.filter(
+	const tasks = computed(() => state.value.tasks)
+
+	const summary = computed(() => {
+		const total = state.value.tasks.length;
+		const inProgress = state.value.tasks.filter(
 			(task) => task.status === "RUNNING"
 		).length;
-		const completed = state.tasks.filter(
+		const completed = state.value.tasks.filter(
 			(task) => task.status === "COMPLETED"
 		).length;
-		const failed = state.tasks.filter(
+		const failed = state.value.tasks.filter(
 			(task) => task.status === "FAILED"
 		).length;
 		return { total, inProgress, completed, failed };
 	});
 
-	return { tasks: state.tasks, fetchTasks, getSummary };
+	function reset() {
+		state.value = getDefaultState()
+	}
+
+	return { 
+		state, 
+		tasks,
+		summary,
+		fetchTasks, 
+		reset,
+	};
 });

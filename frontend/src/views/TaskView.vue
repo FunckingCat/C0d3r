@@ -25,10 +25,6 @@
   
   const taskId = computed(() => Number(route.params.id));
   
-  onMounted(() => {
-    tasksStore.fetchTasks();
-  });
-  
   const task = computed(() => tasksStore.tasks.find((t) => t.id === taskId.value));
   </script>
   

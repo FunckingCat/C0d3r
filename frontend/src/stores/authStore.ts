@@ -1,26 +1,38 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
+import type { User } from "@/types/ApiTypes";
 
 interface StateType {
-	authentication: AuthenticationType;
+	authorized: boolean
+	user?: User
 }
 
-interface AuthenticationType {
-	authorized: boolean;
-}
+export const useAuthStore = defineStore("auth", () => {
 
-export const useGlobalStore = defineStore("global", () => {
+	const getDefaultState = () => ({
+		authorized: false
+	  });
 
-	const state = ref<StateType>({
-		authentication: { authorized: false },
-	});
+	const state = ref<StateType>(getDefaultState());
+
+	function reset() {
+		state.value = getDefaultState()
+	}
 
 	function setAuthorized(authorized: boolean) {
-		state.value.authentication.authorized = authorized;
+		state.value.authorized = authorized;
+	}
+
+	function setUser(user: User) {
+		state.value.user = user;
 	}
 
 	return {
 		state,
+		authorized: computed(() => state.value.authorized),
+		user: computed(() => state.value.user),
 		setAuthorized,
+		setUser,
+		reset
 	};
 });

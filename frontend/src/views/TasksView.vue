@@ -6,7 +6,7 @@
         <TasksSummary :summary="summary" class="mb-6" />
 
         <!-- Task List -->
-        <TasksList :tasks="tasks" />
+        <TasksList />
     </div>
 </template>
 
@@ -18,10 +18,5 @@ import TasksList from '@/components/tasksdash/TasksList.vue';
 
 const tasksStore = useTasksStore();
 
-onMounted(() => {
-    tasksStore.fetchTasks();
-});
-
-const tasks = computed(() => tasksStore.tasks);
 const summary = computed(() => tasksStore.getSummary);
 </script>

@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.davidzh.coder.backend.aop.annotation.LogExecution
+import ru.davidzh.coder.backend.service.UserService
 import ru.davidzh.coder.backend.util.extension.asResponseEntity
-import ru.davidzh.coder.backend.util.extension.getUserAuthentication
 
 /**
  * REST controller for user-related operations.
@@ -19,15 +19,13 @@ import ru.davidzh.coder.backend.util.extension.getUserAuthentication
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/users")
-class UsersController {
+class UsersController(
+    private val userService: UserService
+) {
 
     @LogExecution
-    @GetMapping("/hello")
-    fun index(): ResponseEntity<Any> {
-        val user = getUserAuthentication()
-        log.info("$user")
-        return "Hello! $user".asResponseEntity()
-    }
+    @GetMapping("/user")
+    fun index(): ResponseEntity<Any> = userService.getCurrentUser().asResponseEntity()
 
     companion object {
         val log: Logger = LoggerFactory.getLogger(UsersController::class.java)

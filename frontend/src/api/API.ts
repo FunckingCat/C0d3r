@@ -1,4 +1,5 @@
 import axios from 'axios';
+import StorageService from "@/util/StorageService.ts";
 
 const apiClient = axios.create({
   baseURL: 'http://localhost:8090',
@@ -10,7 +11,7 @@ const apiClient = axios.create({
 
 // Request interceptor for attaching auth token
 apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('access_token');
+  const token = StorageService.getAccessToken();
   if (token && !config.url?.includes("public")) {
     config.headers.Authorization = `Bearer ${token}`;
   }

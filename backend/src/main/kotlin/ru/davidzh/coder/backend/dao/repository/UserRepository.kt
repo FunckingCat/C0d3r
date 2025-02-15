@@ -12,7 +12,7 @@ import java.util.*
  * It extends [CrudRepository], offering basic CRUD functionalities for the [UserEntity].
  */
 @Repository
-interface UserRepository: CrudRepository<UserEntity, UUID> {
+interface UserRepository: CrudRepository<UserEntity, Long> {
 
     /**
      * Finds a user by their username.
@@ -22,4 +22,6 @@ interface UserRepository: CrudRepository<UserEntity, UUID> {
      *         or an empty [Optional] if no user is found.
      */
     fun findByUsername(userName: String): Optional<UserEntity>
+
+    fun findByUserId(userId: UUID): Optional<UserEntity>
 }

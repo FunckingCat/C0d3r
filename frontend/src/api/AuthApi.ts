@@ -1,6 +1,7 @@
 import apiClient from "./API";
 import type { LoginRequest, LoginResponse } from "../types/ApiTypes";
 import StorageService from "@/util/StorageService";
+import { useAuthStore } from "@/stores/authStore.ts";
 
 const AuthService = {
 	login: async (credentials: LoginRequest): Promise<LoginResponse> => {
@@ -12,6 +13,7 @@ const AuthService = {
 			response.data.accessToken,
 			response.data.refreshToken
 		);
+		useAuthStore().setAuthorized(true)
 		return response.data;
 	},
 
@@ -24,7 +26,7 @@ const AuthService = {
 			response.data.accessToken,
 			response.data.refreshToken
 		);
-
+		useAuthStore().setAuthorized(true)
 		return response.data;
 	},
 
