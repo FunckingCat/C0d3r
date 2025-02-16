@@ -1,10 +1,11 @@
 <template>
-	<header class="bg-gray-900 text-white shadow-md">
+	<header class="border-b-1">
 		<div class="container mx-auto flex items-center justify-between py-4 px-6">
 			<!-- Left: Logo & Navigation Links -->
 			<nav class="flex items-center space-x-6">
-				<RouterLink to="/" class="text-xl font-bold text-blue-400 hover:text-blue-300">
-					Lyambda
+				<RouterLink to="/" class="flex items-center text-xl font-bold hover:text-blue-300">
+					<img src="@/assets/LyambdaLogo.svg" alt="Lyambda Logo" class="mr-2 w-6 h-6" />
+					Lambda
 				</RouterLink>
 			</nav>
 

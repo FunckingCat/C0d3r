@@ -1,5 +1,5 @@
 <template>
-    <div class="p-6 bg-gray-900 min-h-screen text-white">
+    <div class="p-6min-h-screen ">
       <h1 class="text-3xl font-bold mb-6">Task Details</h1>
   
       <div v-if="task">

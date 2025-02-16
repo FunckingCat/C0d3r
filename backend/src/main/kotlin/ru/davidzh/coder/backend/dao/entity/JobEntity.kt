@@ -34,7 +34,7 @@ data class JobEntity(
     /**
      * Creation time of the job.
      */
-    val createdAt: LocalDateTime?,
+    var createdAt: LocalDateTime?,
 
     /**
      * Docker image URL or local .tar file path used for the job execution.

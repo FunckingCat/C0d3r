@@ -1,6 +1,6 @@
 <template>
-    <div class="p-6 bg-gray-900 min-h-screen text-white">
-        <h1 class="text-3xl font-bold mb-6">Tasks Dashboard</h1>
+    <div class="p-6 min-h-screen">
+        <h1 class="text-3xl font-bold mb-6">Jobs Dashboard</h1>
 
         <!-- Summary -->
         <TasksSummary :summary="summary" class="mb-6" />

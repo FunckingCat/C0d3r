@@ -15,6 +15,7 @@ import ru.davidzh.coder.backend.model.Job
 import ru.davidzh.coder.backend.model.JobStatus
 import ru.davidzh.coder.backend.util.JobNameUtil.containerName
 import ru.davidzh.coder.backend.util.extension.getUserAuthentication
+import java.time.LocalDateTime
 
 @Service
 class JobService(
@@ -37,6 +38,9 @@ class JobService(
             .copy(ordinal = 1)
         val jobEntity = jobEntityConverter.convert(jobParameters)
             .copy(status = if (jobParameters.executionType == WEBHOOK) JobStatus.PENDING else JobStatus.RUNNING)
+            .apply {
+                createdAt = LocalDateTime.now()
+            }
 
         log.debug("JobService::createJob jobParameters {} jobEntity {}", jobParameters, jobEntity)
 

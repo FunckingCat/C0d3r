@@ -12,6 +12,8 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <Header />
-  <RouterView />
+  <div class="bg-base-100 text-white shadow-md">
+    <Header />
+    <RouterView />
+  </div>
 </template>

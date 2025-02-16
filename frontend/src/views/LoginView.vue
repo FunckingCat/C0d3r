@@ -1,5 +1,5 @@
 <template>
-    <div class="flex h-screen bg-gray-900 text-white">
+    <div class="flex h-screen">
         <!-- Left Side: Forms -->
         <div class="w-1/2 flex flex-col justify-center items-center">
             <AuthForm />
