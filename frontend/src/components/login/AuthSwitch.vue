@@ -1,6 +1,6 @@
 <template>
 	<div class="flex justify-center mt-4">
-		<button @click="flip" class="text-blue-500 hover:underline text-sm">
+		<button @click="flip" class="text-primary underline hover:underline text-sm">
 			{{ modelValue ? "Need an account? Sign up" : "Already have an account? Log in" }}
 		</button>
 	</div>

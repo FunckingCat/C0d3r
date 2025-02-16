@@ -1,5 +1,5 @@
 <template>
-    <div class="p-6 min-h-screen">
+    <div class="p-6 w-full max-w-5xl">
         <h1 class="text-3xl font-bold mb-6">Jobs Dashboard</h1>
 
         <!-- Summary -->

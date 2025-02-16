@@ -1,5 +1,5 @@
 <template>
-	<div class="w-full max-w-md bg-gray-800 p-8 rounded-lg shadow-lg">
+	<div class="w-full bg-base-300 p-8 rounded-lg shadow-lg">
 		<h2 class="text-2xl font-bold mb-4 text-center">
 			{{ isLogin ? "Welcome back" : "Create an Account" }}
 		</h2>

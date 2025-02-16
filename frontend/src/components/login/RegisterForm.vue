@@ -10,7 +10,7 @@
 			<input v-model="password" type="password" class="w-full p-2 bg-gray-700 rounded" required />
 		</div>
 
-		<button @click="register" class="w-full bg-green-500 hover:bg-green-600 py-2 rounded">
+		<button @click="register" class="w-full btn btn-soft btn-primary py-2 rounded mt-10">
 			Sign up
 		</button>
 	</form>

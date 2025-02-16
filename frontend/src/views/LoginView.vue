@@ -1,12 +1,12 @@
 <template>
-    <div class="flex h-screen">
+    <div class="flex flex-1 w-full justify-center">
         <!-- Left Side: Forms -->
-        <div class="w-1/2 flex flex-col justify-center items-center">
+        <div class="flex flex-1 max-w-md justify-between items-center">
             <AuthForm />
         </div>
 
         <!-- Right Side: Logo Section -->
-        <div class="w-1/2 flex justify-center items-center">
+        <div class="hidden flex-none justify-center items-center sm:flex ml-10">
             <LogoSection />
         </div>
     </div>

@@ -1,5 +1,5 @@
 <template>
-	<div class="space-y-4">
+	<div class="container space-y-4">
 		<div>
 			<label class="block text-gray-400">Email</label>
 			<input v-model="email" type="email" class="w-full p-2 bg-gray-700 rounded" required />
@@ -11,15 +11,10 @@
 		</div>
 
 		<div class="flex justify-between items-center">
-			<label class="flex items-center text-gray-400">
-				<input v-model="rememberMe" type="checkbox" class="mr-2" />
-				Remember this device
-			</label>
-
-			<a href="#" class="text-blue-400 text-sm hover:underline">Forgot password?</a>
+			<a href="#" class="text-primary text-sm hover:underline">Forgot password?</a>
 		</div>
 
-		<button @click="login" class="w-full bg-blue-500 hover:bg-blue-600 py-2 rounded">
+		<button @click="login" class="w-full btn btn-soft btn-primary">
 			Log in
 		</button>
 	</div>
