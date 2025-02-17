@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
-import JobsService from "@/api/JobsApi";
 import type { Job } from "@/types/ApiTypes";
 
 interface ITaskStore {
@@ -15,12 +14,8 @@ export const useTasksStore = defineStore("tasks", () => {
 
 	const state = ref<ITaskStore>(getDefaultState());
 
-	async function fetchTasks() {
-		try {
-			state.value.tasks = await JobsService.getAllJobs();
-		} catch (error) {
-			console.error("Failed to fetch tasks:", error);
-		}
+	async function setTasks(tasks: Job[]) {
+		state.value.tasks = tasks;
 	}
 
 	const tasks = computed(() => state.value.tasks)
@@ -47,7 +42,7 @@ export const useTasksStore = defineStore("tasks", () => {
 		state, 
 		tasks,
 		summary,
-		fetchTasks, 
+		setTasks, 
 		reset,
 	};
 });

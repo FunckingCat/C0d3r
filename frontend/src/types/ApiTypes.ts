@@ -46,7 +46,7 @@ export interface Job {
 	executionResults?: ExecutionResult[] | null;
 };
 
-export type ExecutionResult = {
+export interface ExecutionResult {
 	id?: number | null;
 	jobId: number;
 	startedAt: string;

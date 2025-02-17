@@ -10,13 +10,33 @@
     </div>
 </template>
 
-<script setup>
-import { onMounted, computed } from 'vue';
+<script setup lang="ts">
+import { onMounted, onUnmounted, computed } from 'vue';
 import { useTasksStore } from '@/stores/tasksStore';
 import TasksSummary from '@/components/tasksdash/TasksSummary.vue';
 import TasksList from '@/components/tasksdash/TasksList.vue';
+import { PollingService } from '@/api/polling/PollingService';
+import jobApi from '@/api/JobsApi';
+import type { Job } from '@/types/ApiTypes';
 
 const tasksStore = useTasksStore();
+const summary = computed(() => tasksStore.summary);
 
-const summary = computed(() => tasksStore.getSummary);
+const pollingService: PollingService<Job[]> = new PollingService<Job[]>({
+    name: 'TasksPullingService',
+    interval: 1000,
+    action: () => jobApi.getAllJobs(),
+    callback: (jobs) => tasksStore.setTasks(jobs)
+})
+
+onMounted(async () => {
+    console.log(typeof pollingService); // Should log 'object'
+    await pollingService.start()
+})
+
+onUnmounted(() => {
+    console.log(typeof pollingService); // Should log 'object'
+    pollingService.stop()
+  })
+
 </script>
