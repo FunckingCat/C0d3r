@@ -6,6 +6,10 @@ const jobApi = {
 		const response = await apiClient.get("/api/v1/job");
 		return response.data;
 	},
+	getJobById: async (jobId: number): Promise<Job> => {
+		const response = await apiClient.get(`/api/v1/job/${jobId}`)
+		return response.data;
+	}
 };
 
 export default jobApi;

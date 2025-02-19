@@ -1,6 +1,6 @@
 <template>
 	<div class="border border-gray-700 rounded-xl p-4">
-		<h2 class="text-xl font-semibold mb-3">Task Info</h2>
+		<h2 class="text-xl font-semibold mb-3">Run parameters</h2>
 		<div class="space-y-2">
 			<div><strong>Name:</strong> {{ task.name }}</div>
 			<div><strong>Docker Image:</strong> {{ task.dockerImage }}</div>

@@ -30,12 +30,10 @@ const pollingService: PollingService<Job[]> = new PollingService<Job[]>({
 })
 
 onMounted(async () => {
-    console.log(typeof pollingService); // Should log 'object'
     await pollingService.start()
 })
 
 onUnmounted(() => {
-    console.log(typeof pollingService); // Should log 'object'
     pollingService.stop()
   })
 
