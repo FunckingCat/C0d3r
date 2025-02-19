@@ -1,24 +1,25 @@
-// @ts-ignore
 import TasksView from '@/views/TasksView.vue'
-// @ts-ignore
 import LoginView from '@/views/LoginView.vue'
-// @ts-ignore
 import TaskView from "@/views/TaskView.vue";
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from "@/stores/authStore.ts";
 import { storeToRefs } from 'pinia';
+import CreateJobView from '@/views/CreateJobView.vue';
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
     {
       path: '/login',
-      name: 'login',
+      name: 'Login',
       component: LoginView,
+      meta: {
+        breadcrumbsEnabled: false
+      }
     },
     {
       path: '/tasks',
-      name: 'tasksDashboard',
+      name: 'Jobs Dashboard',
       component: TasksView,
       meta: {
         requiresAuth: true
@@ -32,9 +33,17 @@ const router = createRouter({
       },
     },
     {
-      path: '/task/:id',
-      name: 'task',
+      path: '/tasks/:id',
+      name: 'Task',
       component: TaskView,
+      meta: {
+        requiresAuth: true
+      },
+    },
+    {
+      path: '/new-job',
+      name: 'New Job',
+      component: CreateJobView,
       meta: {
         requiresAuth: true
       },

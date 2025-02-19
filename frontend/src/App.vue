@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-// @ts-ignore
+import { RouterLink, RouterView, useRoute } from 'vue-router'
 import Header from '@/components/Header.vue';
-import { onBeforeMount } from 'vue';
+import { computed, onBeforeMount } from 'vue';
 import { logInIfTokenPresent } from './scripts/login';
+import Breadcrumbs from './components/Breadcrumbs.vue';
 
 onBeforeMount(async () => {
   await logInIfTokenPresent()

@@ -1,5 +1,6 @@
 <template>
-    <div class="p-6 w-full max-w-5xl">
+    <div class="px-6 w-full max-w-5xl">
+        <Breadcrumbs/>
         <h1 class="text-3xl font-bold mb-6">Jobs Dashboard</h1>
 
         <!-- Summary -->
@@ -18,6 +19,7 @@ import TasksList from '@/components/tasksdash/TasksList.vue';
 import { PollingService } from '@/api/polling/PollingService';
 import jobApi from '@/api/JobsApi';
 import type { Job } from '@/types/ApiTypes';
+import Breadcrumbs from '@/components/Breadcrumbs.vue';
 
 const tasksStore = useTasksStore();
 const summary = computed(() => tasksStore.summary);

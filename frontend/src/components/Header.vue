@@ -12,6 +12,9 @@
 					{{ user?.username || "Problem" }}
 				</div>
 				<LogoutButton />
+				<RouterLink to="/new-job" class="btn btn-primary">
+					New Job
+				</RouterLink>
 			</div>
 		</div>
 	</header>

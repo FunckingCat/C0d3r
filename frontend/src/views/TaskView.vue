@@ -1,5 +1,6 @@
 <template>
-  <div class="p-6 w-full max-w-5xl">
+  <div class="px-6 w-full max-w-5xl">
+    <Breadcrumbs/>
     <h1 class="text-3xl font-bold mb-6">Task Details</h1>
 
     <div v-if="task">
@@ -22,6 +23,7 @@ import { storeToRefs } from 'pinia';
 import { PollingService } from '@/api/polling/PollingService';
 import type { Job } from '@/types/ApiTypes';
 import jobApi from '@/api/JobsApi';
+import Breadcrumbs from '@/components/Breadcrumbs.vue';
 
 const route = useRoute()
 const taskId = Number(route.params.id);

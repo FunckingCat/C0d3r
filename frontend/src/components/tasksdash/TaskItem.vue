@@ -1,6 +1,6 @@
 <template>
     <li class="list-row">
-        <RouterLink :to="`/task/${task.id}`" class="flex items-center space-x-10">
+        <RouterLink :to="`/tasks/${task.id}`" class="flex items-center space-x-10">
             <div class="bg-base-300 size-15 rounded-box flex items-center justify-center ml-10">
                 <img class="size-7 rounded-box" src="@/assets/Check.svg" />
             </div>

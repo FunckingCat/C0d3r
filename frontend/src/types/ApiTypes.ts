@@ -20,6 +20,15 @@ export type RegisterResponse = {
 	expiresIn: number;
 };
 
+export interface CreateJobRequest {
+    name: string;
+    dockerImage: string;
+    command: string[];
+    environmentVariables?: Map<string, string>;
+    executionType: ExecutionType;
+    schedule?: string | null;
+};
+
 export interface User {
 	id: string,
 	username: string,
