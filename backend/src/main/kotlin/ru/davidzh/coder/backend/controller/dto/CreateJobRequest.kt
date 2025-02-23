@@ -1,8 +1,7 @@
 package ru.davidzh.coder.backend.controller.dto
 
-import ru.davidzh.coder.backend.model.ExecutionType
-
 import io.swagger.v3.oas.annotations.media.Schema
+import ru.davidzh.coder.backend.model.ExecutionType
 
 /**
  * Data class representing a request to create a new job.
