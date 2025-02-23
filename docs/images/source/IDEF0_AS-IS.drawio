@@ -1,0 +1,193 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="24.9.0">
+  <diagram id="shHlo1yC8X_wF76_ZDBa" name="Страница 1">
+    <mxGraphModel dx="804" dy="581" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="keKhefzbxvEpWmXAP8D1-8" value="" style="group;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="54" y="200" width="720" height="640" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;imageAspect=0;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry width="720" height="640" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-2" value="Заголовок:&lt;div&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; font-size: 14px; line-height: normal; font-family: &amp;quot;.AppleSystemUIFont&amp;quot;; color: rgb(14, 14, 14); text-align: start;&quot; class=&quot;p1&quot;&gt;Выполнение вычислений на удаленном сервере&lt;/p&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry y="590" width="720" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-4" value="узел:&lt;div&gt;А-0&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry y="590" width="110.77" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-5" value="Номер:&lt;div&gt;1&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="609.23" y="590" width="110.77" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-7" value="IDEF0 (AS-IS)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-9" value="&lt;span style=&quot;color: rgb(14, 14, 14); font-family: &amp;quot;.AppleSystemUIFont&amp;quot;; font-size: 14px; text-align: start;&quot;&gt;Выполнить вычислений на удаленном сервере&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="200" y="202.5" width="320" height="155" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-10" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.309;exitY=0.981;exitDx=0;exitDy=0;exitPerimeter=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" source="keKhefzbxvEpWmXAP8D1-34" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="116.66666666666674" y="30" as="sourcePoint" />
+            <mxPoint x="200" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-11" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.083;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="60" y="240" as="sourcePoint" />
+            <mxPoint x="200" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-12" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.083;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="60" y="320" as="sourcePoint" />
+            <mxPoint x="200" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-15" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="321" y="160" as="sourcePoint" />
+            <mxPoint x="320.55" y="202.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-16" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=0;exitDx=0;exitDy=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" source="keKhefzbxvEpWmXAP8D1-27" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="401" y="79.5" as="sourcePoint" />
+            <mxPoint x="401" y="202.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-14" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=0;exitDx=0;exitDy=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" source="keKhefzbxvEpWmXAP8D1-25" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="241" y="80" as="sourcePoint" />
+            <mxPoint x="241" y="202.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-19" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.083;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="520" y="320" as="sourcePoint" />
+            <mxPoint x="660" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-20" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.083;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="520" y="240" as="sourcePoint" />
+            <mxPoint x="660" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-21" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="240" y="400" as="sourcePoint" />
+            <mxPoint x="240" y="357.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-22" value="I1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="160" y="210" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-23" value="I2" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="160" y="250" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-24" value="I3" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="160" y="290" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-25" value="C1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="241" y="160" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-26" value="C2" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="321" y="160" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-27" value="C3" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="401" y="160" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-28" value="O1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="520" y="210" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-29" value="O2" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="520" y="290" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-31" value="M1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="240" y="357.5" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-32" value="&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; line-height: normal; color: rgb(14, 14, 14);&quot;&gt;&lt;font style=&quot;font-size: 9px;&quot; face=&quot;Helvetica&quot;&gt;Запрос на вычисления или развертывание контейнера&lt;/font&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="10" y="200" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-33" value="&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; line-height: normal;&quot;&gt;&lt;font color=&quot;#0e0e0e&quot; style=&quot;font-size: 9px; line-height: 100%;&quot;&gt;Ручные инструкции или предварительная настройка инфраструктуры&lt;/font&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="10" y="282" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-34" value="&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; line-height: normal;&quot;&gt;&lt;font color=&quot;#0e0e0e&quot; style=&quot;font-size: 9px;&quot;&gt;Контактная информация клиента&amp;nbsp;&lt;/font&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="10" y="240" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-36" value="&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; line-height: normal;&quot;&gt;&lt;font size=&quot;1&quot; color=&quot;#0e0e0e&quot;&gt;Ручное управление вычислительными ресурсами&lt;/font&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="201" y="70" width="70" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-37" value="&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; line-height: normal;&quot;&gt;&lt;font size=&quot;1&quot; color=&quot;#0e0e0e&quot;&gt;Местные серверы или инфраструктура&lt;/font&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="286" y="80" width="70" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-38" value="&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; line-height: normal;&quot;&gt;&lt;font size=&quot;1&quot; color=&quot;#0e0e0e&quot;&gt;Ограничения по пропускной способности сети&lt;/font&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="371" y="70" width="70" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-39" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=0;exitDx=0;exitDy=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" source="keKhefzbxvEpWmXAP8D1-40" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="79.5" as="sourcePoint" />
+            <mxPoint x="480" y="202.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-40" value="C4" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="480" y="160" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-41" value="&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; line-height: normal;&quot;&gt;&lt;font size=&quot;1&quot; color=&quot;#0e0e0e&quot;&gt;Политики безопасности и соответствия стандартам&lt;/font&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="450" y="70" width="70" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-42" value="&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; line-height: normal;&quot;&gt;&lt;font size=&quot;1&quot; color=&quot;#0e0e0e&quot;&gt;Системные администраторы, отвечающие за настройку серверов&lt;/font&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="205" y="400" width="70" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-43" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="321" y="400" as="sourcePoint" />
+            <mxPoint x="321" y="357.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-44" value="M2" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="321" y="357.5" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-45" value="&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; line-height: normal;&quot;&gt;&lt;font size=&quot;1&quot; color=&quot;#0e0e0e&quot;&gt;Техническая команда для настройки сетевых решений и инфраструктуры&lt;/font&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="286" y="400" width="70" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-46" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="396" y="400" as="sourcePoint" />
+            <mxPoint x="396" y="357.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-47" value="M3" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="396" y="357.5" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-48" value="&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; line-height: normal;&quot;&gt;&lt;font size=&quot;1&quot; color=&quot;#0e0e0e&quot;&gt;&amp;nbsp;Клиенты&lt;/font&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="361" y="400" width="70" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-49" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="476" y="400" as="sourcePoint" />
+            <mxPoint x="476" y="357.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-50" value="M4" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="476" y="357.5" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-51" value="&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; line-height: normal;&quot;&gt;&lt;font size=&quot;1&quot; color=&quot;#0e0e0e&quot;&gt;Инструменты для мониторинга и управления серверами вручную&lt;/font&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="441" y="400" width="70" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-52" value="&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; line-height: normal;&quot;&gt;&lt;font size=&quot;1&quot; color=&quot;#0e0e0e&quot;&gt;Выполненные задачи&lt;/font&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="550" y="202.5" width="110" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-54" value="&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; line-height: normal;&quot;&gt;&lt;font size=&quot;1&quot; color=&quot;#0e0e0e&quot;&gt;Логи выполнения&lt;/font&gt;&lt;/p&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="560" y="280" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-55" value="ТОЧКА ЗРЕНИЯ: Клиент" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="26" y="540" width="144.61" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="keKhefzbxvEpWmXAP8D1-56" value="ЦЕЛЬ:&amp;nbsp;Выявление проблемных областей бизнес-процесса выполнения задач на удаленных серверах&amp;nbsp;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="keKhefzbxvEpWmXAP8D1-8" vertex="1">
+          <mxGeometry x="26" y="510" width="664" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
