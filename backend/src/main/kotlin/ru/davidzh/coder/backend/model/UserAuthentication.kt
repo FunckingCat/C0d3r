@@ -14,7 +14,7 @@ import java.util.*
  */
 data class UserAuthentication(
     val userId: UUID,
-    val roles: Set<Role>,
+    val roles: Set<Role>
 ) {
     companion object {
         fun fromJwt(jwt: Jwt): UserAuthentication = UserAuthentication(
