@@ -101,6 +101,16 @@ class UserService(
         return keycloakService.describeGroup(groupId)
     }
 
+    fun checkAccess(groupId: UUID?, permission: Permission) {
+
+        if (groupId == null) return
+
+        val user = getCurrentUser()
+        val group = user.groups.firstOrNull { it.id == groupId }
+        checkNotNull(group) { "User is not member of group" }
+        check(group.permissions.contains(permission)) { "User is not allowed to perform this operation" }
+    }
+
     private fun checkUserIsAdmin(groupId: UUID) {
         val user = getCurrentUser()
         if (!user.groups.first { it.id == groupId }.permissions.contains(Permission.ADMIN)) {

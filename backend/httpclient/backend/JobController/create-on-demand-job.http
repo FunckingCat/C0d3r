@@ -5,7 +5,8 @@ Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
 {
-  "name": "testjob-{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}",
+  "name": "job-{{$random.address.cityName}}-{{$random.ancient.god}}",
+  "groupId": "{{group-id}}",
   "dockerImage": "busybox",
   "command": ["sh", "-c", "echo 'Container is running'"],
   "environmentVariables": {},

@@ -24,6 +24,14 @@ interface JobRepository: CrudRepository<JobEntity, Long> {
     fun findAllByUserId(userId: UUID): List<JobEntity>
 
     /**
+     * Finds all jobs belonging to the given group ID.
+     *
+     * @param groupId the ID of the user whose jobs are to be retrieved.
+     * @return a list of jobs associated with the user.
+     */
+    fun findAllByGroupId(groupId: UUID): List<JobEntity>
+
+    /**
      * Finds all jobs with the specified status.
      *
      * @param status the status of the jobs to find, as defined by the {@link JobStatus} enum.

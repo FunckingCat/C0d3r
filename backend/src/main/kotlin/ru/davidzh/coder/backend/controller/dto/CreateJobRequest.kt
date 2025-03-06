@@ -2,6 +2,7 @@ package ru.davidzh.coder.backend.controller.dto
 
 import io.swagger.v3.oas.annotations.media.Schema
 import ru.davidzh.coder.backend.model.ExecutionType
+import java.util.*
 
 /**
  * Data class representing a request to create a new job.
@@ -15,7 +16,10 @@ import ru.davidzh.coder.backend.model.ExecutionType
 data class CreateJobRequest(
 
     @Schema(description = "Название задачи")
-    val name: String,
+    var name: String,
+
+    @Schema(description = "Идентификатор группы в которой создается задача")
+    val groupId: UUID? = null,
 
     @Schema(description = "Ссылка на Docker-образ или локальный .tar")
     val dockerImage: String,

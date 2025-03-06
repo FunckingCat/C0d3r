@@ -5,6 +5,8 @@ import java.util.*
 data class JobParameters(
     /** Идентификатор пользователя, создавшего задачу */
     val userId: UUID,
+    /** Идентификатор группы, которой принадлежит задача */
+    val groupId: UUID? = null,
     /** Название задачи */
     val name: String,
     /** Ссылка на Docker-образ или локальный .tar */

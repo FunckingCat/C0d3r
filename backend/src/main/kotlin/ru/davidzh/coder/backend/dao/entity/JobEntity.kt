@@ -22,9 +22,14 @@ data class JobEntity(
     @Id val id: Long? = null,
 
     /**
-     * Unique user identifier (UUID) for the user to whom the job belongs.
+     * Unique user identifier (UUID) of the user to whom the job belongs.
      */
     val userId: UUID,
+
+    /**
+     * Unique user identifier (UUID) of the group the job belongs.
+     */
+    val groupId: UUID? = null,
 
     /**
      * Name of the job.

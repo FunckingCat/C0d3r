@@ -13,12 +13,14 @@ import ru.davidzh.coder.backend.model.ExecutionStatus
 import ru.davidzh.coder.backend.model.ExecutionType.*
 import ru.davidzh.coder.backend.model.Job
 import ru.davidzh.coder.backend.model.JobStatus
+import ru.davidzh.coder.backend.model.Permission
 import ru.davidzh.coder.backend.util.JobNameUtil.containerName
 import ru.davidzh.coder.backend.util.extension.getUserAuthentication
 import java.time.LocalDateTime
 
 @Service
 class JobService(
+    private val userService: UserService,
     private val jobParametersConverter: JobParametersConverter,
     private val kubernetesService: KubernetesService,
     private val jobEntityConverter: JobEntityConverter,
@@ -30,6 +32,8 @@ class JobService(
      * Creates new Job
      */
     fun createJob(createJobRequest: CreateJobRequest): Job {
+
+        createJobRequest.name = createJobRequest.name.lowercase()
 
         if (!validateJobName(createJobRequest.name)) throw ValidationException("Job name is invalid")
 
@@ -43,6 +47,8 @@ class JobService(
             }
 
         log.debug("JobService::createJob jobParameters {} jobEntity {}", jobParameters, jobEntity)
+
+        userService.checkAccess(jobParameters.groupId, Permission.RUN)
 
         val entity = jobRepository.save(jobEntity)
 
@@ -64,16 +70,25 @@ class JobService(
     /**
      * Returns list of jobs of user
      */
-    fun getJobs(): List<Job> = jobRepository.findAllByUserId(getUserAuthentication().userId)
-        .map { jobConverter.convert(it) }
+    fun getJobs(): List<Job> {
+        val user = userService.getCurrentUser()
+        val userJobs = jobRepository.findAllByUserId(user.id)
+        val groupJobs = user.groups
+            .filter { it.permissions.contains(Permission.VIEW) }
+            .flatMap { jobRepository.findAllByGroupId(it.id) }
+
+        return (userJobs + groupJobs)
+            .distinct()
+            .map { jobConverter.convert(it) }
+    }
 
     /**
      * Returns job by job id. If user is not owner of the job throws exception.
      */
-    fun getJob(id: Long): Job = jobRepository.findById(id)
-        .filter { it.userId == getUserAuthentication().userId }
-        .map { jobConverter.convert(it) }
-        .orElseThrow()
+    fun getJob(id: Long): Job = jobRepository.findById(id).orElseThrow()
+        .let { jobConverter.convert(it) }
+        .also { checkAccess(it, Permission.VIEW) }
+
 
     /**
      * Cancels an active job by its ID.
@@ -86,7 +101,7 @@ class JobService(
     fun cancelJob(id: Long) {
         val job = jobRepository.findByIdOrNull(id)?: throw ValidationException("Job with id $id not found")
 
-        if (job.userId != getUserAuthentication().userId) throw ValidationException("Job with id $id is not allowed")
+        checkAccess(jobConverter.convert(job), Permission.RUN)
 
         if (job.status != JobStatus.RUNNING) throw ValidationException("Job with id $id is not allowed")
 
@@ -119,7 +134,7 @@ class JobService(
 
         val job = jobRepository.findByIdOrNull(id)?: throw ValidationException("Job with id $id not found")
 
-        if (job.userId != getUserAuthentication().userId) throw ValidationException("Job with id $id is not allowed")
+        checkAccess(jobConverter.convert(job), Permission.EDIT)
 
         try {
             cancelJob(id)
@@ -141,7 +156,7 @@ class JobService(
         val job = (jobRepository.findByIdOrNull(id) ?: throw IllegalStateException("Job with ID $id not found"))
             .apply { ordinal = ordinal?.plus(1) }
 
-        if (job.userId != getUserAuthentication().userId) throw IllegalStateException("Access denied")
+        checkAccess(jobConverter.convert(job), Permission.RUN)
 
         if (job.status == JobStatus.RUNNING) throw IllegalStateException("Job with ID $id is already running")
 
@@ -162,7 +177,7 @@ class JobService(
         val job = (jobRepository.findByIdOrNull(jobId) ?: throw IllegalStateException("Job with ID $jobId not found"))
             .apply { ordinal = ordinal?.plus(1) }
 
-        if (job.userId != getUserAuthentication().userId) throw IllegalStateException("Access denied")
+        checkAccess(jobConverter.convert(job), Permission.RUN)
 
         if (job.status != JobStatus.PENDING) throw IllegalStateException("Job with ID $jobId is not pending")
 
@@ -171,6 +186,14 @@ class JobService(
         kubernetesService.startJob(parameters)
 
         jobRepository.save(job.copy(status = JobStatus.RUNNING))
+    }
+
+    private fun checkAccess(job: Job, permission: Permission) {
+        val userAuthentication = getUserAuthentication()
+        if (userAuthentication.userId != job.userId) {
+            checkNotNull(job.groupId) { "User not allowed for job" }
+            userService.checkAccess(job.groupId, permission)
+        }
     }
 
 }
