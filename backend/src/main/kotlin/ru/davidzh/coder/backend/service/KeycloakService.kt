@@ -18,6 +18,8 @@ import ru.davidzh.coder.backend.configuration.properties.KeycloakConfigurationPr
 import ru.davidzh.coder.backend.controller.dto.RegisterUserRequest
 import ru.davidzh.coder.backend.controller.model.JwtToken
 import ru.davidzh.coder.backend.model.Group
+import ru.davidzh.coder.backend.model.GroupDescription
+import ru.davidzh.coder.backend.model.GroupMember
 import ru.davidzh.coder.backend.model.Permission
 import ru.davidzh.coder.backend.util.extension.getUserAuthentication
 import java.util.*
@@ -156,8 +158,32 @@ class KeycloakService(
         userResource.roles().realmLevel().remove(rolesToRemove)
     }
 
+    fun describeGroup(groupId: UUID): GroupDescription {
+        val group = findGroupById(groupId)
+        val groupMembers = realm.groups().group(group.id).members()
+            .map { realm.users().get(it.id) }
+            .map { userResource ->
+                val userRepresentation = userResource.toRepresentation()
+                val roles = userResource.roles().realmLevel().listEffective()
+                    .map { it.id }
+                    .map { realm.rolesById().getRole(it) }
+                    .toSet()
+                GroupMember(
+                    id = UUID.fromString(userRepresentation.id),
+                    username = userRepresentation.username,
+                    permissions = calcPermissions(groupId.toString(), roles)
+                )
+            }
+            .toSet()
+        return GroupDescription(
+            id = groupId,
+            name = group.attributes[NAME]?.first()?.toString() ?: "",
+            members = groupMembers
+        )
+    }
+
     private fun findGroupById(groupId: UUID): GroupRepresentation {
-        return realm.groups().groups().firstOrNull { it.name == groupId.toString() }
+        return realm.getGroupByPath(groupId.toString())
             ?: throw NoSuchElementException("Group not found with ID: $groupId")
     }
 

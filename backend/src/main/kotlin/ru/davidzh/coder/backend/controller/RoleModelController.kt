@@ -30,6 +30,12 @@ class RoleModelController(
         .asResponseEntity()
 
     @LogExecution
+    @GetMapping("/group/{groupId}")
+    fun createGroup(@PathVariable groupId: UUID): ResponseEntity<Any> = userService
+        .describeGroup(groupId)
+        .asResponseEntity()
+
+    @LogExecution
     @PostMapping("/join-group")
     fun createGroup(@RequestBody joinGroupRequest: JoinGroupRequest): ResponseEntity<Any> = userService
         .joinGroup(joinGroupRequest)

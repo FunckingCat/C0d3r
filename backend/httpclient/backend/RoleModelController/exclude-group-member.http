@@ -1,5 +1,3 @@
-run ../../keycloak/get-user-token-via-token-exchange.http
-
 ###
 # @name Exclude Member
 POST http://localhost:8090/api/v1/role-model/exclude-member-from-group

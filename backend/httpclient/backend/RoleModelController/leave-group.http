@@ -1,5 +1,3 @@
-run ../../keycloak/get-user-token-via-token-exchange.http
-
 ###
 # @name Leave Group
 POST http://localhost:8090/api/v1/role-model/leave-group/{groupId}

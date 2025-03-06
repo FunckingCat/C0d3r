@@ -96,11 +96,21 @@ class UserService(
         groupAccessTokenRepository.save(tokenEntity.copy(accessToken = generateGroupAccessToken()))
     }
 
+    fun describeGroup(groupId: UUID): Any {
+        checkUserIsGroupMember(groupId)
+        return keycloakService.describeGroup(groupId)
+    }
+
     private fun checkUserIsAdmin(groupId: UUID) {
         val user = getCurrentUser()
         if (!user.groups.first { it.id == groupId }.permissions.contains(Permission.ADMIN)) {
             throw IllegalAccessError("Poor permissions to perform this operation")
         }
+    }
+
+    private fun checkUserIsGroupMember(groupId: UUID) {
+        val user = getCurrentUser()
+        checkNotNull(user.groups.firstOrNull { it.id == groupId }) { "User is not group member" }
     }
 
     private fun generateGroupAccessToken(): String = UUID.randomUUID().toString().toBase64()

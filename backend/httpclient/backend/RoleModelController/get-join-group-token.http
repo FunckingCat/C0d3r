@@ -1,5 +1,3 @@
-run ../../keycloak/get-user-token-via-token-exchange.http
-
 ###
 # @name Get Join Group Token
 GET http://localhost:8090/api/v1/role-model/get-join-group-token/{{group-id}}
