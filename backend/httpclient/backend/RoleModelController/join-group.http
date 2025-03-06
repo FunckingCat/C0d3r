@@ -1,0 +1,9 @@
+###
+# @name Join Group
+POST http://localhost:8090/api/v1/role-model/join-group
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "token": "{{join-group-token}}"
+}

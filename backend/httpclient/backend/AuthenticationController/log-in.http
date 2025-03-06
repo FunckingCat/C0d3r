@@ -1,0 +1,10 @@
+###
+# @name log-in
+POST http://localhost:8090/public/api/v1/authentication/log-in
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "username": "gene_mcclure62@mail.ru",
+  "password": "password"
+}

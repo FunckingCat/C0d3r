@@ -1,0 +1,16 @@
+###
+# @name Get Job By Id
+GET http://localhost:8090/api/v1/job/63
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "name": "test-job-{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}",
+  "dockerImage": "busybox",
+  "command": [
+    "echo",
+    "Hello world"
+  ],
+  "environmentVariables": {},
+  "executionType": "ON_DEMAND"
+}

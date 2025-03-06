@@ -1,0 +1,4 @@
+###
+# @name Run Webhook
+POST http://localhost:8090/api/v1/job/webhook/run/52
+Authorization: Bearer {{access_token}}

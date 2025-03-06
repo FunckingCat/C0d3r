@@ -1,0 +1,4 @@
+###
+# @name getUser
+GET http://localhost:8090/api/v1/users/user
+Authorization: Bearer {{access_token}}

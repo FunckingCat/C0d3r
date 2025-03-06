@@ -1,0 +1,4 @@
+###
+# @name Refresh Join Group Token
+POST http://localhost:8090/api/v1/role-model/refresh-join-group-token/{{group-id}}
+Authorization: Bearer {{access_token}}

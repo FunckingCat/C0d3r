@@ -1,0 +1,4 @@
+###
+# @name Cancel Job
+POST http://localhost:8090/api/v1/job/cancel/62
+Authorization: Bearer {{access_token}}

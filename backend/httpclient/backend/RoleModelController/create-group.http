@@ -1,0 +1,10 @@
+###
+# @name Create Group
+POST http://localhost:8090/api/v1/role-model/create-group
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+    "name" : "Group-{{$random.beer.name}}"
+}
+

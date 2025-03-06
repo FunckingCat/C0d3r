@@ -1,0 +1,8 @@
+# group: Keycloak
+# @name refresh-user-token
+POST http://localhost:8080/realms/users/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type = refresh_token &
+client_id = backend-client &
+refresh_token = {{refresh_token}}

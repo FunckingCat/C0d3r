@@ -1,0 +1,4 @@
+###
+# group: Keycloak
+# @name get-well-known-configuration
+GET http://localhost:8080/realms/users/.well-known/openid-configuration

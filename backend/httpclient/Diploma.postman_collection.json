@@ -1,0 +1,1255 @@
+{
+	"info": {
+		"_postman_id": "bac1be72-04db-4a65-aeec-dca193bddc9f",
+		"name": "Diploma",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21345009",
+		"_collection_link": "https://sberpravo.postman.co/workspace/FooBar~8ce4082e-b259-454a-b44d-778611ce66bb/collection/21345009-bac1be72-04db-4a65-aeec-dca193bddc9f?action=share&source=collection_link&creator=21345009"
+	},
+	"item": [
+		{
+			"name": "Keycloak",
+			"item": [
+				{
+					"name": "get-user-token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const options = {",
+									"  url:  'http://localhost:8080/realms/users/protocol/openid-connect/token', ",
+									"  method: 'POST',",
+									"  header: {",
+									"    'Accept': '*/*',",
+									"    'Content-Type': 'application/x-www-form-urlencoded',",
+									"  },",
+									"  body: {",
+									"    mode: 'urlencoded',",
+									"    urlencoded : [",
+									"      { key: 'client_id',  value: 'backend-client'},",
+									"      { key: 'username',   value: 'users-admin'},",
+									"      { key: 'password',   value: 'password'},",
+									"      { key: 'grant_type', value: 'password'},",
+									"    ]",
+									"  }",
+									"};",
+									"",
+									"pm.sendRequest(options, function (err, res) {",
+									"  pm.environment.set(\"admin-access-token\", res.json().access_token);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status is ok, response is json\", function () {\r",
+									"    pm.response.to.be.ok; // проверка статуса\r",
+									"    pm.response.to.be.json; // проверка формата\r",
+									"    pm.collectionVariables.set(\"access_token\", pm.response.json().access_token);\r",
+									"    pm.collectionVariables.set(\"refresh_token\", pm.response.json().refresh_token);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin-access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "urn:ietf:params:oauth:grant-type:token-exchange",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "backend-client",
+									"type": "text"
+								},
+								{
+									"key": "subject_token",
+									"value": "{{admin-access-token}}",
+									"type": "text"
+								},
+								{
+									"key": "requested_token_type",
+									"value": "urn:ietf:params:oauth:token-type:refresh_token",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "requested_subject",
+									"value": "test-user",
+									"description": "Basic user of platform",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "requested_subject",
+									"value": "platform-admin",
+									"description": "Admin of platform",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "requested_subject",
+									"value": "a@mail.ru",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/realms/users/protocol/openid-connect/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"realms",
+								"users",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh-user-token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const options = {",
+									"  url:  'http://localhost:8080/realms/users/protocol/openid-connect/token', ",
+									"  method: 'POST',",
+									"  header: {",
+									"    'Accept': '*/*',",
+									"    'Content-Type': 'application/x-www-form-urlencoded',",
+									"  },",
+									"  body: {",
+									"    mode: 'urlencoded',",
+									"    urlencoded : [",
+									"      { key: 'client_id',  value: 'backend-client'},",
+									"      { key: 'username',   value: 'users-admin'},",
+									"      { key: 'password',   value: 'password'},",
+									"      { key: 'grant_type', value: 'password'},",
+									"    ]",
+									"  }",
+									"};",
+									"",
+									"pm.sendRequest(options, function (err, res) {",
+									"  pm.environment.set(\"admin-access-token\", res.json().access_token);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status is ok, response is json\", function () {\r",
+									"    pm.response.to.be.ok; // проверка статуса\r",
+									"    pm.response.to.be.json; // проверка формата\r",
+									"    pm.collectionVariables.set(\"access_token\", pm.response.json().access_token);\r",
+									"    pm.collectionVariables.set(\"refresh_token\", pm.response.json().refresh_token);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "refresh_token",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "backend-client",
+									"type": "text"
+								},
+								{
+									"key": "refresh_token",
+									"value": "{{refresh_token}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/realms/users/protocol/openid-connect/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"realms",
+								"users",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-admin-token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const options = {",
+									"  url:  'http://localhost:8080/realms/users/protocol/openid-connect/token', ",
+									"  method: 'POST',",
+									"  header: {",
+									"    'Accept': '*/*',",
+									"    'Content-Type': 'application/x-www-form-urlencoded',",
+									"  },",
+									"  body: {",
+									"    mode: 'urlencoded',",
+									"    urlencoded : [",
+									"      { key: 'client_id',  value: 'backend-client'},",
+									"      { key: 'username',   value: 'users-admin'},",
+									"      { key: 'password',   value: 'users-admin'},",
+									"      { key: 'grant_type', value: 'password'},",
+									"    ]",
+									"  }",
+									"};",
+									"",
+									"pm.sendRequest(options, function (err, res) {",
+									"  pm.environment.set(\"admin-access-token\", res.json().access_token);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin-access-token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "backend-client",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "users-admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/realms/users/protocol/openid-connect/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"realms",
+								"users",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-user-password-token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"strictSSL": false
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "backend-client",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "esther_swaniawski49@mail.ru",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/realms/users/protocol/openid-connect/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"realms",
+								"users",
+								"protocol",
+								"openid-connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getRealm",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "getWellKnownConfiguration",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/realms/users/.well-known/openid-configuration",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"realms",
+								"users",
+								".well-known",
+								"openid-configuration"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Backend",
+			"item": [
+				{
+					"name": "AuthenticationController",
+					"item": [
+						{
+							"name": "log-in",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\" : \"gene_mcclure62@mail.ru\",\n    \"password\" : \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8090/public/api/v1/authentication/log-in",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"public",
+										"api",
+										"v1",
+										"authentication",
+										"log-in"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "reset-password",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\" : \"felipe_hintz@mail.ru\",\n    \"password\" : \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8090/public/api/v1/authentication/reset-password",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"public",
+										"api",
+										"v1",
+										"authentication",
+										"reset-password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "reset-password Copy",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8090/public/api/v1/authentication/test",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"public",
+										"api",
+										"v1",
+										"authentication",
+										"test"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "RegistrationController",
+					"item": [
+						{
+							"name": "register-user",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\" : \"{{$randomUserName}}@mail.ru\",\n    \"password\" : \"password\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8090/public/api/v1/registration",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"public",
+										"api",
+										"v1",
+										"registration"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "UsersController",
+					"item": [
+						{
+							"name": "getUsers",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8090/api/v1/users/user",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"user"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "JobController",
+					"item": [
+						{
+							"name": "Create Infitite Job",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"testjob-{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}\",\n  \"dockerImage\": \"busybox\",\n  \"command\": [\"sh\", \"-c\", \"while true; do echo 'Container is running'; sleep 10; done\"],\n  \"environmentVariables\": {},\n  \"executionType\": \"ON_DEMAND\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8090/api/v1/job",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"v1",
+										"job"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Demand Job",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"testjob-{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}\",\n  \"dockerImage\": \"busybox\",\n  \"command\": [\"sh\", \"-c\", \"echo 'Container is running'\"],\n  \"environmentVariables\": {},\n  \"executionType\": \"ON_DEMAND\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8090/api/v1/job",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"v1",
+										"job"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Cron Job",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"testjob-{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}\",\n  \"dockerImage\": \"busybox\",\n  \"command\": [\"sh\", \"-c\", \"echo 'Container is running'\"],\n  \"environmentVariables\": {},\n  \"executionType\": \"SCHEDULED\",\n  \"schedule\": \"* * * * *\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8090/api/v1/job",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"v1",
+										"job"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Jobs",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8090/api/v1/job",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"v1",
+										"job"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Job By Id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"test-job-{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}\",\n  \"dockerImage\": \"busybox\",\n  \"command\": [\n    \"echo\",\n    \"Hello world\"\n  ],\n  \"environmentVariables\": {},\n  \"executionType\": \"ON_DEMAND\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8090/api/v1/job/63",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"v1",
+										"job",
+										"63"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cancel Job",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"test-job-{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}\",\n  \"dockerImage\": \"busybox\",\n  \"command\": [\n    \"echo\",\n    \"Hello world\"\n  ],\n  \"environmentVariables\": {},\n  \"executionType\": \"SCHEDULED\",\n  \"schedule\": \"* * * * *\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8090/api/v1/job/cancel/62",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"v1",
+										"job",
+										"cancel",
+										"62"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Rerun Job",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"test-job-{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}\",\n  \"dockerImage\": \"busybox\",\n  \"command\": [\n    \"echo\",\n    \"Hello world\"\n  ],\n  \"environmentVariables\": {},\n  \"executionType\": \"SCHEDULED\",\n  \"schedule\": \"* * * * *\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8090/api/v1/job/rerun/63",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"v1",
+										"job",
+										"rerun",
+										"63"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Run Webhook",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"test-job-{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}\",\n  \"dockerImage\": \"busybox\",\n  \"command\": [\n    \"echo\",\n    \"Hello world\"\n  ],\n  \"environmentVariables\": {},\n  \"executionType\": \"SCHEDULED\",\n  \"schedule\": \"* * * * *\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8090/api/v1/job/webhook/run/52",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"v1",
+										"job",
+										"webhook",
+										"run",
+										"52"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "RoleModelController",
+					"item": [
+						{
+							"name": "Create Group",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"Group-{{$randomAdjective}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8090/api/v1/role-model/create-group",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"v1",
+										"role-model",
+										"create-group"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Join Group",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"token\" : \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8090/api/v1/role-model/join-group",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"v1",
+										"role-model",
+										"join-group"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Join Group Token",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8090/api/v1/role-model/get-join-group-token/{groupId}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"v1",
+										"role-model",
+										"get-join-group-token",
+										"{groupId}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Refresh Join Group Token",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8090/api/v1/role-model/refresh-join-group-token/{groupId}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"v1",
+										"role-model",
+										"refresh-join-group-token",
+										"{groupId}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Leave Group",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8090/api/v1/role-model/leave-group/{groupId}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"v1",
+										"role-model",
+										"leave-group",
+										"{groupId}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Exclude Member",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"memberId\" : \"\",\n    \"groupId\" : \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8090/api/v1/role-model/exclude-member-from-group",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"v1",
+										"role-model",
+										"exclude-member-from-group"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Exclude Member Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"action\" : \"GRANT\",\n    \"memberId\" : \"\",\n    \"groupId\" : \"\",\n    \"permission\" : \"ADMIN\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8090/api/v1/role-model/change-permission",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"api",
+										"v1",
+										"role-model",
+										"change-permission"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": ""
+		},
+		{
+			"key": "refresh_token",
+			"value": ""
+		}
+	]
+}

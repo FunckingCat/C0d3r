@@ -1,0 +1,9 @@
+###
+# @name register-user
+POST http://localhost:8090/public/api/v1/registration
+Content-Type: application/json
+
+{
+    "username" : "c@mail.ru",
+    "password" : "password"
+}

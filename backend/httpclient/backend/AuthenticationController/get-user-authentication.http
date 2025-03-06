@@ -1,0 +1,4 @@
+###
+# @name get-user-authentication
+POST http://localhost:8090/public/api/v1/authentication/test
+Authorization: Bearer {{access_token}}

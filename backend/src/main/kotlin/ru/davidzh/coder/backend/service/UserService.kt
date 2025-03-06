@@ -33,13 +33,14 @@ class UserService(
             )
         }
 
-    fun createGroup(createGroupRequest: CreateGroupRequest) {
+    fun createGroup(createGroupRequest: CreateGroupRequest):UUID {
         val groupId = keycloakService.initializeGroup(createGroupRequest.name)
         val groupAccessTokenEntity = GroupAccessTokenEntity(
             groupId = groupId,
             accessToken = generateGroupAccessToken()
         )
         groupAccessTokenRepository.save(groupAccessTokenEntity)
+        return groupId
     }
 
     fun leaveGroup(groupId: UUID) {
@@ -49,7 +50,7 @@ class UserService(
 
     fun excludeFromGroup(excludeRequest: ExcludeRequest) {
         checkUserIsAdmin(excludeRequest.groupId)
-        keycloakService.removeUserFromGroup(excludeRequest.groupId, excludeRequest.memberId)
+        keycloakService.removeUserFromGroup(excludeRequest.memberId, excludeRequest.groupId)
     }
 
     fun changePermissions(changePermissionRequest: ChangePermissionRequest) {
@@ -75,6 +76,7 @@ class UserService(
         checkNotNull(tokenEntity) { "Invalid Access Token" }
         val user = getUserAuthentication()
         keycloakService.addUserToGroup(user.userId, tokenEntity.groupId)
+        keycloakService.addRoleToUser(user.userId, tokenEntity.groupId, Permission.VIEW)
     }
 
     fun getJoinGroupToken(groupId: UUID): JoinGroupToken {

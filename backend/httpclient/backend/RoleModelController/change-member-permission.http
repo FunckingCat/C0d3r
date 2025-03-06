@@ -1,0 +1,12 @@
+###
+# @name Exclude Member Copy
+POST http://localhost:8090/api/v1/role-model/change-permission
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "action": "REVOKE",
+  "memberId": "{{group-member-id}}",
+  "groupId": "{{group-id}}",
+  "permission": "RUN"
+}
