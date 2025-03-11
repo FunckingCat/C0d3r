@@ -5,11 +5,12 @@
 
     <div v-if="task">
       <TaskDetails :task="task" class="mb-6" />
-      <TaskLogs :logs="task.executionResults?.[0]?.logs || []" />
+      <TaskExecutions :task="task" />
     </div>
 
     <div v-else class="text-gray-400">Loading task information...</div>
   </div>
+  <TaskExecutionModal />
 </template>
 
 <script setup lang="ts">
@@ -17,13 +18,14 @@ import { computed, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useTasksStore } from '@/stores/tasksStore';
 import TaskDetails from '@/components/task/TaskDetails.vue';
-import TaskLogs from '@/components/task/TaskLogs.vue';
+import TaskExecutions from '@/components/task/TaskExecutions.vue';
 import { UseCurrentTaskStore } from '@/stores/currentTaskStore';
 import { storeToRefs } from 'pinia';
 import { PollingService } from '@/api/polling/PollingService';
 import type { Job } from '@/types/ApiTypes';
 import jobApi from '@/api/JobsApi';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
+import TaskExecutionModal from '@/components/task/TaskExecutionModal.vue';
 
 const route = useRoute()
 const taskId = Number(route.params.id);

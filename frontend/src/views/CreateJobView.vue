@@ -50,14 +50,6 @@
                 <input type="text" id="schedule" v-model="jobParameters.schedule" class="input input-bordered w-full" />
             </div>
 
-            <div role="alert" class="alert alert-error">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span>Error! Task failed successfully.</span>
-            </div>
-
             <button type="submit" class="btn btn-primary w-full">Create Job</button>
         </form>
     </div>
@@ -67,6 +59,8 @@
 import { ref } from 'vue';
 import { ExecutionType, type CreateJobRequest } from '@/types/ApiTypes';
 import { isCronValid } from '@/util/CronValidator';
+import jobApi from '@/api/JobsApi';
+import router from '@/router';
 
 interface IJonParameters {
     name?: string;
@@ -112,6 +106,11 @@ const submit = async () => {
         executionType: collectedParams.executionType!!,
         schedule: collectedParams.executionType == ExecutionType.SCHEDULED ? collectedParams.schedule!! : null
     }
+
+    const createdJob = await jobApi.createJob(createJobRequest)
+
+    router.push(`/tasks/${createdJob.id}`)
+
 }
 
 </script>
