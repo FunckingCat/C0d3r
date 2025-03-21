@@ -5,6 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from "@/stores/authStore.ts";
 import { storeToRefs } from 'pinia';
 import CreateJobView from '@/views/CreateJobView.vue';
+import ProfileView from '@/views/ProfileView.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -44,6 +45,14 @@ const router = createRouter({
       path: '/new-job',
       name: 'New Job',
       component: CreateJobView,
+      meta: {
+        requiresAuth: true
+      },
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: ProfileView,
       meta: {
         requiresAuth: true
       },

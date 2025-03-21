@@ -32,11 +32,32 @@ export interface CreateJobRequest {
 export interface User {
 	id: string,
 	username: string,
-	roles: Role[]
+	roles: Role[],
+	groups: Group[],
 }
+
+export interface Group {
+	name: string;
+	id: string;
+	permissions: Permission[];
+}
+
+export type Permission = 'RUN' | 'VIEW' | 'EDIT' | 'ADMIN';
 
 export enum Role {
 	USER, ADMIN
+}
+
+export interface Member {
+	id: string;
+	username: string;
+	permissions: Permission[]; 
+}
+  
+export interface GroupDescription {
+	id: string;
+	name: string;
+	members: Member[];
 }
 
 export interface Job {

@@ -5,6 +5,7 @@ import io.kubernetes.client.openapi.ApiException
 import io.kubernetes.client.openapi.apis.BatchV1Api
 import io.kubernetes.client.openapi.apis.CoreV1Api
 import io.kubernetes.client.openapi.models.V1JobStatus
+import io.kubernetes.client.openapi.models.V1PodStatus
 import io.kubernetes.client.util.Config
 import org.slf4j.LoggerFactory
 import org.springframework.boot.context.event.ApplicationReadyEvent
@@ -63,9 +64,9 @@ class KubernetesService {
             .map {
                 ContainerState(
                     containerName = it.metadata.name,
-                    status = ExecutionStatus.COMPLETED, // TODO Ставить корректный статус
+                    status = mapK8sJobStatusToExecutionStatus(it.status),
                     checkTime = LocalDateTime.now(),
-                    logs = getPodLogs(it.metadata.name),
+                    logs = extractErrorsFromPodStatus(it.status) + getPodLogs(it.metadata.name),
                 )
             }
 
@@ -87,15 +88,32 @@ class KubernetesService {
         }
     }
 
+    fun mapK8sJobStatusToExecutionStatus(podStatus: V1PodStatus): ExecutionStatus {
+        return when (podStatus.phase) {
+            "Pending" -> ExecutionStatus.PENDING
+            "Running" -> ExecutionStatus.RUNNING
+            "Succeeded" -> ExecutionStatus.COMPLETED
+            "Failed" -> ExecutionStatus.FAILED
+            "Unknown" -> ExecutionStatus.FAILED
+            else -> ExecutionStatus.FAILED
+        }
+    }
+
+    fun extractErrorsFromPodStatus(podStatus: V1PodStatus): List<String> {
+        return podStatus.containerStatuses
+            .filter { it.state.terminated != null }
+            .map { "${it.state.terminated.reason}: ${it.state.terminated.message}" }
+    }
+
     fun mapK8sJobStatusToExecutionStatus(k8sJobStatus: V1JobStatus): ExecutionStatus {
-        return if (k8sJobStatus.active == 1) {
-             ExecutionStatus.RUNNING
-        } else if (k8sJobStatus.succeeded != null && k8sJobStatus.succeeded > 0) {
+        return if (k8sJobStatus.succeeded != null && k8sJobStatus.succeeded > 0) {
              ExecutionStatus.COMPLETED
         } else if (k8sJobStatus.failed != null && k8sJobStatus.failed > 0) {
              ExecutionStatus.FAILED
         } else if (k8sJobStatus.terminating == 1) {
              ExecutionStatus.CANCELLED
+        } else if (k8sJobStatus.active == 1) {
+            ExecutionStatus.RUNNING
         } else  ExecutionStatus.PENDING
     }
 

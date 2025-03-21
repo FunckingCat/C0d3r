@@ -8,9 +8,9 @@
 			</RouterLink>
 
 			<div v-if="authorized" class="flex items-center space-x-4" :key="authorized">
-				<div>
+				<RouterLink to="/profile" class="link">
 					{{ user?.username || "Problem" }}
-				</div>
+				</RouterLink>
 				<LogoutButton />
 				<RouterLink to="/new-job" class="btn btn-primary">
 					New Job

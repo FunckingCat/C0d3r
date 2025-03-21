@@ -5,10 +5,9 @@ Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
 {
-  "name": "job-{{$random.address.cityName}}-{{$random.ancient.god}}",
-  "groupId": "{{group-id}}",
-  "dockerImage": "busybox",
-  "command": ["sh", "-c", "echo 'Container is running'"],
+  "name": "cite-{{$random.address.cityName}}",
+  "dockerImage": "ubuntu",
+  "command": ["/bin/sh", "-c", "apt-get update && apt-get install -y curl jq && curl -s https://api.chucknorris.io/jokes/random | jq -r '.value'"],
   "environmentVariables": {},
   "executionType": "ON_DEMAND"
 }

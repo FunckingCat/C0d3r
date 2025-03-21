@@ -1,5 +1,6 @@
 import { onMounted, onUnmounted, computed } from 'vue';
 
+type Predicate = () => boolean
 type ActionFunction<T> = () => Promise<T>
 type PollingCallback<T> = (data: T) => void
 
@@ -10,6 +11,7 @@ export class PollingService<T> {
     public readonly config: {
       name: string
       interval: number
+      filter?: Predicate,
       action: ActionFunction<T>,
       callback: PollingCallback<T>
     }
@@ -22,6 +24,7 @@ export class PollingService<T> {
 
     const executePoll = async () => {
       try {
+        if (this.config.filter != undefined && !this.config.filter()) return
         const response = await this.config.action()
         console.log(`${this.config.name} poll`, response)
         this.config.callback(response)

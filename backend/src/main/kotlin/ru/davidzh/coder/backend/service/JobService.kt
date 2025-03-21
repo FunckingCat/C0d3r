@@ -33,7 +33,7 @@ class JobService(
      */
     fun createJob(createJobRequest: CreateJobRequest): Job {
 
-        createJobRequest.name = createJobRequest.name.lowercase()
+        createJobRequest.name = sanitizeString(createJobRequest.name)
 
         if (!validateJobName(createJobRequest.name)) throw ValidationException("Job name is invalid")
 
@@ -59,6 +59,12 @@ class JobService(
         }
 
         return jobConverter.convert(jobRepository.findByIdOrNull(entity.id!!)!!)
+    }
+
+    fun sanitizeString(input: String): String {
+        return input.lowercase()
+            .replace(Regex("[^a-z0-9.-]"), "") // Remove forbidden characters
+            .replace(Regex("^[^a-z0-9]+|[^a-z0-9]+$"), "") // Trim non-alphanumeric start/end
     }
 
     fun validateJobName(input: String): Boolean {

@@ -48,20 +48,30 @@ class ExecutionService(
     }
 
     private fun precessOnDemandJobExecution(job: Job) {
-        val intermediateResult: IntermediateJobState = kubernetesService.getJobExecutionResult(containerName(job.userId, job.name, job.ordinal!!))
+        val intermediateResult: IntermediateJobState = kubernetesService
+            .getJobExecutionResult(containerName(job.userId, job.name, job.ordinal!!))
         precessJobExecution(job, intermediateResult)
         if (intermediateResult.status == ExecutionStatus.COMPLETED) {
             jobRepository.findByIdOrNull(job.id!!)!!
                 .let { jobRepository.save(it.copy(status = JobStatus.COMPLETED)) }
         }
+        if (intermediateResult.status == ExecutionStatus.FAILED) {
+            jobRepository.findByIdOrNull(job.id!!)!!
+                .let { jobRepository.save(it.copy(status = JobStatus.FAILED)) }
+        }
     }
 
     private fun precessWebHookJobExecution(job: Job) {
-        val intermediateResult: IntermediateJobState = kubernetesService.getJobExecutionResult(containerName(job.userId, job.name, job.ordinal!!))
+        val intermediateResult: IntermediateJobState = kubernetesService
+            .getJobExecutionResult(containerName(job.userId, job.name, job.ordinal!!))
         precessJobExecution(job, intermediateResult)
         if (intermediateResult.status == ExecutionStatus.COMPLETED) {
             jobRepository.findByIdOrNull(job.id!!)!!
                 .let { jobRepository.save(it.copy(status = JobStatus.PENDING)) }
+        }
+        if (intermediateResult.status == ExecutionStatus.FAILED) {
+            jobRepository.findByIdOrNull(job.id!!)!!
+                .let { jobRepository.save(it.copy(status = JobStatus.FAILED)) }
         }
     }
 
@@ -75,7 +85,7 @@ class ExecutionService(
                 originalJobName = intermediateResult.originalJobName,
                 jobId = job.id!!,
                 startedAt = LocalDateTime.now(),
-                status = intermediateResult.status,
+                status = intermediateResult.containerStates[0].status,
                 recordedAt = intermediateResult.containerStates[0].checkTime,
                 logs = intermediateResult.containerStates[0].logs
             )
