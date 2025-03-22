@@ -1,8 +1,8 @@
 import apiClient from "./API";
-import type { GroupDescription, User } from "@/types/ApiTypes";
+import type { GroupDescription, User, PermissionRequest, GroupTokenResponse } from "@/types/ApiTypes";
 
 const roleModelApi = {
-    changePermission: async (data: any): Promise<any> => {
+    changePermission: async (data: PermissionRequest): Promise<any> => {
         const response = await apiClient.post("/api/v1/role-model/change-permission", data);
         return response.data;
     },
@@ -18,7 +18,7 @@ const roleModelApi = {
         const response = await apiClient.get(`/api/v1/role-model/group/${groupId}`);
         return response.data;
     },
-    getJoinGroupToken: async (groupId: string): Promise<any> => {
+    getJoinGroupToken: async (groupId: string): Promise<GroupTokenResponse> => {
         const response = await apiClient.get(`/api/v1/role-model/get-join-group-token/${groupId}`);
         return response.data;
     },

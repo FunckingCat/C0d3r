@@ -1,10 +1,11 @@
 <template>
   <div class="modal" :class="{ 'modal-open': executionModelOpened }">
     <div class="modal-box">
-      <h3 class="font-bold text-lg">Execution Logs</h3>
-        <div class="h-64 overflow-y-auto bg-gray-800 text-white p-2 rounded">
-            {{ task?.executionResults?.filter(res => res.id == activeExecutionId)[0]?.logs?.join("\n") }}
-        </div>
+      <div class="mockup-code w-full">
+        <h3 class="ml-12 font-bold text-lg">Execution Logs</h3>
+        <pre data-prefix="~" v-for="log in task?.executionResults?.find(res => res.id === activeExecutionId)?.logs" :key="log"><code>{{ log }}</code></pre>
+      </div>
+
       <div class="modal-action">
         <button class="btn" @click="toggleModal">
           Close modal

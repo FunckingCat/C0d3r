@@ -31,14 +31,14 @@ const { authorized, loading, user, activeGroup, activeGroupDescription } = store
 
 const userPollingService = new PollingService<User>({
   name: 'UserPollingService',
-  interval: 1000,
+  interval: 10000,
   action: () => userApi.getCurrentUser(),
   callback: (user) => userStore.setUser(user)
 })
 
 const gproupPollingService = new PollingService<GroupDescription>({
   name: 'GroupPollingService',
-  interval: 1100,
+  interval: 11000,
   filter: () => activeGroup != undefined,
   action: () => roleModelApi.getGroup(activeGroup.value as string),
   callback: (group) => userStore.setActiveGroupDescription(group)

@@ -42,7 +42,7 @@ export interface Group {
 	permissions: Permission[];
 }
 
-export type Permission = 'RUN' | 'VIEW' | 'EDIT' | 'ADMIN';
+export enum Permission { RUN, VIEW, EDIT, ADMIN };
 
 export enum Role {
 	USER, ADMIN
@@ -58,6 +58,23 @@ export interface GroupDescription {
 	id: string;
 	name: string;
 	members: Member[];
+}
+
+export enum ActionType {
+	GRANT = 'GRANT',
+	REVOKE = 'REVOKE'
+}
+
+export interface PermissionRequest {
+	action: ActionType;
+	memberId: string;
+	groupId: string;
+	permission: string;
+}
+
+export interface GroupTokenResponse {
+	groupId: string;
+	token: string;
 }
 
 export interface Job {

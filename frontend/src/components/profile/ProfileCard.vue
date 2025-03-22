@@ -3,7 +3,7 @@
       <div class="flex items-center">
         <img src="../../assets/Avatar.png" alt="Profile Picture" class="w-64 h-64 rounded-3xl" />
         <div class="ml-4">
-          <h2 class="text-xl font-bold">{{ user?.username }}</h2>
+          <h2 class="text-xl font-bold">Username: {{ user?.username }}</h2>
         </div>
       </div>
     </div>
