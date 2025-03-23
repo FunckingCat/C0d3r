@@ -5,5 +5,5 @@ Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
 {
-  "token": "{{join-group-token}}"
+  "token": "YmIxOTNmMjctMzU3NC00MTk2LTkzNzctMmY5NTkxOGY0NzAw"
 }

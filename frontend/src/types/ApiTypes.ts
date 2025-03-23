@@ -77,6 +77,14 @@ export interface GroupTokenResponse {
 	token: string;
 }
 
+export interface CreateGroupRequest {
+	name: string;
+}
+
+export interface JoinGroupRequest {
+	token: string;
+}
+
 export interface Job {
 	id?: number | null;
 	userId: string;

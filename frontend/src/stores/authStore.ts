@@ -42,7 +42,7 @@ export const useAuthStore = defineStore("auth", () => {
 		state.value.loading = true;
 	}
 
-	function setActiveGroup(groupId: string) {
+	function setActiveGroup(groupId: string | undefined) {
 		state.value.activeGroup = groupId
 	}
 

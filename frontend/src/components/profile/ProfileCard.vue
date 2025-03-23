@@ -1,9 +1,9 @@
 <template>
-    <div class="card w-full p-4">
-      <div class="flex items-center">
+    <div class="card p-4">
+      <div class="flex flex-col items-center">
         <img src="../../assets/Avatar.png" alt="Profile Picture" class="w-64 h-64 rounded-3xl" />
-        <div class="ml-4">
-          <h2 class="text-xl font-bold">Username: {{ user?.username }}</h2>
+        <div class="mt-4">
+          <h2 class="text-xl font-bold">{{ user?.username }}</h2>
         </div>
       </div>
     </div>

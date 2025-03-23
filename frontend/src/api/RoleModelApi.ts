@@ -1,12 +1,13 @@
 import apiClient from "./API";
-import type { GroupDescription, User, PermissionRequest, GroupTokenResponse } from "@/types/ApiTypes";
+import type { GroupDescription, User, PermissionRequest, GroupTokenResponse, CreateGroupRequest, JoinGroupRequest } from "@/types/ApiTypes";
 
 const roleModelApi = {
     changePermission: async (data: PermissionRequest): Promise<any> => {
         const response = await apiClient.post("/api/v1/role-model/change-permission", data);
         return response.data;
     },
-    createGroup: async (data: any): Promise<any> => {
+    createGroup: async (data: CreateGroupRequest): Promise<string> => {
+        console.log("Create group RB", data)
         const response = await apiClient.post("/api/v1/role-model/create-group", data);
         return response.data;
     },
@@ -22,11 +23,11 @@ const roleModelApi = {
         const response = await apiClient.get(`/api/v1/role-model/get-join-group-token/${groupId}`);
         return response.data;
     },
-    joinGroup: async (data: any): Promise<any> => {
+    joinGroup: async (data: JoinGroupRequest): Promise<void> => {
         const response = await apiClient.post("/api/v1/role-model/join-group", data);
         return response.data;
     },
-    leaveGroup: async (groupId: string): Promise<any> => {
+    leaveGroup: async (groupId: string): Promise<void> => {
         const response = await apiClient.post(`/api/v1/role-model/leave-group/${groupId}`);
         return response.data;
     },

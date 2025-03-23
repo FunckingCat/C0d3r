@@ -6,7 +6,11 @@
       <span class="loading loading-infinity loading-xl"></span>
     </div>
     <div v-else class="w-full">
-      <ProfileCard/>
+      <div class="flex">
+        <ProfileCard class="flex-none"/>
+        <GroupSelection class="flex-1"/>
+      </div>
+      <h2 class="text-2xl font-bold">{{ activeGroupDescription?.name }}</h2>
       <AccessToken/>
       <MembersTable/>
     </div>
@@ -19,6 +23,7 @@ import userApi from '@/api/UserApi';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import AccessToken from '@/components/profile/AccessToken.vue';
 import ProfileCard from '@/components/profile/ProfileCard.vue';
+import GroupSelection from '@/components/profile/GroupSelection.vue';
 import { useAuthStore } from '@/stores/authStore';
 import {type GroupDescription, type User } from '../types/ApiTypes'
 import { PollingService } from '@/api/polling/PollingService';
@@ -31,14 +36,14 @@ const { authorized, loading, user, activeGroup, activeGroupDescription } = store
 
 const userPollingService = new PollingService<User>({
   name: 'UserPollingService',
-  interval: 10000,
+  interval: 5100,
   action: () => userApi.getCurrentUser(),
   callback: (user) => userStore.setUser(user)
 })
 
 const gproupPollingService = new PollingService<GroupDescription>({
   name: 'GroupPollingService',
-  interval: 11000,
+  interval: 5000,
   filter: () => activeGroup != undefined,
   action: () => roleModelApi.getGroup(activeGroup.value as string),
   callback: (group) => userStore.setActiveGroupDescription(group)

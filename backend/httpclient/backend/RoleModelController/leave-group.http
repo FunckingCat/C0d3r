@@ -1,4 +1,4 @@
 ###
 # @name Leave Group
-POST http://localhost:8090/api/v1/role-model/leave-group/{groupId}
+POST http://localhost:8090/api/v1/role-model/leave-group/f3a82edc-c096-4ce0-9b9f-41c798597aae
 Authorization: Bearer {{access_token}}

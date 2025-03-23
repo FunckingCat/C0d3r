@@ -1,5 +1,5 @@
 <template>
-    <div class="card w-full p-4">
+    <div v-if="isGroupAdmin" class="card w-full p-4">
       <div class="mt-4">
         <label>Access Token:</label>
         <div class="flex items-center">
@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import roleModelApi from '@/api/RoleModelApi';
 import { useAuthStore } from '@/stores/authStore';
+import { Permission } from '@/types/ApiTypes';
 import { computed } from '@vue/reactivity';
 import { storeToRefs } from 'pinia';
 import { ref, watch } from 'vue';
@@ -48,4 +49,20 @@ const revokeToken = async () => {
     console.log("TOKEN", token)
     accessToken.value = token.token
 }
+
+const userPermissionContains = (permissions: Permission[], permission: string) => {
+    var permissionsList = permissions.map(status => status.toString())
+    // console.log(permissions, permission, permissions.includes(permission))
+    return permissionsList.includes(permission)
+}
+
+const isGroupAdmin = computed(
+  () => {
+    var userPermissionsInGroup = user.value?.groups.filter(g => g.id == activeGroup.value)[0].permissions
+    var isAdmin = userPermissionContains(userPermissionsInGroup as Permission[], "ADMIN")
+    console.log(`User ${user.value?.username} isAdmin = ${isAdmin} in group ${activeGroupDescription.value?.name}`)
+    return isAdmin
+  }
+)
+
 </script>
