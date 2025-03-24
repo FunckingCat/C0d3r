@@ -30,12 +30,12 @@ export const useAuthStore = defineStore("auth", () => {
 	function setUser(user: User) {
 		state.value.user = user;
 		state.value.loading = false;
-		if (state.value.activeGroup == undefined) {
-			const group = user.groups?.[0]?.id ?? null;
-			if (group != null) {
-				state.value.activeGroup = group
-			}
-		}
+		// if (state.value.activeGroup == undefined) {
+		// 	const group = user.groups?.[0]?.id ?? null;
+		// 	if (group != null) {
+		// 		state.value.activeGroup = group
+		// 	}
+		// }
 	}
 
 	function setLoading() {
@@ -46,7 +46,7 @@ export const useAuthStore = defineStore("auth", () => {
 		state.value.activeGroup = groupId
 	}
 
-	function setActiveGroupDescription(groupDescription: GroupDescription) {
+	function setActiveGroupDescription(groupDescription: GroupDescription | undefined) {
 		state.value.activeGroupDescription = groupDescription
 	}
 

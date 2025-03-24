@@ -24,7 +24,10 @@ export class PollingService<T> {
 
     const executePoll = async () => {
       try {
-        if (this.config.filter != undefined && !this.config.filter()) return
+        if (this.config.filter != undefined && !this.config.filter()) {
+          console.log(`Skip polling ${this.config.name}`)
+          return
+        }
         const response = await this.config.action()
         console.log(`${this.config.name} poll`, response)
         this.config.callback(response)

@@ -103,6 +103,7 @@ const leaveGroup = async () => {
 
   if (selectedGroup.value == activeGroup.value) {
     userStore.setActiveGroup(undefined)
+    userStore.setActiveGroupDescription(undefined)
   }
 
   selectedGroup.value = ""

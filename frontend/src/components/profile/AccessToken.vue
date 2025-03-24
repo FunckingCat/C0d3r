@@ -25,7 +25,7 @@ const { authorized, loading, user, activeGroup, activeGroupDescription } = store
 const accessToken = ref('******************');
 
 watch(activeGroup, async (newGroup) => {
-    if (activeGroup == undefined) {
+    if (newGroup == undefined) {
       return "Active group not selected"
     }
     var token = await roleModelApi.getJoinGroupToken(newGroup as string)
@@ -51,14 +51,21 @@ const revokeToken = async () => {
 }
 
 const userPermissionContains = (permissions: Permission[], permission: string) => {
-    var permissionsList = permissions.map(status => status.toString())
-    // console.log(permissions, permission, permissions.includes(permission))
+    var permissionsList = permissions?.map(status => status.toString())
     return permissionsList.includes(permission)
 }
 
 const isGroupAdmin = computed(
   () => {
-    var userPermissionsInGroup = user.value?.groups.filter(g => g.id == activeGroup.value)[0].permissions
+
+    console.log("isGroupAdmin", activeGroup.value, activeGroupDescription.value)
+
+    if (activeGroup.value == undefined) {
+      console.log("No active group selected")
+      return false
+    }
+
+    var userPermissionsInGroup = user.value?.groups.filter(g => g.id == activeGroup.value)?.[0]?.permissions
     var isAdmin = userPermissionContains(userPermissionsInGroup as Permission[], "ADMIN")
     console.log(`User ${user.value?.username} isAdmin = ${isAdmin} in group ${activeGroupDescription.value?.name}`)
     return isAdmin

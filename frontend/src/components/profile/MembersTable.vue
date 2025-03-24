@@ -43,13 +43,6 @@ const { authorized, loading, user, activeGroup, activeGroupDescription } = store
 
 const checboxDisabled = (member: Member, permission: string) => {
 
-  console.log(
-    "user", user.value?.id,
-    "member", member.id,
-    "permission", permission,
-
-  )
-
   //Disable self admin manipulating
   if (user.value?.id == member.id && permission == 'ADMIN') {
       return true;
@@ -94,6 +87,14 @@ const userPermissionContains = (permissions: Permission[], permission: string) =
 
 const isGroupAdmin = computed(
   () => {
+
+    console.log("isGroupAdmin", activeGroup)
+
+    if (activeGroup.value == undefined) {
+      console.log("No active group selected")
+      return false
+    }
+
     var userPermissionsInGroup = user.value?.groups.filter(g => g.id == activeGroup.value)[0].permissions
     var isAdmin = userPermissionContains(userPermissionsInGroup as Permission[], "ADMIN")
     console.log(`User ${user.value?.username} isAdmin = ${isAdmin} in group ${activeGroupDescription.value?.name}`)
