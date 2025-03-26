@@ -2,6 +2,20 @@
     <div class="max-w-md mx-auto p-4">
         <h2 class="text-2xl font-bold mb-4">Create Job</h2>
         <form @submit.prevent="submit" class="space-y-4">
+
+            <div>
+                <label class="label">Group</label>
+                <select 
+                    class="select select-bordered w-full mt-2" 
+                    v-model="jobParameters.group"
+                    >
+                    <option disabled value="">Select a group</option>
+                    <option v-for="group in user?.groups" :key="group.id" :value="group.id">
+                        {{ group.name }}
+                    </option>
+                </select>
+            </div>
+
             <div>
                 <label for="name" class="label">Job Name</label>
                 <input type="text" id="name" v-model="jobParameters.name" class="input input-bordered w-full"
@@ -61,8 +75,14 @@ import { ExecutionType, type CreateJobRequest } from '@/types/ApiTypes';
 import { isCronValid } from '@/util/CronValidator';
 import jobApi from '@/api/JobsApi';
 import router from '@/router';
+import { useAuthStore } from '@/stores/authStore';
+import { storeToRefs } from 'pinia';
+
+const userStore = useAuthStore()
+const { authorized, loading, user, activeGroup, activeGroupDescription } = storeToRefs(userStore)
 
 interface IJonParameters {
+    group?: string,
     name?: string;
     dockerImage?: string;
     command?: string;
@@ -99,6 +119,7 @@ const submit = async () => {
     }
 
     const createJobRequest: CreateJobRequest = {
+        groupId: collectedParams.group,
         name: collectedParams.name!!,
         dockerImage: collectedParams.dockerImage!!,
         command: collectedParams.command!!.split(" "),

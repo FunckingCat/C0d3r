@@ -21,6 +21,7 @@ export type RegisterResponse = {
 };
 
 export interface CreateJobRequest {
+	groupId?: string;
     name: string;
     dockerImage: string;
     command: string[];
