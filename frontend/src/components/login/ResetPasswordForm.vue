@@ -6,12 +6,12 @@
 		</div>
 
 		<div>
-			<label class="block text-gray-400">Password</label>
+			<label class="block text-gray-400">New password</label>
 			<input v-model="password" type="password" class="w-full p-2 bg-gray-700 rounded" required />
 		</div>
 
-		<button @click="register" class="w-full btn btn-soft btn-primary py-2 rounded mt-10">
-			Sign up
+		<button @click="resetPassword" class="w-full btn btn-soft btn-primary py-2 rounded mt-10">
+			Reset password
 		</button>
 	</div>
 </template>
@@ -21,13 +21,18 @@ import { ref } from "vue";
 import AuthService from "@/api/AuthApi";
 import router from "@/router/index.js";
 import { logInIfTokenPresent } from "@/scripts/login";
+import { AuthFormState, useAuthStore } from '@/stores/authStore';
+import { storeToRefs } from 'pinia';
+import ResetPasswordForm from "./ResetPasswordForm.vue";
 
+var authStore = useAuthStore()
+var { authFormState } = storeToRefs(authStore)
 const email = ref("");
 const password = ref("");
 
-const register = async () => {
-	await AuthService.register({ username: email.value, password: password.value });
-	await logInIfTokenPresent()
+const resetPassword = async () => {
+	await AuthService.ressetPassword({ username: email.value, password: password.value });
+	authStore.setAuthFromState(AuthFormState.LOGIN);
 };
 </script>
   

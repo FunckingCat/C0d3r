@@ -10,11 +10,7 @@
 			<input v-model="password" type="password" class="w-full p-2 bg-gray-700 rounded" required />
 		</div>
 
-		<div class="flex justify-between items-center">
-			<a href="#" class="text-primary text-sm hover:underline">Forgot password?</a>
-		</div>
-
-		<button @click="login" class="w-full btn btn-soft btn-primary">
+		<button @click="login" class="w-full btn btn-soft btn-primary mt-4">
 			Log in
 		</button>
 	</div>
@@ -23,17 +19,14 @@
 <script setup>
 import { ref } from "vue";
 import AuthService from "@/api/AuthApi";
-import router from "@/router/index.js";
 import { logInIfTokenPresent } from "@/scripts/login";
 
 const email = ref("a@mail.ru");
 const password = ref("password");
-const rememberMe = ref(false);
 
 const login = async () => {
 	await AuthService.login({ username: email.value, password: password.value });
 	await logInIfTokenPresent()
-	await router.push("/")
 };
 
 </script>

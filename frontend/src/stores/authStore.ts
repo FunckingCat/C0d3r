@@ -3,6 +3,9 @@ import { defineStore } from "pinia";
 import type { GroupDescription, User } from "@/types/ApiTypes";
 
 interface StateType {
+	authFormState: {
+		state: AuthFormState
+	}
 	authorized: boolean
 	user?: User
 	loading: boolean
@@ -10,9 +13,14 @@ interface StateType {
 	activeGroupDescription?: GroupDescription
 }
 
+export enum AuthFormState { LOGIN, REG, RESET }
+
 export const useAuthStore = defineStore("auth", () => {
 
 	const getDefaultState = () => ({
+		authFormState: {
+			state: AuthFormState.LOGIN
+		},
 		authorized: false,
 		loading: false
 	  });
@@ -30,12 +38,6 @@ export const useAuthStore = defineStore("auth", () => {
 	function setUser(user: User) {
 		state.value.user = user;
 		state.value.loading = false;
-		// if (state.value.activeGroup == undefined) {
-		// 	const group = user.groups?.[0]?.id ?? null;
-		// 	if (group != null) {
-		// 		state.value.activeGroup = group
-		// 	}
-		// }
 	}
 
 	function setLoading() {
@@ -50,6 +52,10 @@ export const useAuthStore = defineStore("auth", () => {
 		state.value.activeGroupDescription = groupDescription
 	}
 
+	function setAuthFromState(stateValue: AuthFormState) {
+		state.value.authFormState.state = stateValue
+	}
+
 	return {
 		state,
 		authorized: computed(() => state.value.authorized),
@@ -57,11 +63,13 @@ export const useAuthStore = defineStore("auth", () => {
 		user: computed(() => state.value.user),
 		activeGroup: computed(() => state.value.activeGroup),
 		activeGroupDescription: computed(() => state.value.activeGroupDescription),
+		authFormState: computed(() => state.value.authFormState.state),
 		setAuthorized,
 		setUser,
 		setLoading,
 		setActiveGroup,
 		setActiveGroupDescription,
+		setAuthFromState,
 		reset
 	};
 });
