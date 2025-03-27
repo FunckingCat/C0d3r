@@ -4,7 +4,7 @@
     <h1 class="text-3xl font-bold mb-6">Task Details</h1>
 
     <div v-if="task">
-      <TaskDetails :task="task" class="mb-6" />
+      <TaskDetails class="mb-6" />
       <TaskExecutions :task="task" />
     </div>
 

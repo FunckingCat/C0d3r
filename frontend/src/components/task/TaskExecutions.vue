@@ -19,7 +19,7 @@
 			<td>{{ formatDate(result.startedAt) }}</td>
 			<td>{{ formatDate(result.finishedAt) }}</td>
 			<td>{{ result.status }}</td>
-			<td><button class="btn" @click="openModal(result.id ?? -1)">View Logs</button></td>
+			<td><button class="btn btn-primary" @click="openModal(result.id ?? -1)">View Logs</button></td>
 		  </tr>
 		</tbody>
 	  </table>

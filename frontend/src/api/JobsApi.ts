@@ -16,6 +16,22 @@ const jobApi = {
 		console.log("Call response", response)
 		return response.data;
 	},
+	rerunJob: async (jobId: number): Promise<void> => {
+		const response = await apiClient.post(`/api/v1/job/rerun/${jobId}`);
+		return response.data;
+	},
+	delete: async (jobId: number): Promise<void> => {
+		const response = await apiClient.post(`/api/v1/job/delete/${jobId}`);
+		return response.data;
+	},
+	cancelJob: async (jobId: number): Promise<void> => {
+		const response = await apiClient.post(`/api/v1/job/cancel/${jobId}`);
+		return response.data;
+	},
+	triggerWebhook: async (jobId: number): Promise<void> => {
+		const response = await apiClient.post(`/api/v1/job/webhook/run/${jobId}`);
+		return response.data;
+	},
 };
 
 export default jobApi;

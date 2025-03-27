@@ -1,4 +1,4 @@
 ###
 # @name Rerun Job
-POST http://localhost:8090/api/v1/job/rerun/63
+POST http://localhost:8090/api/v1/job/rerun/90
 Authorization: Bearer {{access_token}}

@@ -17,7 +17,7 @@ const statusClass = () => {
         COMPLETED: "badge-success",
         FAILED: "badge-error",
         PENDING: "badge-warning",
-        CANCELLED: "badge-neutral"
+        CANCELLED: "badge-info"
     };
     return statusMap[props.status] || "badge-info";
 };

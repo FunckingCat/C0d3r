@@ -94,6 +94,7 @@ class ExecutionService(
             val updatedExecutionResult: ExecutionResultEntity = execution
                 .copy(
                     status = intermediateResult.status,
+                    finishedAt = if (terminalStatus(intermediateResult.status)) LocalDateTime.now() else null,
                     recordedAt = intermediateResult.containerStates[0].checkTime,
                     logs = intermediateResult.containerStates[0].logs
                 )
@@ -101,6 +102,10 @@ class ExecutionService(
         }
 
     }
+
+    private fun terminalStatus(status: ExecutionStatus) = setOf(
+        ExecutionStatus.COMPLETED, JobStatus.FAILED, ExecutionStatus.CANCELLED
+    ).contains(status)
 
     companion object {
         val log = LoggerFactory.getLogger(ExecutionService::class.java)!!
