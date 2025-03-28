@@ -1,5 +1,5 @@
 <template>
-    <div class="px-6 w-full max-w-5xl">
+    <div class="px-6 w-full max-w-5xl pb-10">
         <Breadcrumbs/>
         <h1 class="text-3xl font-bold mb-6">Jobs Dashboard</h1>
 

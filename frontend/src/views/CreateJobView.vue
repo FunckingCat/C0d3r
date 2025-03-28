@@ -10,7 +10,7 @@
                     v-model="jobParameters.group"
                     >
                     <option disabled value="">Select a group</option>
-                    <option v-for="group in user?.groups" :key="group.id" :value="group.id">
+                    <option v-for="group in groupOptions" :key="group.id" :value="group.id">
                         {{ group.name }}
                     </option>
                 </select>
@@ -70,8 +70,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { ExecutionType, type CreateJobRequest } from '@/types/ApiTypes';
+import { computed, ref } from 'vue';
+import { ExecutionType, Permission, type CreateJobRequest } from '@/types/ApiTypes';
 import { isCronValid } from '@/util/CronValidator';
 import jobApi from '@/api/JobsApi';
 import router from '@/router';
@@ -106,6 +106,13 @@ const addEnvironmentVariable = () => {
         envValue.value = null;
     }
 };
+
+const groupOptions = computed(() => {
+    var groups =  user.value?.groups
+        .filter(g => g.permissions.map(p => p.toString()).includes('RUN'))
+    console.log("Group options", user.value?.groups, groups)
+    return groups
+})
 
 const removeEnvironmentVariable = (key: string) => {
     jobParameters.value.environmentVariables?.delete(key);

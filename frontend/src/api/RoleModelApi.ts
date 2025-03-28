@@ -1,5 +1,5 @@
 import apiClient from "./API";
-import type { GroupDescription, User, PermissionRequest, GroupTokenResponse, CreateGroupRequest, JoinGroupRequest } from "@/types/ApiTypes";
+import type { GroupDescription, User, PermissionRequest, GroupTokenResponse, CreateGroupRequest, JoinGroupRequest, ExcludeRequest } from "@/types/ApiTypes";
 
 const roleModelApi = {
     changePermission: async (data: PermissionRequest): Promise<any> => {
@@ -33,6 +33,10 @@ const roleModelApi = {
     },
     refreshJoinGroupToken: async (groupId: string): Promise<any> => {
         const response = await apiClient.post(`/api/v1/role-model/refresh-join-group-token/${groupId}`);
+        return response.data;
+    },
+    excludeMember: async (excludeRequest: ExcludeRequest): Promise<void> => {
+        const response = await apiClient.post(`/api/v1/role-model/exclude-member-from-group`, excludeRequest);
         return response.data;
     },
 };

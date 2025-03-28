@@ -66,6 +66,11 @@ export interface GroupDescription {
 	members: Member[];
 }
 
+export interface ExcludeRequest {
+	memberId: string;
+	groupId: string;
+}
+
 export enum ActionType {
 	GRANT = 'GRANT',
 	REVOKE = 'REVOKE'
@@ -93,6 +98,7 @@ export interface JoinGroupRequest {
 
 export interface Job {
 	id?: number | null;
+	groupId?: string;
 	userId: string;
 	name: string;
 	createdAt?: string | null;

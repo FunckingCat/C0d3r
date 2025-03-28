@@ -6,14 +6,15 @@
           <tr>
             <th>Username</th>
             <th>Permissions</th>
+            <th v-if="isGroupAdmin"></th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="member in activeGroupDescription?.members" :key="member.id">
             <td class="text-md">{{ member.username }}</td>
-            <td class="flex justify-between">
+            <td class="flex justify-between mt-2">
               <div 
-                v-for="permission in permissionsToStringList()" :key="permission" class="flex">
+                v-for="permission in permissionsToStringList()" :key="permission" class="flex items-center">
                 <Toggle
                   :modelValue="userPermissionContains(member.permissions, permission)"
                   :checkboxDisabled="checboxDisabled(member, permission)"
@@ -22,6 +23,14 @@
                 <div class="text-md">
                   {{ permission }}
                 </div>
+              </div>
+            </td>
+            <td v-if="isGroupAdmin">
+              <div 
+                v-if="member.id != user?.id" 
+                class="btn btn-secondary" 
+                @click = "() => { excludeUser(member.id) }">
+                  Exclude
               </div>
             </td>
           </tr>
@@ -84,6 +93,14 @@ const userPermissionContains = (permissions: Permission[], permission: string) =
     // console.log(permissions, permission, permissions.includes(permission))
     return permissionsList.includes(permission)
 }
+
+const excludeUser = async (userId: string) => {
+    console.log(`Exclude user ${userId} from group ${activeGroup}`)
+    await roleModelApi.excludeMember({
+      memberId: userId,
+      groupId: activeGroup.value as string
+    })
+} 
 
 const isGroupAdmin = computed(
   () => {
