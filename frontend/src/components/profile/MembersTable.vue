@@ -10,26 +10,26 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="member in activeGroupDescription?.members" :key="member.id">
-            <td class="text-md">{{ member.username }}</td>
+          <tr v-for="tableRow in tableRows" :key="tableRow.userId">
+            <td class="text-md">{{ tableRow.userName }}</td>
             <td class="flex justify-between mt-2">
               <div 
-                v-for="permission in permissionsToStringList()" :key="permission" class="flex items-center">
+                v-for="checkbox in tableRow.checkboxes" :key="checkbox.label" class="flex items-center">
                 <Toggle
-                  :modelValue="userPermissionContains(member.permissions, permission)"
-                  :checkboxDisabled="checboxDisabled(member, permission)"
-                  @change="(state: boolean) => toggleFeature(member.id, permission, state)"
+                  :checked="checkbox.checked"
+                  :checkboxDisabled="checkbox.disabled"
+                  @change="(state: boolean) => toggleFeature(tableRow.userId, checkbox.label, state)"
                   class="mr-3"/>
                 <div class="text-md">
-                  {{ permission }}
+                  {{ checkbox.label }}
                 </div>
               </div>
             </td>
             <td v-if="isGroupAdmin">
               <div 
-                v-if="member.id != user?.id" 
+                v-if="tableRow.userId != user?.id" 
                 class="btn btn-secondary" 
-                @click = "() => { excludeUser(member.id) }">
+                @click = "() => { excludeUser(tableRow.userId) }">
                   Exclude
               </div>
             </td>
@@ -45,10 +45,54 @@ import { storeToRefs } from 'pinia';
 import { Permission, type Member, type PermissionRequest, ActionType } from '@/types/ApiTypes';
 import Toggle from '../Toggle.vue'
 import roleModelApi from '@/api/RoleModelApi';
-import { computed } from 'vue';
+import { computed, type ComputedRef } from 'vue';
 
 const userStore = useAuthStore()
-const { authorized, loading, user, activeGroup, activeGroupDescription } = storeToRefs(userStore)
+const { user, activeGroup, activeGroupDescription } = storeToRefs(userStore)
+
+interface ITableRow {
+  key: string;
+  userId: string;
+  userName: string;
+  checkboxes: ICheckboxState[]
+}
+
+interface ICheckboxState {
+  key: string;
+  label: string;
+  checked: boolean;
+  disabled: boolean;
+}
+
+const tableRows = computed(() => {
+  if (activeGroupDescription.value === undefined) return []
+
+  const rows: ITableRow[] = activeGroupDescription.value?.members.map(member => {
+        const userPermissionSet = member.permissions;
+        const checkboxStates: ICheckboxState[] = permissionsToStringList()
+          .map(permissionKey => {
+              const isChecked = userPermissionContains(userPermissionSet, permissionKey);
+              const isDisabled = checboxDisabled(member, permissionKey);
+              return {
+                  key: `${activeGroupDescription.value?.name}-${member.id}-${permissionKey}`,
+                  label: permissionKey,
+                  checked: isChecked,
+                  disabled: isDisabled,
+              };
+          });
+
+        return {
+            key: `${activeGroupDescription.value?.name}-${member.id}`,
+            userId: member.id,
+            userName: member.username,
+            checkboxes: checkboxStates,
+        };
+    });
+
+    console.log("Table rows", rows)
+
+    return rows;
+})
 
 const checboxDisabled = (member: Member, permission: string) => {
 
@@ -76,7 +120,7 @@ const toggleFeature = async (id: string, permission: string, state: boolean) => 
     var request: PermissionRequest = {
       action: state ? ActionType.GRANT : ActionType.REVOKE,
       memberId: id,
-      groupId: activeGroup.value as string, // Using non-null assertion assuming it's always present
+      groupId: activeGroupDescription.value?.id as string,
       permission: permission
     }
     console.log("Permission change", id, permission, state, request)

@@ -3,7 +3,7 @@
       <input
         type="checkbox"
         :disabled="checkboxDisabled"
-        :checked="modelValue"
+        :checked="checked"
         @change="handleChange"
         class="hidden"
       >
@@ -20,7 +20,7 @@
       type: Boolean,
       default: false
     },
-    modelValue: {
+    checked: {
       type: Boolean,
       default: false
     }

@@ -28,6 +28,9 @@ watch(activeGroup, async (newGroup) => {
     if (newGroup == undefined) {
       return "Active group not selected"
     }
+    if (isGroupAdmin.value == false) {
+      return
+    }
     var token = await roleModelApi.getJoinGroupToken(newGroup as string)
     console.log("TOKEN", token)
     accessToken.value = token.token
