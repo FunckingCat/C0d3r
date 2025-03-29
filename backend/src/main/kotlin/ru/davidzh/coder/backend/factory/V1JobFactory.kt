@@ -67,5 +67,6 @@ object V1JobFactory {
         .name(containerName(jobParameters.userId, jobParameters.name, jobParameters.ordinal!!))
         .image(jobParameters.dockerImage)
         .command(jobParameters.command)
+        .env(jobParameters.environmentVariables.map { V1EnvVar().name(it.key).value(it.value) })
 
 }

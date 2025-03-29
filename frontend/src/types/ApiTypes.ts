@@ -30,7 +30,7 @@ export interface CreateJobRequest {
     name: string;
     dockerImage: string;
     command: string[];
-    environmentVariables?: Map<string, string>;
+    environmentVariables?: Record<string, string>;
     executionType: ExecutionType;
     schedule?: string | null;
 };

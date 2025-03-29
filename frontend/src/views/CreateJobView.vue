@@ -43,7 +43,7 @@
                 </div>
                 <ul class="mt-2">
                     <li v-for="(value, key) in jobParameters.environmentVariables" :key="key"
-                        class="badge badge-md badge-outline badge-accent py-4 px-3 m-2">
+                        class="badge badge-soft badge-md badge-outline badge-warning py-4 px-3 m-2">
                         {{ value[0] }} : {{ value[1] }}
                         <button type="button" @click="removeEnvironmentVariable(value[0])" class="">✖</button>
                     </li>
@@ -125,6 +125,8 @@ const removeEnvironmentVariable = (key: string) => {
 const submit = async () => {
     const collectedParams = jobParameters.value
 
+    console.log("Collected params", collectedParams)
+
     if (collectedParams.executionType == ExecutionType.SCHEDULED) {
         const cronValid = isCronValid(collectedParams.schedule!!)
     }
@@ -134,15 +136,26 @@ const submit = async () => {
         name: collectedParams.name!!,
         dockerImage: collectedParams.dockerImage!!,
         command: collectedParams.command!!.split(" "),
-        environmentVariables: collectedParams.environmentVariables,
+        environmentVariables: environmentMapToRecord(collectedParams.environmentVariables),
         executionType: collectedParams.executionType!!,
         schedule: collectedParams.executionType == ExecutionType.SCHEDULED ? collectedParams.schedule!! : null
     }
+
+    console.log("createJobRequest", createJobRequest)
 
     const createdJob = await jobApi.createJob(createJobRequest)
 
     router.push(`/tasks/${createdJob.id}`)
 
+}
+
+function environmentMapToRecord(
+    environmentVariables?: Map<string, string> | null
+): Record<string, string> {
+    if (!environmentVariables) {
+        return {};
+    }
+    return Object.fromEntries(environmentVariables);
 }
 
 onMounted(async () => {

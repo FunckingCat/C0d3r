@@ -45,7 +45,7 @@
           </option>
         </select>
       </div>
-      <button class="btn btn-secondary ml-6 w-35" @click="setActive">Set Active</button>
+      <button class="btn btn-soft btn-success ml-6 w-35" @click="setActive">Set Active</button>
       <button class="btn btn-warning ml-6 w-35" @click="leaveGroup">Leave Group</button>
     </div>
   </div>

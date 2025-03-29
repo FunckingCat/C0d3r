@@ -12,7 +12,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div class="bg-base-100 text-white shadow-md h-screen flex flex-col items-center">
+  <div class="bg-base-100 text-white h-screen flex flex-col items-center">
     <Header />
     <RouterView />
   </div>

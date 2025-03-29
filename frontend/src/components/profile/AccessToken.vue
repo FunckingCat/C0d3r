@@ -4,8 +4,8 @@
         <label>Access Token:</label>
         <div class="flex items-center">
           <input type="text" v-model="accessToken" readonly class="input w-full" />
-          <button @click="copyToken" class="btn btn-secondary ml-2">Copy token</button>
-          <button @click="revokeToken" class="btn btn-danger ml-2">Revoke token</button>
+          <button @click="copyToken" class="btn btn-success ml-2">Copy token</button>
+          <button @click="revokeToken" class="btn btn-soft btn-secondary ml-2">Revoke token</button>
         </div>
       </div>
     </div>

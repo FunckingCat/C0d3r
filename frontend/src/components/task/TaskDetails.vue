@@ -10,10 +10,10 @@
 				<div><strong>Created At:</strong> {{ task?.createdAt }}</div>
 			</div>
 			<div class="flex flex-col ml-6 gap-4">
-				<button v-if="task?.executionType == ExecutionType.ON_DEMAND" @click="rerunAction" class="btn btn-accent w-70">Re-run</button>
-				<button v-if="task?.executionType == ExecutionType.WEBHOOK" @click="triggerWebhook" class="btn btn-accent w-70">Trigger webhook</button>
-				<button @click="terminateAction" class="btn btn-warning w-70">Terminate</button>
-				<button @click="deleteAction" class="btn btn-error w-70">Delete</button>
+				<button v-if="task?.executionType == ExecutionType.ON_DEMAND" @click="rerunAction" class="btn btn-soft btn-accent w-70">Re-run</button>
+				<button v-if="task?.executionType == ExecutionType.WEBHOOK" @click="triggerWebhook" class="btn btn-soft btn-accent w-70">Trigger webhook</button>
+				<button @click="terminateAction" class="btn btn-soft btn-warning w-70">Terminate</button>
+				<button @click="deleteAction" class="btn btn-soft btn-error w-70">Delete</button>
 			</div>
 		</div>
 	</div>
