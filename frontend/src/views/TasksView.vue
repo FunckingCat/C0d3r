@@ -21,7 +21,9 @@ import jobApi from '@/api/JobsApi';
 import type { Job } from '@/types/ApiTypes';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import { useBreadCrumbStore } from '@/stores/breadCrumbsStore';
+import { useAlertStore } from '@/stores/alertStore';
 
+const alertStore = useAlertStore()
 const breadCrumbsStore = useBreadCrumbStore()
 const tasksStore = useTasksStore();
 const summary = computed(() => tasksStore.summary);

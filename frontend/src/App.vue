@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 import Header from '@/components/Header.vue';
-import { computed, onBeforeMount } from 'vue';
+import { computed, onBeforeMount, onMounted } from 'vue';
 import { logInIfTokenPresent } from './scripts/login';
-import Breadcrumbs from './components/Breadcrumbs.vue';
+import Alert from './components/Alert.vue';
 
 onBeforeMount(async () => {
   await logInIfTokenPresent()
@@ -16,4 +16,5 @@ onBeforeMount(async () => {
     <Header />
     <RouterView />
   </div>
+  <Alert />
 </template>

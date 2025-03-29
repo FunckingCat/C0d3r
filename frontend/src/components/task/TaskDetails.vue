@@ -21,6 +21,7 @@
 
 <script setup lang="ts">
 import jobApi from '@/api/JobsApi';
+import router from '@/router';
 import { UseCurrentTaskStore } from '@/stores/currentTaskStore';
 import { ExecutionType } from '@/types/ApiTypes';
 import { storeToRefs } from 'pinia';
@@ -41,11 +42,12 @@ const terminateAction = () => {
 const deleteAction = () => {
 	jobApi.delete(task.value?.id as number)
 	console.log("Call deleteAction")
+	router.push("/tasks")
 }
 
 const triggerWebhook = () => {
 	jobApi.triggerWebhook(task.value?.id as number)
-	console.log("Call deleteAction")
+	console.log("Call trigger webhook")
 }
 
 </script>

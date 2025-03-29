@@ -86,6 +86,7 @@ class JobService(
         return (userJobs + groupJobs)
             .distinct()
             .map { jobConverter.convert(it) }
+            .filter{ job -> job.deleted == false }
     }
 
     /**

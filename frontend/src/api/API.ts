@@ -1,5 +1,6 @@
 import axios from 'axios';
 import StorageService from "@/util/StorageService.ts";
+import { useAlertStore } from '@/stores/alertStore';
 
 const apiClient = axios.create({
   baseURL: 'http://localhost:8090',
@@ -19,12 +20,19 @@ apiClient.interceptors.request.use((config) => {
 }, (error) => Promise.reject(error));
 
 // Response interceptor for handling errors (e.g., token expiration)
-apiClient.interceptors.response.use((response) => response, async (error) => {
-  if (error.response?.status === 401) {
-    // Optionally handle token refresh here
-    console.warn('Unauthorized request. Redirecting to login...');
+apiClient.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response?.status != 200) {
+      const alertStore = useAlertStore()
+      alertStore.addAlert({
+        level: 'error',
+        title: `${error.response?.status}: ${error.response?.data.message}`,
+        text: error.response?.data.description,
+      })
+    }
+    return Promise.reject(error);
   }
-  return Promise.reject(error);
-});
+);
 
 export default apiClient;

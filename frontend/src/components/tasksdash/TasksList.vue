@@ -2,7 +2,7 @@
 	<h2 class="p-4 pb-2 text-4xl opacity-60 tracking-wide">Tasks</h2>
 	
 	<div v-for="(groupJobs, groupName) in taskGroups">
-		<h3 class="p-4 pb-2 text-xl opacity-60 tracking-wide">{{ groupName }}</h3>
+		<h3 v-if="groupJobs.length > 0" class="p-4 pb-2 text-xl opacity-60 tracking-wide">{{ groupName }}</h3>
 		<ul class="list bg-base-200 rounded-box shadow-md">
 			<TaskItem v-for="job in groupJobs" :key="job.name" :task="job" />
 		</ul>
