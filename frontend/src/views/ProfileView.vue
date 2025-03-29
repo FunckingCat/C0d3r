@@ -30,7 +30,9 @@ import { PollingService } from '@/api/polling/PollingService';
 import { storeToRefs } from 'pinia';
 import MembersTable from '@/components/profile/MembersTable.vue';
 import roleModelApi from '@/api/RoleModelApi';
+import { useBreadCrumbStore } from '@/stores/breadCrumbsStore';
 
+const breadCrumbsStore = useBreadCrumbStore()
 const userStore = useAuthStore()
 const { authorized, loading, user, activeGroup, activeGroupDescription } = storeToRefs(userStore)
 
@@ -61,6 +63,10 @@ const gproupPollingService = new PollingService<GroupDescription>({
 })
 
 onMounted(async () => {
+  breadCrumbsStore.setCrumbs([
+        { name: 'Jobs Dashboard', link: "/tasks" },
+        { name: 'Profile', link: "/profile" }
+    ])
   await userPollingService.start()
   await gproupPollingService.start()
 })

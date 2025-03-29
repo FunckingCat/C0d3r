@@ -20,7 +20,9 @@ import { PollingService } from '@/api/polling/PollingService';
 import jobApi from '@/api/JobsApi';
 import type { Job } from '@/types/ApiTypes';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
+import { useBreadCrumbStore } from '@/stores/breadCrumbsStore';
 
+const breadCrumbsStore = useBreadCrumbStore()
 const tasksStore = useTasksStore();
 const summary = computed(() => tasksStore.summary);
 
@@ -32,11 +34,14 @@ const pollingService: PollingService<Job[]> = new PollingService<Job[]>({
 })
 
 onMounted(async () => {
+    breadCrumbsStore.setCrumbs([
+        { name: 'Jobs Dashboard', link: "/tasks" }
+    ])
     await pollingService.start()
 })
 
 onUnmounted(() => {
     pollingService.stop()
-  })
+})
 
 </script>

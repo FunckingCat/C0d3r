@@ -1,4 +1,5 @@
 <template>
+            <Breadcrumbs/>
     <div class="max-w-md mx-auto p-4">
         <h2 class="text-2xl font-bold mb-4">Create Job</h2>
         <form @submit.prevent="submit" class="space-y-4">
@@ -70,14 +71,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { onMounted, computed, ref } from 'vue';
 import { ExecutionType, Permission, type CreateJobRequest } from '@/types/ApiTypes';
 import { isCronValid } from '@/util/CronValidator';
 import jobApi from '@/api/JobsApi';
 import router from '@/router';
 import { useAuthStore } from '@/stores/authStore';
 import { storeToRefs } from 'pinia';
+import Breadcrumbs from '@/components/Breadcrumbs.vue';
+import { useBreadCrumbStore } from '@/stores/breadCrumbsStore';
 
+const breadCrumbsStore = useBreadCrumbStore()
 const userStore = useAuthStore()
 const { authorized, loading, user, activeGroup, activeGroupDescription } = storeToRefs(userStore)
 
@@ -140,5 +144,12 @@ const submit = async () => {
     router.push(`/tasks/${createdJob.id}`)
 
 }
+
+onMounted(async () => {
+    breadCrumbsStore.setCrumbs([
+        { name: 'Jobs Dashboard', link: "/tasks" },
+        { name: 'New Job', link: "/new-job" }
+    ])
+})
 
 </script>
