@@ -1,5 +1,5 @@
 <template>
-  <div class="modal" :class="{ 'modal-open': executionModelOpened }">
+  <div class="modal w-screen" :class="{ 'modal-open': executionModelOpened }">
     <div class="modal-box w-11/12 max-w-4xl"> 
       <div class="mb-4"> 
         <h3 class="font-bold text-lg">Execution Logs</h3>

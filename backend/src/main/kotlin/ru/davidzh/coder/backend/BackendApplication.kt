@@ -1,5 +1,7 @@
 package ru.davidzh.coder.backend
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition
+import io.swagger.v3.oas.annotations.info.Info
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.EnableAspectJAutoProxy
@@ -13,6 +15,16 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @SpringBootApplication
 @EnableAspectJAutoProxy
 @EnableScheduling
+@OpenAPIDefinition(
+	info = Info(
+		title = "Lambda platform API",
+		version = "1.0.0",
+		description = "This API provides functionalities for interaction with Lambda platform APIs."
+	)
+	// You can also add servers, security definitions etc. here
+	// servers = @Server(...)
+	// security = @SecurityRequirement(...)
+)
 class BackendApplication
 
 /**

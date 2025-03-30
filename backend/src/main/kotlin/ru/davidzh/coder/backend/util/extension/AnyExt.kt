@@ -12,5 +12,5 @@ import org.springframework.http.ResponseEntity
  * @param status the HTTP status to set for the ResponseEntity. Defaults to `HttpStatus.OK`.
  * @return a ResponseEntity containing the current object as the body and the specified status.
  */
-fun Any.asResponseEntity(status: HttpStatus = HttpStatus.OK):
-        ResponseEntity<Any> = ResponseEntity.status(status).body(this)
+fun <T> T.asResponseEntity(status: HttpStatus = HttpStatus.OK):
+        ResponseEntity<T> = ResponseEntity.status(status).body(this)

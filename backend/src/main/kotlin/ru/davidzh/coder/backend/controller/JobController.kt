@@ -1,11 +1,21 @@
 package ru.davidzh.coder.backend.controller
 
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.ArraySchema
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ru.davidzh.coder.backend.aop.annotation.LogExecution
 import ru.davidzh.coder.backend.controller.dto.CreateJobRequest
+import ru.davidzh.coder.backend.controller.model.RestError
+import ru.davidzh.coder.backend.model.Job
 import ru.davidzh.coder.backend.service.JobService
 import ru.davidzh.coder.backend.util.extension.asResponseEntity
-import java.util.*
 
 /**
  * REST controller for managing jobs in the system.
@@ -17,6 +27,7 @@ import java.util.*
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/job")
+@Tag(name = "Job Management", description = "Endpoints for creating, retrieving, updating, and managing the lifecycle of jobs.")
 class JobController(
     private val jobService: JobService
 ) {
@@ -29,7 +40,21 @@ class JobController(
      */
     @LogExecution
     @PostMapping
-    fun createJob(@RequestBody createJobRequest: CreateJobRequest) =
+    @Operation(
+        summary = "Create Job",
+        description = "Creates a new job based on the provided details."
+    )
+    @ApiResponses(value = [
+        ApiResponse(
+            responseCode = "201", description = "Job created successfully", // Use 201 for successful creation
+            content = [Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = Schema(implementation = Job::class))]
+        ),
+        ApiResponse(
+            responseCode = "500", description = "Internal server error",
+            content = [Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = Schema(implementation = RestError::class))]
+        )
+    ])
+    fun createJob(@RequestBody createJobRequest: CreateJobRequest): ResponseEntity<Job> =
         jobService.createJob(createJobRequest).asResponseEntity()
 
     /**
@@ -39,7 +64,21 @@ class JobController(
      */
     @LogExecution
     @GetMapping
-    fun getJobs() = jobService.getJobs().asResponseEntity()
+    @Operation(
+        summary = "Get All Jobs",
+        description = "Retrieves a list of all jobs available in the system."
+    )
+    @ApiResponses(value = [
+        ApiResponse(
+            responseCode = "200", description = "Successfully retrieved list of jobs",
+            content = [Content(mediaType = MediaType.APPLICATION_JSON_VALUE, array = ArraySchema(schema = Schema(implementation = Job::class)))] // Use ArraySchema for lists
+        ),
+        ApiResponse(
+            responseCode = "500", description = "Internal server error",
+            content = [Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = Schema(implementation = RestError::class))]
+        )
+    ])
+    fun getJobs(): ResponseEntity<List<Job>> = jobService.getJobs().asResponseEntity()
 
     /**
      * Retrieves the details of a specific job by its ID.
@@ -49,7 +88,21 @@ class JobController(
      */
     @LogExecution
     @GetMapping("/{id}")
-    fun getJob(@PathVariable id: Long) = jobService.getJob(id).asResponseEntity()
+    @Operation(
+        summary = "Get Job by ID",
+        description = "Retrieves the details of a specific job using its unique ID."
+    )
+    @ApiResponses(value = [
+        ApiResponse(
+            responseCode = "200", description = "Successfully retrieved job details",
+            content = [Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = Schema(implementation = Job::class))]
+        ),
+        ApiResponse(
+            responseCode = "500", description = "Internal server error",
+            content = [Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = Schema(implementation = RestError::class))]
+        )
+    ])
+    fun getJob(@PathVariable id: Long): ResponseEntity<Job> = jobService.getJob(id).asResponseEntity()
 
     /**
      * Cancels a specific job by its ID.
@@ -59,7 +112,21 @@ class JobController(
      */
     @LogExecution
     @PostMapping("/cancel/{id}")
-    fun cancelJob(@PathVariable id: Long) = jobService.cancelJob(id).asResponseEntity()
+    @Operation(
+        summary = "Cancel Job",
+        description = "Requests cancellation of a specific job by its ID. The job might not be cancelled immediately depending on its state."
+    )
+    @ApiResponses(value = [
+        ApiResponse(
+            responseCode = "200", description = "Job cancellation request accepted", // Or 204 if truly no content ever
+            content = [Content()]
+        ),
+        ApiResponse(
+            responseCode = "500", description = "Internal server error",
+            content = [Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = Schema(implementation = RestError::class))]
+        )
+    ])
+    fun cancelJob(@PathVariable id: Long): ResponseEntity<Unit> = jobService.cancelJob(id).asResponseEntity()
 
     /**
      * Reruns a specific job by its ID.
@@ -69,7 +136,21 @@ class JobController(
      */
     @LogExecution
     @PostMapping("/rerun/{id}")
-    fun rerunJob(@PathVariable id: Long) = jobService.rerunJob(id).asResponseEntity()
+    @Operation(
+        summary = "Rerun Job",
+        description = "Requests a rerun of a specific job (e.g., a failed or completed job) by its ID."
+    )
+    @ApiResponses(value = [
+        ApiResponse(
+            responseCode = "200", description = "Job rerun request accepted",
+            content = [Content()]
+        ),
+        ApiResponse(
+            responseCode = "500", description = "Internal server error",
+            content = [Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = Schema(implementation = RestError::class))]
+        )
+    ])
+    fun rerunJob(@PathVariable id: Long): ResponseEntity<Unit> = jobService.rerunJob(id).asResponseEntity()
 
     /**
      * Deletes a specific job by its ID.
@@ -79,7 +160,21 @@ class JobController(
      */
     @LogExecution
     @PostMapping("/delete/{id}")
-    fun deleteJob(@PathVariable id: Long) = jobService.deleteJob(id).asResponseEntity()
+    @Operation(
+        summary = "Delete Job",
+        description = "Permanently deletes a specific job by its ID."
+    )
+    @ApiResponses(value = [
+        ApiResponse(
+            responseCode = "200", description = "Job deleted successfully", // Or 204 No Content
+            content = [Content()]
+        ),
+        ApiResponse(
+            responseCode = "500", description = "Internal server error",
+            content = [Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = Schema(implementation = RestError::class))]
+        )
+    ])
+    fun deleteJob(@PathVariable id: Long): ResponseEntity<Unit> = jobService.deleteJob(id).asResponseEntity()
 
     /**
      * Starts a webhook job for a specific job ID.
@@ -89,6 +184,20 @@ class JobController(
      */
     @LogExecution
     @PostMapping("/webhook/run/{id}")
-    fun startWebhook(@PathVariable id: Long) = jobService.startWebHookJob(id).asResponseEntity()
+    @Operation(
+        summary = "Start Webhook Job",
+        description = "Triggers the webhook associated with a specific job ID."
+    )
+    @ApiResponses(value = [
+        ApiResponse(
+            responseCode = "200", description = "Webhook job trigger request accepted",
+            content = [Content()]
+        ),
+        ApiResponse(
+            responseCode = "500", description = "Internal server error",
+            content = [Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = Schema(implementation = RestError::class))]
+        )
+    ])
+    fun startWebhook(@PathVariable id: Long): ResponseEntity<Unit> = jobService.startWebHookJob(id).asResponseEntity()
 
 }

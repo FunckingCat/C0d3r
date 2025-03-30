@@ -1,5 +1,6 @@
 package ru.davidzh.coder.backend.controller.dto
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import io.swagger.v3.oas.annotations.media.Schema
 
 /**
@@ -18,6 +19,7 @@ data class LogInUserRequest(
     @Schema(description = "Пароль для входа в систему")
     val password: String
 ) {
+    @get:JsonIgnore
     val usernameLower: String
         get() = username.lowercase()
 }

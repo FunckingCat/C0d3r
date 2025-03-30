@@ -1,14 +1,21 @@
 package ru.davidzh.coder.backend.controller
 
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ru.davidzh.coder.backend.aop.annotation.LogExecution
-import ru.davidzh.coder.backend.controller.UsersController.Companion.log
 import ru.davidzh.coder.backend.controller.dto.LogInUserRequest
 import ru.davidzh.coder.backend.controller.dto.ResetPasswordRequest
+import ru.davidzh.coder.backend.controller.model.JwtToken
+import ru.davidzh.coder.backend.controller.model.RestError
 import ru.davidzh.coder.backend.service.AuthenticationService
 import ru.davidzh.coder.backend.util.extension.asResponseEntity
-import ru.davidzh.coder.backend.util.extension.getUserAuthentication
 
 /**
  * REST controller for handling user authentication operations.
@@ -20,6 +27,7 @@ import ru.davidzh.coder.backend.util.extension.getUserAuthentication
 @CrossOrigin
 @RestController
 @RequestMapping("/public/api/v1/authentication")
+@Tag(name = "Authentication", description = "Public endpoints for user authentication (login, password reset).")
 class AuthenticationController(
     private val authenticationService: AuthenticationService,
 ) {
@@ -32,7 +40,23 @@ class AuthenticationController(
      */
     @LogExecution
     @PostMapping("/log-in")
-    fun logIn(@RequestBody request: LogInUserRequest) =
+    @Operation(
+        summary = "User Login",
+        description = "Authenticates a user based on provided credentials and returns a JWT token upon success."
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200", description = "Authentication successful, JWT token returned",
+                content = [Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = Schema(implementation = JwtToken::class))]
+            ),
+            ApiResponse(
+                responseCode = "500", description = "Internal server error",
+                content = [Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = Schema(implementation = RestError::class))]
+            )
+        ]
+    )
+    fun logIn(@RequestBody request: LogInUserRequest): ResponseEntity<JwtToken> =
         authenticationService.logIn(request).asResponseEntity()
 
     /**
@@ -43,20 +67,23 @@ class AuthenticationController(
      */
     @LogExecution
     @PostMapping("/reset-password")
-    fun resetPassword(@RequestBody request: ResetPasswordRequest) =
+    @Operation(
+        summary = "Reset User Password",
+        description = "Initiates the password reset process for a user (details depend on implementation, e.g., requires email and new password)."
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200", description = "Password reset request processed successfully (e.g., password updated or reset email sent)",
+                content = [Content()]
+            ),
+            ApiResponse(
+                responseCode = "500", description = "Internal server error",
+                content = [Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = Schema(implementation = RestError::class))]
+            )
+        ]
+    )
+    fun resetPassword(@RequestBody request: ResetPasswordRequest): ResponseEntity<Unit> =
         authenticationService.resetPassword(request).asResponseEntity()
-
-    /**
-     * Tests the authentication mechanism by retrieving and logging the current user's authentication details.
-     *
-     * @return a [ResponseEntity] containing the user's authentication details.
-     */
-    @LogExecution
-    @PostMapping("/test")
-    fun test(): ResponseEntity<Any> {
-        val user = getUserAuthentication()
-        log.info("$user")
-        return user.asResponseEntity()
-    }
 
 }

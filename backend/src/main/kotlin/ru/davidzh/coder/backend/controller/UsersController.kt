@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.davidzh.coder.backend.aop.annotation.LogExecution
+import ru.davidzh.coder.backend.model.User
 import ru.davidzh.coder.backend.service.UserService
 import ru.davidzh.coder.backend.util.extension.asResponseEntity
 
@@ -25,7 +26,7 @@ class UsersController(
 
     @LogExecution
     @GetMapping("/user")
-    fun index(): ResponseEntity<Any> = userService.getCurrentUser().asResponseEntity()
+    fun getCurrentUser(): ResponseEntity<User> = userService.getCurrentUser().asResponseEntity()
 
     companion object {
         val log: Logger = LoggerFactory.getLogger(UsersController::class.java)
