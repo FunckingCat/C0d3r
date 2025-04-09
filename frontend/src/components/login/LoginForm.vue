@@ -21,8 +21,8 @@ import { ref } from "vue";
 import AuthService from "@/api/AuthApi";
 import { logInIfTokenPresent } from "@/scripts/login";
 
-const email = ref("a@mail.ru");
-const password = ref("password");
+const email = ref("");
+const password = ref("");
 
 const login = async () => {
 	await AuthService.login({ username: email.value, password: password.value });

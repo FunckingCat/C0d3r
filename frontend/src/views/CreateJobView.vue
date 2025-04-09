@@ -80,6 +80,7 @@ import { useAuthStore } from '@/stores/authStore';
 import { storeToRefs } from 'pinia';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
 import { useBreadCrumbStore } from '@/stores/breadCrumbsStore';
+import { parse } from 'shell-quote';
 
 const breadCrumbsStore = useBreadCrumbStore()
 const userStore = useAuthStore()
@@ -135,7 +136,7 @@ const submit = async () => {
         groupId: collectedParams.group,
         name: collectedParams.name!!,
         dockerImage: collectedParams.dockerImage!!,
-        command: collectedParams.command!!.split(" "),
+        command: parse(collectedParams.command!!),
         environmentVariables: environmentMapToRecord(collectedParams.environmentVariables),
         executionType: collectedParams.executionType!!,
         schedule: collectedParams.executionType == ExecutionType.SCHEDULED ? collectedParams.schedule!! : null

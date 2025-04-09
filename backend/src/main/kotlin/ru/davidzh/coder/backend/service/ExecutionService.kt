@@ -20,8 +20,7 @@ class ExecutionService(
     private val jobConverter: JobConverter
 ) {
 
-//    @EventListener(ApplicationReadyEvent::class)
-    @Scheduled(fixedDelay = 5000, initialDelay = 2000)
+    @Scheduled(fixedDelay = 2000, initialDelay = 2000)
     fun executeTask() {
         val runningJobs = jobRepository.findByStatus(JobStatus.RUNNING)
 

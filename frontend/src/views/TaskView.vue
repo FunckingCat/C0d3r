@@ -44,7 +44,7 @@ watch(task, async (newTaskId) => {
 
 const pollingService = new PollingService<Job>({
   name: 'CurrentTaskPullingService',
-  interval: 1000,
+  interval: 500,
   action: () => jobApi.getJobById(taskId),
   callback: (job) => currentTaskStore.setTask(job)
 })
