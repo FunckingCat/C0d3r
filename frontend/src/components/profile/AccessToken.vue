@@ -13,6 +13,7 @@
   
 <script setup lang="ts">
 import roleModelApi from '@/api/RoleModelApi';
+import userApi from '@/api/UserApi';
 import { useAuthStore } from '@/stores/authStore';
 import { Permission } from '@/types/ApiTypes';
 import { computed } from '@vue/reactivity';
@@ -25,10 +26,14 @@ const { authorized, loading, user, activeGroup, activeGroupDescription } = store
 const accessToken = ref('******************');
 
 watch(activeGroup, async (newGroup) => {
+    console.log("WATCH")
     if (newGroup == undefined) {
       return "Active group not selected"
     }
-    if (isGroupAdmin.value == false) {
+    var userDto = await userApi.getCurrentUser()
+    var userPermissionsInGroup = userDto.groups.filter(g => g.id == activeGroup.value)?.[0]?.permissions
+    var isAdmin = userPermissionContains(userPermissionsInGroup as Permission[], "ADMIN")
+    if (!isAdmin) {
       return
     }
     var token = await roleModelApi.getJoinGroupToken(newGroup as string)
