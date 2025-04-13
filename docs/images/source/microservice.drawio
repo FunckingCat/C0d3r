@@ -1,0 +1,85 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15" version="26.2.10">
+  <diagram name="Microservices Architecture" id="microservices-arch">
+    <mxGraphModel dx="1806" dy="682" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="9oqtgPrdCQ-4t9hM0V_q-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="client1" target="9oqtgPrdCQ-4t9hM0V_q-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="client1" value="Client&lt;div&gt;(FrontEnd)&lt;/div&gt;" style="shape=person;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="80" y="80" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="9oqtgPrdCQ-4t9hM0V_q-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="client2" target="9oqtgPrdCQ-4t9hM0V_q-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="client2" value="Client&lt;div&gt;(API)&lt;/div&gt;" style="shape=person;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="80" y="240" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="actor1" value="Users" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" parent="1" vertex="1">
+          <mxGeometry x="10" y="85" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="actor2" value="Integrations" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;" parent="1" vertex="1">
+          <mxGeometry x="10" y="245" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="edge1" style="endArrow=block;html=1;" parent="1" source="actor1" target="client1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge2" style="endArrow=block;html=1;" parent="1" source="actor2" target="client2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="saDB" value="Service A&lt;div&gt;Database&lt;/div&gt;" style="shape=cylinder;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="650" y="52.5" width="100" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="sbDB" value="Service B&lt;div&gt;Database&lt;/div&gt;" style="shape=cylinder;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="660" y="263" width="100" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="9oqtgPrdCQ-4t9hM0V_q-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="9oqtgPrdCQ-4t9hM0V_q-1" target="9oqtgPrdCQ-4t9hM0V_q-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9oqtgPrdCQ-4t9hM0V_q-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="9oqtgPrdCQ-4t9hM0V_q-1" target="9oqtgPrdCQ-4t9hM0V_q-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9oqtgPrdCQ-4t9hM0V_q-1" value="API Gateway" style="rounded=0;whiteSpace=wrap;html=1;direction=west;rotation=270;" vertex="1" parent="1">
+          <mxGeometry x="140" y="173.88" width="241.25" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="9oqtgPrdCQ-4t9hM0V_q-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="9oqtgPrdCQ-4t9hM0V_q-4" target="saDB">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9oqtgPrdCQ-4t9hM0V_q-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="9oqtgPrdCQ-4t9hM0V_q-4" target="9oqtgPrdCQ-4t9hM0V_q-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9oqtgPrdCQ-4t9hM0V_q-4" value="Service A" style="swimlane;whiteSpace=wrap;html=1;horizontal=0;container=0;" vertex="1" parent="1">
+          <mxGeometry x="340" y="30" width="270" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="sa1" value="Service A Presentation" style="shape=rectangle;whiteSpace=wrap;html=1;" parent="9oqtgPrdCQ-4t9hM0V_q-4" vertex="1">
+          <mxGeometry x="40" y="15" width="210" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="sa2" value="Service A Business Logic" style="shape=rectangle;whiteSpace=wrap;html=1;" parent="9oqtgPrdCQ-4t9hM0V_q-4" vertex="1">
+          <mxGeometry x="40" y="55" width="210" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="sa3" value="Service A Data Access" style="shape=rectangle;whiteSpace=wrap;html=1;" parent="9oqtgPrdCQ-4t9hM0V_q-4" vertex="1">
+          <mxGeometry x="40" y="95" width="210" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="9oqtgPrdCQ-4t9hM0V_q-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="9oqtgPrdCQ-4t9hM0V_q-5" target="sbDB">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9oqtgPrdCQ-4t9hM0V_q-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="9oqtgPrdCQ-4t9hM0V_q-5" target="9oqtgPrdCQ-4t9hM0V_q-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9oqtgPrdCQ-4t9hM0V_q-5" value="Service B" style="swimlane;whiteSpace=wrap;html=1;horizontal=0;container=0;" vertex="1" parent="1">
+          <mxGeometry x="340" y="240" width="270" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="9oqtgPrdCQ-4t9hM0V_q-6" value="Service B Presentation" style="shape=rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="9oqtgPrdCQ-4t9hM0V_q-5">
+          <mxGeometry x="40" y="15" width="210" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="9oqtgPrdCQ-4t9hM0V_q-7" value="Service B Business Logic" style="shape=rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="9oqtgPrdCQ-4t9hM0V_q-5">
+          <mxGeometry x="40" y="55" width="210" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="9oqtgPrdCQ-4t9hM0V_q-8" value="Service B Data Access" style="shape=rectangle;whiteSpace=wrap;html=1;" vertex="1" parent="9oqtgPrdCQ-4t9hM0V_q-5">
+          <mxGeometry x="40" y="95" width="210" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

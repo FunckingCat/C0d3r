@@ -1,0 +1,67 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15" version="26.2.10">
+  <diagram name="Monolithic Architecture" id="monolithic-web-arch">
+    <mxGraphModel dx="979" dy="682" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="QDLE7NMi8FAMYxf8mcH8-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="2" target="3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2" value="Client&lt;div&gt;(FrontEnd)&lt;/div&gt;" style="shape=person;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="130" y="90" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QDLE7NMi8FAMYxf8mcH8-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="3" target="7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QDLE7NMi8FAMYxf8mcH8-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="3" target="QDLE7NMi8FAMYxf8mcH8-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3" value="Monolithic &amp;nbsp;Web Application Web Server" style="swimlane;whiteSpace=wrap;html=1;horizontal=0;container=0;" parent="1" vertex="1">
+          <mxGeometry x="280" y="30" width="360" height="310" as="geometry" />
+        </mxCell>
+        <mxCell id="7" value="Service A&lt;div&gt;Database&lt;/div&gt;" style="shape=cylinder;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="680" y="80" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="QDLE7NMi8FAMYxf8mcH8-9" value="Users" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="92" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QDLE7NMi8FAMYxf8mcH8-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.002;entryY=0.532;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="QDLE7NMi8FAMYxf8mcH8-9" target="2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4" value="Service A Presentation Layer" style="shape=rectangle;whiteSpace=wrap;html=1;container=0;" parent="1" vertex="1">
+          <mxGeometry x="320" y="50" width="300" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="5" value="Service A&amp;nbsp;Business Logic" style="shape=rectangle;whiteSpace=wrap;html=1;container=0;" parent="1" vertex="1">
+          <mxGeometry x="320" y="90" width="300" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="6" value="Service A&amp;nbsp;Database Access Layer" style="shape=rectangle;whiteSpace=wrap;html=1;container=0;" parent="1" vertex="1">
+          <mxGeometry x="320" y="130" width="300" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QDLE7NMi8FAMYxf8mcH8-12" value="Service B Presentation Layer" style="shape=rectangle;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="320" y="200" width="300" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QDLE7NMi8FAMYxf8mcH8-13" value="Service B Business Logic" style="shape=rectangle;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="320" y="240" width="300" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QDLE7NMi8FAMYxf8mcH8-14" value="Service B Database Access Layer" style="shape=rectangle;whiteSpace=wrap;html=1;container=0;" vertex="1" parent="1">
+          <mxGeometry x="320" y="280" width="300" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QDLE7NMi8FAMYxf8mcH8-15" value="Service B&lt;div&gt;Database&lt;/div&gt;" style="shape=cylinder;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="680" y="220" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="QDLE7NMi8FAMYxf8mcH8-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="QDLE7NMi8FAMYxf8mcH8-20" target="3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QDLE7NMi8FAMYxf8mcH8-20" value="Client&lt;div&gt;(API)&lt;/div&gt;" style="shape=person;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="229" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QDLE7NMi8FAMYxf8mcH8-21" value="Integrations" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="231" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="QDLE7NMi8FAMYxf8mcH8-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.002;entryY=0.532;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="QDLE7NMi8FAMYxf8mcH8-21" target="QDLE7NMi8FAMYxf8mcH8-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
