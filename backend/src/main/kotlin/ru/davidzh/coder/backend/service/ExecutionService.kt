@@ -90,10 +90,11 @@ class ExecutionService(
             )
             executionResultRepository.save(newExecutionEntity)
         } else {
+            val finishedAt = execution.finishedAt ?: if (terminalStatus(intermediateResult.status)) LocalDateTime.now() else null
             val updatedExecutionResult: ExecutionResultEntity = execution
                 .copy(
                     status = intermediateResult.status,
-                    finishedAt = if (terminalStatus(intermediateResult.status)) LocalDateTime.now() else null,
+                    finishedAt = finishedAt,
                     recordedAt = intermediateResult.containerStates[0].checkTime,
                     logs = intermediateResult.containerStates[0].logs
                 )
