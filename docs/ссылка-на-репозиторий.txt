@@ -1,0 +1,3 @@
+Вся документация и демо находятся в папке docs
+
+https://github.com/FunckingCat/C0d3r
